@@ -1,0 +1,76 @@
+<div class="wrapper">
+    <div class="header">
+        <div class="header-search">
+            <div class="input-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <input type="text" class="header-search__input" placeholder="Tìm kiếm">
+        </div>
+        <div class="header-icons">
+            <i class="fa-regular fa-comment-dots"></i>
+            <i class="fa-regular fa-bell"></i>
+            <img src="./assets/images/house1.jpg" alt="Avatar" class="header-avatar">
+        </div>
+    </div>
+    <div class="nav">
+        <div class="nav-logo">
+            <img src="./assets/images/Logo.png" alt="LoGo">
+        </div>
+        <div class="nav-icon__search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <div class="nav-icon">
+
+            <a [routerLink]="['/']" routerLinkActive="active" class="nav-icon__option" [ngClass]="{'nav-icon__active': isIconActive('icon1')}"
+                (click)="setActiveIcon('icon1')"><i class="fa-solid fa-house"></i></a>
+
+            <a [routerLink]="['/']" routerLinkActive="active" class="nav-icon__option"
+                [ngClass]="{'nav-icon__active': isIconActive('icon2')}" (click)="setActiveIcon('icon2')"><i
+                    class="fa-solid fa-code-branch fa-rotate-90"></i></a>
+
+            <a [routerLink]="['/']" routerLinkActive="active" class="nav-icon__option"
+                [ngClass]="{'nav-icon__active': isIconActive('icon3')}" (click)="setActiveIcon('icon3')"><i
+                    class="fa-solid fa-user-check"></i></a>
+
+
+            <a [routerLink]="['user/user-info']" routerLinkActive="active" class="nav-icon__option"
+                [ngClass]="{'nav-icon__active': isIconActive('icon4')}" (click)="setActiveIcon('icon4')"><i
+                    class="fa-solid fa-user-group"></i></a>
+
+
+            <a href="" class="nav-icon__option" [ngClass]="{'nav-icon__active': isIconActive('icon5')}"
+                (click)="setActiveIcon('icon5')"><i class="fa-regular fa-calendar"></i></a>
+
+
+            <a href="" class="nav-icon__option" [ngClass]="{'nav-icon__active': isIconActive('icon6')}"
+                (click)="setActiveIcon('icon6')"><i class="fa-solid fa-book-open"></i></a>
+
+
+            <a href="" class="nav-icon__option" [ngClass]="{'nav-icon__active': isIconActive('icon7')}"
+                (click)="setActiveIcon('icon7')"><i class="fa-solid fa-user-plus"></i></a>
+
+
+            <a href="" class="nav-icon__option" [ngClass]="{'nav-icon__active': isIconActive('icon8')}"
+                (click)="setActiveIcon('icon8')"><i class="fa-solid fa-chart-line"></i></a>
+
+
+            <a href="" class="nav-icon__option" [ngClass]="{'nav-icon__active': isIconActive('icon9')}"
+                (click)="setActiveIcon('icon9')"><i class="fa-solid fa-square-poll-vertical"></i></a>
+
+
+            <a href="" class="nav-icon__option" [ngClass]="{'nav-icon__active': isIconActive('icon10')}"
+                (click)="setActiveIcon('icon10')"><i class="fa-solid fa-code-branch fa-rotate-90"></i></a>
+
+
+            <a href="" class="nav-icon__option" [ngClass]="{'nav-icon__active': isIconActive('icon11')}"
+                (click)="setActiveIcon('icon11')"><i class="fa-solid fa-code-branch fa-rotate-90"></i></a>
+
+
+            <a href="" class="nav-icon__option" [ngClass]="{'nav-icon__active': isIconActive('icon12')}"
+                (click)="setActiveIcon('icon12')"><i class="fa-solid fa-code-branch fa-rotate-90"></i></a>
+        </div>
+    </div>
+    <div class="user">
+        <router-outlet></router-outlet>
+    </div>
+</div>

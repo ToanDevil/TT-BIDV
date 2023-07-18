@@ -1,0 +1,151 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: [col1-start] 94px [col2-start] auto [col3-start] auto [col3-end];
+    grid-template-rows: [row1-start] 72px [row2-start] auto [row2-end];
+    grid-auto-rows: auto;
+    grid-auto-columns: auto;
+    height: 100vh;
+    width: 100%;
+    background-color: #f5f5f5;
+}
+
+/* CSS cho .header */
+.header {
+    grid-column: col2-start/col3-end;
+    grid-row: row1-start;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+}
+
+.user {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 20px;
+}
+
+
+.header-left {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+/* CSS cho .header-search */
+.header-search {
+    display: flex;
+    align-items: center;
+    margin-left: 25px;
+}
+
+.header-search__input {
+    border: none;
+    background-color: #f5f5f5;
+    width: 440px;
+    height: 40px;
+    font-size: 16px;
+    padding-left: 35px;
+    position: relative;
+    border-radius: 8px;
+}
+
+.input-icon {
+    position: absolute;
+    left: 128px;
+    z-index: 1;
+    font-size: 16px;
+}
+
+/* CSS cho .header-icons */
+.header-icons {
+    display: flex;
+    align-items: center;
+}
+
+.header-icons i {
+    margin: 0px 24px 0 24px;
+    font-size: 16px;
+}
+
+.header-icons img {
+    margin: 0px 24px 0 24px;
+}
+
+.header-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* CSS cho .nav */
+
+.nav-logo {
+    background-color: #006b68;
+    width: 94px;
+    display: flex;
+    height: 72px;
+}
+
+.nav-logo img {
+    margin-top: 20px;
+    max-width: 94px;
+    height: 30px;
+}
+
+.nav {
+    grid-column: col1-start;
+    grid-row: row1-start/row2-end;
+    display: flex;
+    align-items: center;
+    background-color: #006b68;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* CSS cho .nav-icon__search */
+.nav-icon__search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    background-color: #24807d;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-top: 26px;
+}
+
+.nav-icon__search i {
+    justify-content: center;
+    font-size: 16px;
+    color: #fff;
+}
+
+/* CSS cho .nav-icon */
+.nav-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CSS cho .nav-icon__option */
+.nav-icon__option {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-icon__option.nav-icon__active {
+    background-color: #04af8f;
+}
+
+.nav-icon a {
+    color: #ffffff;
+    text-decoration: none;
+}

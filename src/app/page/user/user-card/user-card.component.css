@@ -1,0 +1,135 @@
+.container {
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+h3 {
+    margin: 0;
+    text-align: left;
+}
+.user-card { 
+    display: flex;
+    flex-direction: column;
+    width: 900px;
+    height: 450px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 50px 30px 30px 30px;
+    margin-top: 20px;
+}
+/* CSS ảnh với trạng thái */
+
+.user-card__image {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 400px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+.user-card__image img {
+    position: relative;
+    border-radius: 8px;
+}
+
+.img-change {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    background-color: #141ed2;
+    border-radius: 8px;
+    right: 180px;
+    z-index: 2;
+    margin-top: -200px;
+    margin-left: 174px;
+}
+
+.img-change i {
+    font-size: 10px;
+    color: #fff;
+}
+
+.status {
+    display: flex;
+    justify-content: center;
+    margin: 40px;
+    background-color: #fbe6ea;
+    height: 30px;
+    border-radius: 4px;
+    margin-top: 200px;
+}
+
+.status p {
+    color: #fa8486;
+    font-size: 14px;
+}
+
+/*CSS icon-box thay đổi thông tin*/
+
+.user-card__change {
+    display: flex;
+    justify-content: flex-end;
+}
+.box-change {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    background-color: #e8eaf6;
+    border-radius: 8px;
+    border: 1px solid #141ed2 ;
+    margin-bottom: 4px;
+}
+
+.user-card__change a{
+    margin:  auto;  
+    color: #141ed2;  
+}
+
+.user-card__change i {
+    font-size: 18px;
+}
+
+/* CSS profile */
+
+.user-card__content {
+    display: flex;
+    flex-direction: row;
+}
+
+.user-card__info {
+    display: flex;
+    flex-direction: column;
+    width: 700px;
+    height: 400px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    margin-left: 30px;
+}
+
+.field-row {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+}
+
+.field {
+    flex-basis: calc(33.33% - 10px);
+    /* Sử dụng 33.33% để chia cột ngang */
+    font-size: 14px;
+    padding-top: 20px;
+    margin-left: 40px;
+}
+
+label {
+    font-weight: bold;
+    color: #181818;
+}
+
+p {
+    margin-top: 5px;
+    padding-top: 4px ;
+    color: #bcbbc5;
+}

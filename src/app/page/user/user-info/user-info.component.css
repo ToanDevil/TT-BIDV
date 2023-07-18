@@ -1,0 +1,46 @@
+.container {
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+h3 {
+    margin: 0;
+    text-align: left;
+}
+
+.user-profile { 
+    width: 900px;
+    height: 450px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 30px;
+    margin-top: 20px;
+}
+
+.fields-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.field {
+    flex-basis: calc(33.33% - 10px);
+    /* Sử dụng 33.33% để chia cột ngang */
+    font-size: var(--font-size);
+}
+
+label {
+    font-weight: bold;
+    color: #181818;
+}
+
+p {
+    margin-top: 5px;
+    color: #bcbbc5;
+}
