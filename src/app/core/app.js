@@ -13,30 +13,30 @@ const dbConfig = {
 };
 
 app.get('/api/users/:id', async (req, res) => {
-    const id = req.params.id;
-  
-    try {
-      // Kết nối đến Oracle database
-      const connection = await oracledb.getConnection(dbConfig);
-      console.log('Connected to Oracle Database')
-  
-      // Thực hiện truy vấn lấy dữ liệu từ bảng user
-      const result = await connection.execute('SELECT * FROM users WHERE code = :id', [id]);
-  
-      // Đóng kết nối sau khi thực hiện truy vấn
-      await connection.close();
-  
-      // Trả về dữ liệu người dùng dưới dạng JSON
-      if (result.rows.length > 0) {
-        res.json(result.rows[0]);
-      } else {
-        res.status(404).json({ message: 'User not found' });
-      }
-    } catch (err) {
-      console.error('Error executing database query:', err);
-      res.status(500).json({ message: 'Internal server error' });
+  const id = req.params.id;
+
+  try {
+    // Kết nối đến Oracle database
+    const connection = await oracledb.getConnection(dbConfig);
+    console.log('Connected to Oracle Database')
+
+    // Thực hiện truy vấn lấy dữ liệu từ bảng USERS theo trường ID
+    const result = await connection.execute('SELECT * FROM USERS WHERE ID = :id', [id]);
+
+    // Đóng kết nối sau khi thực hiện truy vấn
+    await connection.close();
+
+    // Trả về dữ liệu người dùng dưới dạng JSON
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).json({ message: 'User not found' });
     }
-  });
+  } catch (err) {
+    console.error('Error executing database query:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
   
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);

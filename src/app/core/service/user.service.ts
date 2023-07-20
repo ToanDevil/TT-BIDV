@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { Observable } from "rxjs";
+import { User } from "src/app/page/user/user";
 
 
 @Injectable({
@@ -12,8 +13,8 @@ export class UserService {
 
     constructor(private http: HttpClient) { }
   
-    getUser(id: string): Observable<any> {
+    getUser(id: string): Observable<User> {
       const url = `${this.apiUrl}/${id}`;
-      return this.http.get<any>(url);
+      return this.http.get<User>(url);
     }
 }

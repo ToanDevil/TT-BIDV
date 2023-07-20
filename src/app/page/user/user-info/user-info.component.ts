@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserInfoComponent implements OnInit {
 
-  userData: any;
+  userData: User | undefined;
   id: string | null = null;
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +24,7 @@ export class UserInfoComponent implements OnInit {
       if(id){
         console.log(id);
         this.userService.getUser(id).subscribe(userData => {
+          this.userData = userData;
           console.log(userData);
         })
       }
