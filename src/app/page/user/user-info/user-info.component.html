@@ -1,39 +1,39 @@
 <div class="container">
     <h3>Thông tin nhân viên</h3>
     <div class="user-profile">
-        <div class="fields-container">
+        <div class="fields-container" *ngIf="userData">
             <div class="field-row">
                 <div class="field">
                     <label>Mã cán bộ</label>
                     <br>
-                    <p>{{ user.code }}</p>
+                    <p>{{ userData.code }}</p>
                 </div>
                 <div class="field">
                     <label>Họ và tên</label>
                     <br>
-                    <p>{{ user.name }}</p>
+                    <p>{{ userData.name }}</p>
                 </div>
                 <div class="field">
                     <label>Địa chỉ</label>
                     <br>
-                    <p>{{ user.address }}</p>
+                    <p>{{ userData.address }}</p>
                 </div>
             </div>
             <div class="field-row">
                 <div class="field">
                     <label>Email</label>
                     <br>
-                    <p>{{ user.email }}</p>
+                    <p>{{ userData.email }}</p>
                 </div>
                 <div class="field">
                     <label>Số điện thoại di động</label>
                     <br>
-                    <p>{{ user.phone }}</p>
+                    <p>{{ userData.phone }}</p>
                 </div>
                 <div class="field">
                     <label>Số điện thoại cơ quan</label>
                     <br>
-                    <p>{{ user.tel }}</p>
+                    <p>{{ userData.tel }}</p>
                 </div>
             </div>
         </div>

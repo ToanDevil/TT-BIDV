@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PageComponent } from './page/page.component';
 import { PageModule } from './page/page.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { PageModule } from './page/page.module';
     AppRoutingModule,
     FormsModule,
     RouterModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

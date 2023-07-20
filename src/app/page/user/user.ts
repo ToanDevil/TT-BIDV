@@ -1,4 +1,5 @@
 export interface User {
+    id : string;
     name : String;
     email : String;
     address : String;
