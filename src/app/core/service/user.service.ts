@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
-import { Observable } from "rxjs";
+import { Observable, map } from "rxjs";
 import { User } from "src/app/page/user/user";
 
 
@@ -15,6 +15,20 @@ export class UserService {
   
     getUser(id: string): Observable<User> {
       const url = `${this.apiUrl}/${id}`;
-      return this.http.get<User>(url);
+      return this.http.get<any[]>(url).pipe( // Modify the return type to any[]
+        map((userDataArray: any[]) => this.mapToUser(userDataArray))
+      );
     }
-}
+  
+    private mapToUser(userDataArray: any[]): User {
+      return {
+        code: userDataArray[0],
+        name: userDataArray[1],
+        email: userDataArray[2],
+        address: userDataArray[3],
+        phone: userDataArray[4],
+        tel: userDataArray[5],
+        id: userDataArray[6]
+      };
+    }
+  }
