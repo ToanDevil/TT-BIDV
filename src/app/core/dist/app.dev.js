@@ -207,7 +207,8 @@ app.get('/api/users/:id', function _callee(req, res) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
-          id = req.params.id;
+          // const id = req.params.id;
+          id = '1';
           _context4.prev = 1;
           _context4.next = 4;
           return regeneratorRuntime.awrap(getUser(id));

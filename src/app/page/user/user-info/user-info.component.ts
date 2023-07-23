@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../user';
 import { UserService } from 'src/app/core/service/user.service';
 import { ActivatedRoute } from '@angular/router';
+import { DataService } from 'src/app/core/service/data.service';
 
 @Component({
   selector: 'app-user-info',
@@ -16,6 +17,7 @@ export class UserInfoComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
+    private dataService: DataService,
   ) { }
 
   ngOnInit() {
@@ -25,6 +27,7 @@ export class UserInfoComponent implements OnInit {
         console.log(id);
         this.userService.getUser(id).subscribe(userData => {
           this.userData = userData;
+          this.dataService.setUserData(userData);
           console.log(userData);
         })
       }

@@ -9,8 +9,9 @@ import { UserService } from '../core/service/user.service';
 })
 export class PageComponent implements OnInit {
    // click icon
-  id : string = '1';
+  id : string | undefined;
   activeIcon: string = 'Icon1';
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
    // Kiểm tra nếu đã lưu giá trị activeIcon trong Local Storage
@@ -18,6 +19,10 @@ export class PageComponent implements OnInit {
     if (storedIcon) {
      this.activeIcon = storedIcon;
     }
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+      console.log(this.id); // Kiểm tra xem id đã nhận được từ URL hay không
+    });
   }
  
   setActiveIcon(Icon: string): void {

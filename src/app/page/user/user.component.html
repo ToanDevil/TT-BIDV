@@ -1,7 +1,7 @@
 <div class="menu-user">
     <ul>
         <li>
-            <a [routerLink]="['/page/user/user-info']" routerLinkActive="active" class="menu-user-option" [ngClass]="{'menu-user-option__active': isOptionActive('option1')}" (click)="setActiveOption('option1')"><i class="fa-solid fa-user" [ngClass]="{'menu-user-option__active': isOptionActive('option1')}"></i> Thông tin cá nhân</a>
+            <a [routerLink]="['/page/user/user-info',id]" routerLinkActive="active" class="menu-user-option" [ngClass]="{'menu-user-option__active': isOptionActive('option1')}" (click)="setActiveOption('option1')"><i class="fa-solid fa-user" [ngClass]="{'menu-user-option__active': isOptionActive('option1')}"></i> Thông tin cá nhân</a>
         </li>
         <li>
             <a href="#" class="menu-user-option"> <i class="fa-solid fa-briefcase"></i> Thông tin công việc</a>
@@ -22,7 +22,7 @@
             <a href="#" class="menu-user-option"> <i class="fa-solid fa-thumbs-up"></i> Đánh giá đồng nghiệp</a>
         </li>
         <li>
-            <a [routerLink]="['/page/user/user-card']" outerLinkActive="active" class="menu-user-option" [ngClass]="{'menu-user-option__active': isOptionActive('option8')}" (click)="setActiveOption('option8')"> <i class="fa-solid fa-id-card" [ngClass]="{'menu-user-option__active': isOptionActive('option8')}"></i> Thẻ thông tin cá nhân</a>
+            <a [routerLink]="['/page/user/user-card', id]" outerLinkActive="active" class="menu-user-option" [ngClass]="{'menu-user-option__active': isOptionActive('option8')}" (click)="setActiveOption('option8')"> <i class="fa-solid fa-id-card" [ngClass]="{'menu-user-option__active': isOptionActive('option8')}"></i> Thẻ thông tin cá nhân</a>
         </li>
     </ul>
 </div>

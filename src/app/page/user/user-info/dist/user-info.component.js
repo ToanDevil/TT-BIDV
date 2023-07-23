@@ -6,40 +6,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.UserCardComponent = void 0;
+exports.UserInfoComponent = void 0;
 var core_1 = require("@angular/core");
-var UserCardComponent = /** @class */ (function () {
-    function UserCardComponent(route, userService, activatedRoute, dataService) {
+var UserInfoComponent = /** @class */ (function () {
+    function UserInfoComponent(route, userService, activatedRoute, dataService) {
         this.route = route;
         this.userService = userService;
         this.activatedRoute = activatedRoute;
         this.dataService = dataService;
         this.id = null;
     }
-    UserCardComponent.prototype.ngOnInit = function () {
+    UserInfoComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.dataService.userData$.subscribe(function (userData) {
-            _this.userData = userData; // Nhận dữ liệu từ DataService
-        });
         this.activatedRoute.paramMap.subscribe(function (paramMap) {
             var id = paramMap.get('id');
             if (id) {
                 console.log(id);
-                _this.userService.getCard(id).subscribe(function (cardData) {
-                    _this.cardData = cardData;
-                    console.log(cardData);
-                    console.log(_this.userData);
+                _this.userService.getUser(id).subscribe(function (userData) {
+                    _this.userData = userData;
+                    _this.dataService.setUserData(userData);
+                    console.log(userData);
                 });
             }
         });
     };
-    UserCardComponent = __decorate([
+    UserInfoComponent = __decorate([
         core_1.Component({
-            selector: 'app-user-card',
-            templateUrl: './user-card.component.html',
-            styleUrls: ['./user-card.component.css']
+            selector: 'app-user-info',
+            templateUrl: './user-info.component.html',
+            styleUrls: ['./user-info.component.css']
         })
-    ], UserCardComponent);
-    return UserCardComponent;
+    ], UserInfoComponent);
+    return UserInfoComponent;
 }());
-exports.UserCardComponent = UserCardComponent;
+exports.UserInfoComponent = UserInfoComponent;

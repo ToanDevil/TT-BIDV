@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user-img',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-img.component.css']
 })
 export class UserImgComponent {
-
+  @Input() id: string | undefined;
 }

@@ -134,7 +134,8 @@ async function getCard(code) {
 
 // API endpoint để lấy thông tin người dùng và thẻ dựa trên ID
 app.get('/api/users/:id', async (req, res) => {
-  const id = req.params.id;
+  // const id = req.params.id;
+  const id = '1';
 
   try {
     const userData = await getUser(id);

@@ -3,14 +3,14 @@
     <div class="user-card">
         <div class="user-card__change">
             <div class="box-change">
-                <a [routerLink]="['/page/user/user-card/edit-profile']"><i class="fa-solid fa-pen"></i></a>
+                <a [routerLink]="['/page/user/user-card' , id , 'edit-profile']"><i class="fa-solid fa-pen"></i></a>
             </div>
         </div>
         <div class="user-card__content">
             <div class="user-card__image">
                 <img src="/assets/images/house1.jpg" alt="">
                 <div class="img-change">
-                    <a [routerLink]="['/page/user/user-card/edit-image']"><i class="fa-solid fa-pen"></i></a>
+                    <a [routerLink]="['/page/user/user-card', id ,'edit-image']"><i class="fa-solid fa-pen"></i></a>
                 </div>
                 <div class="status">
                     <p>Đang vắng mặt</p>
@@ -80,6 +80,8 @@
                                 <label>Nick name</label>
                                 <br>
                                 <p>{{cardData.nickname}}</p>
+                            </div>
+                            <div class="field">
                             </div>
                         </div>
                     </div>

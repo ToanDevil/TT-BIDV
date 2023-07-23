@@ -4,11 +4,6 @@ import { PageComponent } from './page/page.component';
 import { UserComponent } from './page/user/user.component';
 
 const routes: Routes = [                 
- 
-  // {
-  //   path: 'page',
-  //   component: PageComponent,
-  // },
   {
     path: '',
     redirectTo: 'page',

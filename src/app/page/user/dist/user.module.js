@@ -10,15 +10,12 @@ exports.UserModule = void 0;
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var user_routing_module_1 = require("./user-routing.module");
-var user_component_1 = require("./user.component");
 var UserModule = /** @class */ (function () {
     function UserModule() {
     }
     UserModule = __decorate([
         core_1.NgModule({
-            declarations: [
-                user_component_1.UserComponent
-            ],
+            declarations: [],
             imports: [
                 common_1.CommonModule,
                 user_routing_module_1.UserRoutingModule

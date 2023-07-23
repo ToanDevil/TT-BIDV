@@ -7,7 +7,7 @@ import { UserFormComponent } from './user-form.component';
 
 @NgModule({
   declarations: [
-    UserFormComponent
+
   ],
   imports: [
     CommonModule,

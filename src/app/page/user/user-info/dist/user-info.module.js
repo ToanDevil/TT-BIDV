@@ -10,15 +10,12 @@ exports.UserInfoModule = void 0;
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var user_info_routing_module_1 = require("./user-info-routing.module");
-var user_info_component_1 = require("./user-info.component");
 var UserInfoModule = /** @class */ (function () {
     function UserInfoModule() {
     }
     UserInfoModule = __decorate([
         core_1.NgModule({
-            declarations: [
-                user_info_component_1.UserInfoComponent
-            ],
+            declarations: [],
             imports: [
                 common_1.CommonModule,
                 user_info_routing_module_1.UserInfoRoutingModule,

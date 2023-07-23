@@ -6,24 +6,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.UserCardModule = void 0;
+exports.DataService = void 0;
 var core_1 = require("@angular/core");
-var common_1 = require("@angular/common");
-var user_card_routing_module_1 = require("./user-card-routing.module");
-var forms_1 = require("@angular/forms");
-var UserCardModule = /** @class */ (function () {
-    function UserCardModule() {
+var rxjs_1 = require("rxjs");
+var DataService = /** @class */ (function () {
+    function DataService() {
+        this.userDataSubject = new rxjs_1.BehaviorSubject(undefined);
+        this.userData$ = this.userDataSubject.asObservable();
     }
-    UserCardModule = __decorate([
-        core_1.NgModule({
-            declarations: [],
-            imports: [
-                common_1.CommonModule,
-                user_card_routing_module_1.UserCardRoutingModule,
-                forms_1.FormsModule
-            ]
+    DataService.prototype.setUserData = function (userData) {
+        this.userDataSubject.next(userData);
+    };
+    DataService = __decorate([
+        core_1.Injectable({
+            providedIn: 'root'
         })
-    ], UserCardModule);
-    return UserCardModule;
+    ], DataService);
+    return DataService;
 }());
-exports.UserCardModule = UserCardModule;
+exports.DataService = DataService;

@@ -6,24 +6,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.UserCardModule = void 0;
+exports.UserFormModule = void 0;
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
-var user_card_routing_module_1 = require("./user-card-routing.module");
-var forms_1 = require("@angular/forms");
-var UserCardModule = /** @class */ (function () {
-    function UserCardModule() {
+var user_form_routing_module_1 = require("./user-form-routing.module");
+var UserFormModule = /** @class */ (function () {
+    function UserFormModule() {
     }
-    UserCardModule = __decorate([
+    UserFormModule = __decorate([
         core_1.NgModule({
             declarations: [],
             imports: [
                 common_1.CommonModule,
-                user_card_routing_module_1.UserCardRoutingModule,
-                forms_1.FormsModule
+                user_form_routing_module_1.UserFormRoutingModule
             ]
         })
-    ], UserCardModule);
-    return UserCardModule;
+    ], UserFormModule);
+    return UserFormModule;
 }());
-exports.UserCardModule = UserCardModule;
+exports.UserFormModule = UserFormModule;

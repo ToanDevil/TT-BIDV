@@ -8,7 +8,6 @@ import { UserInfoComponent } from './user-info.component';
 
 @NgModule({
   declarations: [
-    UserInfoComponent
   ],
   imports: [
     CommonModule,

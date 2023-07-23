@@ -17,6 +17,11 @@ var page_component_1 = require("./page/page.component");
 var http_1 = require("@angular/common/http");
 var user_card_module_1 = require("./page/user/user-card/user-card.module");
 var user_info_module_1 = require("./page/user/user-info/user-info.module");
+var data_service_1 = require("./core/service/data.service");
+var user_card_component_1 = require("./page/user/user-card/user-card.component");
+var user_info_component_1 = require("./page/user/user-info/user-info.component");
+var user_component_1 = require("./page/user/user.component");
+var user_form_component_1 = require("./page/user/user-card/user-form/user-form.component");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -25,6 +30,10 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 app_component_1.AppComponent,
                 page_component_1.PageComponent,
+                user_card_component_1.UserCardComponent,
+                user_info_component_1.UserInfoComponent,
+                user_component_1.UserComponent,
+                user_form_component_1.UserFormComponent,
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -35,7 +44,7 @@ var AppModule = /** @class */ (function () {
                 user_card_module_1.UserCardModule,
                 user_info_module_1.UserInfoModule,
             ],
-            providers: [],
+            providers: [data_service_1.DataService],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);
