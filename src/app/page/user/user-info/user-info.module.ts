@@ -5,13 +5,14 @@ import { UserInfoRoutingModule } from './user-info-routing.module';
 import { UserInfoComponent } from './user-info.component';
 
 
+
 @NgModule({
   declarations: [
     UserInfoComponent
   ],
   imports: [
     CommonModule,
-    UserInfoRoutingModule
+    UserInfoRoutingModule,
   ]
 })
 export class UserInfoModule { }

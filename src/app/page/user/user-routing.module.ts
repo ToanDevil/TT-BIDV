@@ -12,7 +12,7 @@ const routes: Routes = [
         loadChildren: () => import('./user-info/user-info.module').then((m) => m.UserInfoModule)
       },
       {
-        path: 'user-card',
+        path: 'user-card/:id',
         loadChildren: () => import('./user-card/user-card.module').then((m) => m.UserCardModule)
       }
     ]

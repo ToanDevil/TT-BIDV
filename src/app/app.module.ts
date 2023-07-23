@@ -6,8 +6,10 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PageComponent } from './page/page.component';
-import { PageModule } from './page/page.module';
 import { HttpClientModule } from '@angular/common/http';
+import { UserCardModule } from './page/user/user-card/user-card.module';
+import { UserInfoModule } from './page/user/user-info/user-info.module';
+
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     RouterModule,
     HttpClientModule,
+    UserCardModule,
+    UserInfoModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -8,6 +8,8 @@ import { Component, HostBinding } from '@angular/core';
 export class UserComponent {
   // @HostBinding("class") class: string = "user-container";
    // click option menu
+
+   @Input() id: string | undefined;
 
    activeOption: string = 'option1';
 

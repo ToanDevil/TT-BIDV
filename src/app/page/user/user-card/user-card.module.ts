@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { UserCardRoutingModule } from './user-card-routing.module';
 import { UserCardComponent } from './user-card.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { UserCardComponent } from './user-card.component';
   ],
   imports: [
     CommonModule,
-    UserCardRoutingModule
+    UserCardRoutingModule,
+    FormsModule
   ]
 })
 export class UserCardModule { }

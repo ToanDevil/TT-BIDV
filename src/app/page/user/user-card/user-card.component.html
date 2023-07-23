@@ -18,73 +18,68 @@
             </div>
             <div class="user-card__info">
                 <div class="user-profile">
-                    <div class="fields-container">
+                    <div class="fields-container" *ngIf="cardData">
                         <div class="field-row">
                             <div class="field">
                                 <label>Họ và tên</label>
                                 <br>
-                                <p>5354524</p>
+                                <p *ngIf="userData">{{userData.name}}</p>
                             </div>
                             <div class="field">
                                 <label>Chức vụ</label>
                                 <br>
-                                <p>Nguyễn Công Toàn</p>
+                                <p>{{cardData.position}}</p>
                             </div>
                             <div class="field">
                                 <label>Vị trí chức danh</label>
                                 <br>
-                                <p></p>
+                                <p>{{cardData.title}}</p>
                             </div>
                         </div>
                         <div class="field-row" style="background-color: #e5f3ff;">
                             <div class="field">
                                 <label>Công việc (sở trường)</label>
                                 <br>
-                                <p></p>
+                                <p>{{cardData.forte}}</p>
                             </div>
                             <div class="field">
                                 <label>Phòng ban</label>
                                 <br>
-                                <p></p>
+                                <p>{{cardData.department}}</p>
                             </div>
                             <div class="field">
                                 <label>Đơn vị</label>
                                 <br>
-                                <p></p>
+                                <p>{{cardData.unit}}</p>
                             </div>
                         </div>
                         <div class="field-row">
                             <div class="field">
                                 <label>Số điện thoại cơ quan</label>
                                 <br>
-                                <p></p>
+                                <p *ngIf="userData">{{userData.tel}}</p>
                             </div>
                             <div class="field">
                                 <label>Số điện thoại di động</label>
                                 <br>
-                                <p></p>
+                                <p *ngIf="userData">{{userData.phone}}</p>
                             </div>
                             <div class="field">
                                 <label>Email</label>
                                 <br>
-                                <p></p>
+                                <p *ngIf="userData">{{userData.email}}</p>
                             </div>
                         </div>
                         <div class="field-row" style="background-color: #e5f3ff;">
                             <div class="field">
                                 <label>Địa chỉ</label>
                                 <br>
-                                <p></p>
+                                <p *ngIf="userData">{{userData.address}}</p>
                             </div>
                             <div class="field">
                                 <label>Nick name</label>
                                 <br>
-                                <p></p>
-                            </div>
-                            <div class="field">
-                                <label>Địa chỉ</label>
-                                <br>
-                                <p></p>
+                                <p>{{cardData.nickname}}</p>
                             </div>
                         </div>
                     </div>
