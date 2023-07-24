@@ -11,16 +11,22 @@ var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
 var DataService = /** @class */ (function () {
     function DataService() {
-        this.userDataSubject = new rxjs_1.BehaviorSubject(undefined);
+        var userDataFromLocalStorage = JSON.parse(localStorage.getItem('userData') || 'null');
+        this.userDataSubject = new rxjs_1.BehaviorSubject(userDataFromLocalStorage);
         this.userData$ = this.userDataSubject.asObservable();
-        this.cardDataSubject = new rxjs_1.BehaviorSubject(undefined);
+        var cardDataFromLocalStorage = JSON.parse(localStorage.getItem('cardData') || 'null');
+        this.cardDataSubject = new rxjs_1.BehaviorSubject(cardDataFromLocalStorage);
         this.cardData$ = this.cardDataSubject.asObservable();
     }
     DataService.prototype.setUserData = function (userData) {
         this.userDataSubject.next(userData);
+        // lưu dữ liệu vào local storage
+        localStorage.setItem('userData', JSON.stringify(userData));
     };
     DataService.prototype.setCardData = function (cardData) {
         this.cardDataSubject.next(cardData);
+        // lưu trữ dữ liệu vào local storage
+        localStorage.setItem('cardData', JSON.stringify(cardData));
     };
     DataService = __decorate([
         core_1.Injectable({

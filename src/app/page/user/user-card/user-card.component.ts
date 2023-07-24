@@ -40,6 +40,7 @@ export class UserCardComponent {
       if(this.id){
         this.userService.getCard(this.id).subscribe(cardData => {
           this.cardData = cardData;
+          this.dataService.setCardData(cardData);
           console.log(cardData);
           console.log(this.userData);
         })

@@ -20,18 +20,23 @@ export class UserFormComponent {
     private router: Router
   ){}
 
-  ngOnInit(): void {
-    this.dataService.userData$.subscribe(userData => {
-      this.userData = userData; // Nhận dữ liệu từ DataService
-      console.log(userData)
-    })
+  ngOnInit(){
     // this.dataService.userData$.subscribe(cardData => {
     //   this.cardData = cardData; // Nhận dữ liệu từ DataService
     // })
     this.activatedRoute.paramMap.subscribe(param => {
       this.id = (param as any).params['id']
     })
+    this.dataService.userData$.subscribe(userData => {
+      this.userData = userData; // Nhận dữ liệu từ DataService
+      console.log(userData)
+    })
+    this.dataService.cardData$.subscribe(cardData => {
+      this.cardData = cardData; // Nhận dữ liệu từ DataService
+      console.log(cardData)
+    })
   }
+
   
   redirect(){
     this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])

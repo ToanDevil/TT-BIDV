@@ -16,15 +16,19 @@ var UserFormComponent = /** @class */ (function () {
     }
     UserFormComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.dataService.userData$.subscribe(function (userData) {
-            _this.userData = userData; // Nhận dữ liệu từ DataService
-            console.log(userData);
-        });
         // this.dataService.userData$.subscribe(cardData => {
         //   this.cardData = cardData; // Nhận dữ liệu từ DataService
         // })
         this.activatedRoute.paramMap.subscribe(function (param) {
             _this.id = param.params['id'];
+        });
+        this.dataService.userData$.subscribe(function (userData) {
+            _this.userData = userData; // Nhận dữ liệu từ DataService
+            console.log(userData);
+        });
+        this.dataService.cardData$.subscribe(function (cardData) {
+            _this.cardData = cardData; // Nhận dữ liệu từ DataService
+            console.log(cardData);
         });
     };
     UserFormComponent.prototype.redirect = function () {

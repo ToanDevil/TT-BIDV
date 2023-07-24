@@ -34,6 +34,7 @@ var UserCardComponent = /** @class */ (function () {
             if (_this.id) {
                 _this.userService.getCard(_this.id).subscribe(function (cardData) {
                     _this.cardData = cardData;
+                    _this.dataService.setCardData(cardData);
                     console.log(cardData);
                     console.log(_this.userData);
                 });
