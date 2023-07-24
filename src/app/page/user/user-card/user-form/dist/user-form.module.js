@@ -10,6 +10,7 @@ exports.UserFormModule = void 0;
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var user_form_routing_module_1 = require("./user-form-routing.module");
+var forms_1 = require("@angular/forms");
 var UserFormModule = /** @class */ (function () {
     function UserFormModule() {
     }
@@ -18,7 +19,8 @@ var UserFormModule = /** @class */ (function () {
             declarations: [],
             imports: [
                 common_1.CommonModule,
-                user_form_routing_module_1.UserFormRoutingModule
+                user_form_routing_module_1.UserFormRoutingModule,
+                forms_1.FormsModule
             ]
         })
     ], UserFormModule);

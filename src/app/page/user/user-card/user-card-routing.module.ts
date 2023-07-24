@@ -8,11 +8,11 @@ const routes: Routes = [
     component: UserCardComponent,
     children:[
       {
-        path: 'edit-profile',
+        path: 'edit-profile/:id',
         loadChildren: () => import('./user-form/user-form.module').then((m) => m.UserFormModule),
       },
       {
-        path:'edit-image',
+        path:'edit-image/:id',
         loadChildren: () => import('./user-img/user-img.module').then((m) => m.UserImgModule),
       }
     ]

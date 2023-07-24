@@ -9,29 +9,34 @@ exports.__esModule = true;
 exports.UserComponent = void 0;
 var core_1 = require("@angular/core");
 var UserComponent = /** @class */ (function () {
-    function UserComponent() {
-        // @HostBinding("class") class: string = "user-container";
-        // click option menu
+    function UserComponent(router, activatedRoute) {
+        this.router = router;
+        this.activatedRoute = activatedRoute;
         this.activeOption = 'option1';
     }
     UserComponent.prototype.ngOnInit = function () {
+        var _this = this;
         // Kiểm tra nếu đã lưu giá trị activeOption trong Local Storage
         var storedOption = localStorage.getItem('activeOption');
         if (storedOption) {
             this.activeOption = storedOption;
         }
+        this.activatedRoute.paramMap.subscribe(function (param) {
+            console.log(param);
+            _this.id = param.params['id'];
+            // console.log(this.id)
+        });
     };
-    UserComponent.prototype.setActiveOption = function (option) {
+    UserComponent.prototype.setActiveOption = function (option, url) {
         this.activeOption = option;
         // Lưu giá trị activeOption vào Local Storage
         localStorage.setItem('activeOption', option);
+        this.router.navigate([url + this.id]);
+        //  console.log(this.id)
     };
     UserComponent.prototype.isOptionActive = function (option) {
         return this.activeOption === option;
     };
-    __decorate([
-        core_1.Input()
-    ], UserComponent.prototype, "id");
     UserComponent = __decorate([
         core_1.Component({
             selector: 'app-user',

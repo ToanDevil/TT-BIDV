@@ -9,11 +9,19 @@ exports.__esModule = true;
 exports.UserImgComponent = void 0;
 var core_1 = require("@angular/core");
 var UserImgComponent = /** @class */ (function () {
-    function UserImgComponent() {
+    function UserImgComponent(activatedRoute, router) {
+        this.activatedRoute = activatedRoute;
+        this.router = router;
     }
-    __decorate([
-        core_1.Input()
-    ], UserImgComponent.prototype, "id");
+    UserImgComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activatedRoute.paramMap.subscribe(function (param) {
+            _this.id = param.params['id'];
+        });
+    };
+    UserImgComponent.prototype.redirect = function () {
+        this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id]);
+    };
     UserImgComponent = __decorate([
         core_1.Component({
             selector: 'app-user-img',

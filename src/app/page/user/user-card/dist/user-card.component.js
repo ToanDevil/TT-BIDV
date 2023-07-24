@@ -9,23 +9,30 @@ exports.__esModule = true;
 exports.UserCardComponent = void 0;
 var core_1 = require("@angular/core");
 var UserCardComponent = /** @class */ (function () {
-    function UserCardComponent(route, userService, activatedRoute, dataService) {
-        this.route = route;
+    function UserCardComponent(userService, activatedRoute, dataService, router) {
         this.userService = userService;
         this.activatedRoute = activatedRoute;
         this.dataService = dataService;
-        this.id = null;
+        this.router = router;
     }
+    UserCardComponent.prototype.redirect = function (check) {
+        if (check === 'edit-profile') {
+            this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id + check + '/' + this.id]);
+        }
+        else {
+            this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id + check + '/' + this.id]);
+        }
+    };
     UserCardComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.dataService.userData$.subscribe(function (userData) {
             _this.userData = userData; // Nhận dữ liệu từ DataService
         });
         this.activatedRoute.paramMap.subscribe(function (paramMap) {
-            var id = paramMap.get('id');
-            if (id) {
-                console.log(id);
-                _this.userService.getCard(id).subscribe(function (cardData) {
+            _this.id = paramMap.params['id'];
+            console.log(_this.id);
+            if (_this.id) {
+                _this.userService.getCard(_this.id).subscribe(function (cardData) {
                     _this.cardData = cardData;
                     console.log(cardData);
                     console.log(_this.userData);

@@ -32,6 +32,10 @@
     padding: 10px 0 10px 20px;
 }
 
+.menu-user li a{
+    cursor: pointer;
+}
+
 .menu-user i {
     font-size: 20px;
     margin-right: 14px;

@@ -141,6 +141,10 @@
     align-items: center;
 }
 
+.nav-icon__option i {
+    font-size: 18px;
+}
+
 .nav-icon__option.nav-icon__active {
     background-color: #04af8f;
 }
@@ -148,4 +152,5 @@
 .nav-icon a {
     color: #ffffff;
     text-decoration: none;
+    cursor: pointer;
 }

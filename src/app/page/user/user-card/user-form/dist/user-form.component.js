@@ -9,11 +9,27 @@ exports.__esModule = true;
 exports.UserFormComponent = void 0;
 var core_1 = require("@angular/core");
 var UserFormComponent = /** @class */ (function () {
-    function UserFormComponent() {
+    function UserFormComponent(activatedRoute, dataService, router) {
+        this.activatedRoute = activatedRoute;
+        this.dataService = dataService;
+        this.router = router;
     }
-    __decorate([
-        core_1.Input()
-    ], UserFormComponent.prototype, "id");
+    UserFormComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.dataService.userData$.subscribe(function (userData) {
+            _this.userData = userData; // Nhận dữ liệu từ DataService
+            console.log(userData);
+        });
+        // this.dataService.userData$.subscribe(cardData => {
+        //   this.cardData = cardData; // Nhận dữ liệu từ DataService
+        // })
+        this.activatedRoute.paramMap.subscribe(function (param) {
+            _this.id = param.params['id'];
+        });
+    };
+    UserFormComponent.prototype.redirect = function () {
+        this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id]);
+    };
     UserFormComponent = __decorate([
         core_1.Component({
             selector: 'app-user-form',

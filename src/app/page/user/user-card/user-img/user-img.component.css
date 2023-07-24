@@ -31,6 +31,10 @@
     margin-bottom: 20px;
 }
 
+.title a {
+    cursor: pointer;;
+}
+
 .form-title {
     text-align: center;
     font-size: 18px;

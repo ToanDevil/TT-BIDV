@@ -2,7 +2,7 @@
     <div class="form-wrapper">
         <div class="title">
             <span class="form-title">Thẻ thông tin cá nhân</span>
-            <a [routerLink]="['/page/user/user-card', id]"><span class="close-button">X</span></a> <!-- Close (x) button -->
+            <a (click)="redirect()"><span class="close-button">X</span></a> <!-- Close (x) button -->
         </div>
         <form>
             <div class="form-row">

@@ -13,9 +13,14 @@ var DataService = /** @class */ (function () {
     function DataService() {
         this.userDataSubject = new rxjs_1.BehaviorSubject(undefined);
         this.userData$ = this.userDataSubject.asObservable();
+        this.cardDataSubject = new rxjs_1.BehaviorSubject(undefined);
+        this.cardData$ = this.cardDataSubject.asObservable();
     }
     DataService.prototype.setUserData = function (userData) {
         this.userDataSubject.next(userData);
+    };
+    DataService.prototype.setCardData = function (cardData) {
+        this.cardDataSubject.next(cardData);
     };
     DataService = __decorate([
         core_1.Injectable({

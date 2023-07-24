@@ -134,3 +134,7 @@ p {
     padding-top: 4px ;
     color: #bcbbc5;
 }
+
+a {
+    cursor: pointer;
+}
