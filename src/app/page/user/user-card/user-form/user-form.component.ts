@@ -11,7 +11,7 @@ import { Card } from '../card';
   styleUrls: ['./user-form.component.css']
 })
 export class UserFormComponent {
-  id : string | undefined;
+  id: string | undefined;
   userData: User | undefined;
   cardData: Card | undefined;
 
@@ -19,10 +19,10 @@ export class UserFormComponent {
     private activatedRoute: ActivatedRoute,
     private dataService: DataService,
     private userService: UserService,
-    private router: Router
-  ){}
+    private router: Router,
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     // this.dataService.userData$.subscribe(cardData => {
     //   this.cardData = cardData; // Nhận dữ liệu từ DataService
     // })
@@ -40,35 +40,38 @@ export class UserFormComponent {
   }
   //phương thức để cập nhật thông tin người dùng
   updateUser(): void {
-    if(this.userData && this.id) {
+    if (this.userData && this.id) {
       this.userService.updateUser(this.id, this.userData).subscribe(res => {
         //Xử lý kết quả cập nhật thành công
       })
     }
   }
-// phương thức để cập nhật dữ liệu thông tin card
+  // phương thức để cập nhật dữ liệu thông tin card
   updateCard(): void {
-    if(this.cardData && this.userData?.code) {
+    if (this.cardData && this.userData?.code) {
       this.userService.updateCard(this.userData.code, this.cardData).subscribe(res => {
         // Xử lý kêts quả cập nhật thành công
       })
     }
   }
-  
+
+
   saveData(): void {
     if (this.userData && this.cardData && this.id) {
       // cập nhật thông tin người dùng và thẻ thông qua userService
+      console.log(this.userData)
       this.userService.updateUser(this.id, this.userData).subscribe(res =>{
         console.log('Thông tin người dùng đã được cập nhật: ', res);
+        // Sử dụng thư viện thông báo ngx-toastr (cài đặt thư viện: npm install ngx-toastr)
       });
       this.userService.updateCard(this.userData.code, this.cardData).subscribe(res => {
         console.log('Thông tin thẻ đã được cập nhật: ', res);
       })
-      // this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
+      this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
     }
   }
-  
-  redirect(){
+
+  redirect() {
     this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
   }
 }

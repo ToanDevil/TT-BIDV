@@ -1,6 +1,6 @@
 export interface Card {
     id : number,
-    code: number,
+    code: string,
     position: string,
     forte: string,
     department: string,

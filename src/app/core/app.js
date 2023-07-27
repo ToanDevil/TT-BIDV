@@ -1,4 +1,3 @@
-
 const oracledb = require('oracledb');
 const express = require('express');
 const cors = require('cors');
@@ -6,17 +5,14 @@ const app = express();
 const port = 3000;
 
 app.use(cors());
-// Middleware để phân tích JSON
 app.use(express.json());
 
-// Cấu hình kết nối đến Oracle database
 const dbConfig = {
   user: 'admin',
   password: 'Admin1',
   connectString: 'localhost:1521/test', // SID là 'test' và port là 1521
 };
 
-// Kết nối đến Oracle database
 async function connectToDB() {
   try {
     await oracledb.createPool(dbConfig);
@@ -26,7 +22,6 @@ async function connectToDB() {
   }
 }
 
-// Thực hiện truy vấn lấy thông tin người dùng từ bảng USERS theo ID
 async function getUser(id) {
   try {
     const connection = await oracledb.getConnection();
@@ -53,7 +48,6 @@ async function getUser(id) {
   }
 }
 
-// Thực hiện truy vấn lấy thông tin thẻ từ bảng CARD theo CODE
 async function getCard(code) {
   try {
     const connection = await oracledb.getConnection();
@@ -108,27 +102,25 @@ app.get('/api/users/:id', async (req, res) => {
 });
 
 // API endpoint để cập nhật thông tin người dùng dựa trên ID
-
 app.put('/api/user/update/:id', async (req, res) => {
   const id = req.params.id;
-  const {name, email, address, phone, tel} = req.body
-  try{
+  const { name, email, address, phone, tel } = req.body;
+  try {
     const connection = await oracledb.getConnection();
-    const updateQuery = `UPDATE USERS SET name = :name, address = :adress, phone = :phone, tel = :tel, email = :email WHERE id = :id`;
-  
-    await connection.execute(updateQuery, [name, email, address, phone, tel, email])
+    const updateQuery = `UPDATE USERS SET name = :name, email = :email, address = :address, phone = :phone, tel = :tel WHERE id = :id`;
+
+    await connection.execute(updateQuery, [name, email, address, phone, tel, id]);
     await connection.commit();
     await connection.close();
-  
-    res.json({message: 'User infomation updated successfully'});
-  } catch(err) {
-  console.error('Error updating user infomation', err);
-  res.status(500).json({message: 'Internal server error'});
-  } 
-})
 
-// api endpoint để cập nhật thông tin thẻ dựa trên code
+    res.json({ message: 'User information updated successfully' });
+  } catch (err) {
+    console.error('Error updating user information', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
+// API endpoint để cập nhật thông tin thẻ dựa trên code
 app.put('/api/card/update/:code', async (req, res) => {
   const code = req.params.code;
   const { position, forte, department, nickname, unit, title } = req.body;
@@ -147,7 +139,7 @@ app.put('/api/card/update/:code', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-// Khởi động server và kết nối đến Oracle database
+
 connectToDB().then(() => {
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);

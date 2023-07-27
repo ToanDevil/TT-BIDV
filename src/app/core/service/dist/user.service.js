@@ -16,21 +16,19 @@ var UserService = /** @class */ (function () {
         this.apiUrl = 'http://localhost:3000/api/users'; // Replace with your backend server URL
         this.apiEdit = 'http://localhost:3000/api';
     }
-    UserService.prototype.log = function (message) {
-        this.message.add("HeroService: " + message);
-    };
-    UserService.prototype.handleError = function (operation, result) {
-        var _this = this;
-        if (operation === void 0) { operation = 'operation'; }
-        return function (error) {
-            // TODO: send the error to remote logging infrastructure
-            console.error(error); // log to console instead
-            // TODO: better job of transforming error for user consumption
-            _this.log(operation + " failed: " + error.message);
-            // Let the app keep running by returning an empty result.
-            return rxjs_1.of(result);
-        };
-    };
+    // private log(message: string) {
+    //   this.message.add(`HeroService: ${message}`);
+    // }
+    // private handleError<T>(operation = 'operation', result?: T) {
+    //   return (error: any): Observable<T> => {
+    //     // TODO: send the error to remote logging infrastructure
+    //     console.error(error); // log to console instead
+    //     // TODO: better job of transforming error for user consumption
+    //     this.log(`${operation} failed: ${error.message}`);
+    //     // Let the app keep running by returning an empty result.
+    //     return of(result as T);
+    //   };
+    // }
     UserService.prototype.getUser = function (id) {
         var url = this.apiUrl + "/" + id;
         return this.http.get(url).pipe(rxjs_1.map(function (data) { return data.user; }) // Trả về thông tin người dùng đã được ánh xạ từ app.js

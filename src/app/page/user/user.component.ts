@@ -11,7 +11,7 @@ export class UserComponent {
   // @HostBinding("class") class: string = "user-container";
   // click option menu
 
-  id: string | undefined;
+  id: number | undefined;
 
   activeOption: string = 'option1';
   constructor(

@@ -8,16 +8,14 @@ var cors = require('cors');
 
 var app = express();
 var port = 3000;
-app.use(cors()); // Middleware để phân tích JSON
-
-app.use(express.json()); // Cấu hình kết nối đến Oracle database
-
+app.use(cors());
+app.use(express.json());
 var dbConfig = {
   user: 'admin',
   password: 'Admin1',
   connectString: 'localhost:1521/test' // SID là 'test' và port là 1521
 
-}; // Kết nối đến Oracle database
+};
 
 function connectToDB() {
   return regeneratorRuntime.async(function connectToDB$(_context) {
@@ -44,8 +42,7 @@ function connectToDB() {
       }
     }
   }, null, null, [[0, 6]]);
-} // Thực hiện truy vấn lấy thông tin người dùng từ bảng USERS theo ID
-
+}
 
 function getUser(id) {
   var connection, userQuery, userResult;
@@ -99,8 +96,7 @@ function getUser(id) {
       }
     }
   }, null, null, [[0, 15]]);
-} // Thực hiện truy vấn lấy thông tin thẻ từ bảng CARD theo CODE
-
+}
 
 function getCard(code) {
   var connection, cardQuery, cardResult;
@@ -238,9 +234,9 @@ app.put('/api/user/update/:id', function _callee2(req, res) {
 
         case 5:
           connection = _context5.sent;
-          updateQuery = "UPDATE USERS SET name = :name, address = :adress, phone = :phone, tel = :tel, email = :email WHERE id = :id";
+          updateQuery = "UPDATE USERS SET name = :name, email = :email, address = :address, phone = :phone, tel = :tel WHERE id = :id";
           _context5.next = 9;
-          return regeneratorRuntime.awrap(connection.execute(updateQuery, [name, email, address, phone, tel, email]));
+          return regeneratorRuntime.awrap(connection.execute(updateQuery, [name, email, address, phone, tel, id]));
 
         case 9:
           _context5.next = 11;
@@ -252,7 +248,7 @@ app.put('/api/user/update/:id', function _callee2(req, res) {
 
         case 13:
           res.json({
-            message: 'User infomation updated successfully'
+            message: 'User information updated successfully'
           });
           _context5.next = 20;
           break;
@@ -260,7 +256,7 @@ app.put('/api/user/update/:id', function _callee2(req, res) {
         case 16:
           _context5.prev = 16;
           _context5.t0 = _context5["catch"](2);
-          console.error('Error updating user infomation', _context5.t0);
+          console.error('Error updating user information', _context5.t0);
           res.status(500).json({
             message: 'Internal server error'
           });
@@ -271,7 +267,7 @@ app.put('/api/user/update/:id', function _callee2(req, res) {
       }
     }
   }, null, null, [[2, 16]]);
-}); // api endpoint để cập nhật thông tin thẻ dựa trên code
+}); // API endpoint để cập nhật thông tin thẻ dựa trên code
 
 app.put('/api/card/update/:code', function _callee3(req, res) {
   var code, _req$body2, position, forte, department, nickname, unit, title, connection, updateQuery;
@@ -321,8 +317,7 @@ app.put('/api/card/update/:code', function _callee3(req, res) {
       }
     }
   }, null, null, [[2, 16]]);
-}); // Khởi động server và kết nối đến Oracle database
-
+});
 connectToDB().then(function () {
   app.listen(port, function () {
     console.log("Server running on port ".concat(port));

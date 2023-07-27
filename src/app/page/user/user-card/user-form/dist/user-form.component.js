@@ -52,13 +52,15 @@ var UserFormComponent = /** @class */ (function () {
     UserFormComponent.prototype.saveData = function () {
         if (this.userData && this.cardData && this.id) {
             // cập nhật thông tin người dùng và thẻ thông qua userService
+            console.log(this.userData);
             this.userService.updateUser(this.id, this.userData).subscribe(function (res) {
                 console.log('Thông tin người dùng đã được cập nhật: ', res);
+                // Sử dụng thư viện thông báo ngx-toastr (cài đặt thư viện: npm install ngx-toastr)
             });
             this.userService.updateCard(this.userData.code, this.cardData).subscribe(function (res) {
                 console.log('Thông tin thẻ đã được cập nhật: ', res);
             });
-            // this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
+            this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id]);
         }
     };
     UserFormComponent.prototype.redirect = function () {

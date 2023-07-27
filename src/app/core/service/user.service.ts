@@ -17,23 +17,23 @@ export class UserService {
     constructor(private http: HttpClient,
                 private message: MessageService,
     ) { }
-    private log(message: string) {
-      this.message.add(`HeroService: ${message}`);
-    }
+    // private log(message: string) {
+    //   this.message.add(`HeroService: ${message}`);
+    // }
 
-    private handleError<T>(operation = 'operation', result?: T) {
-      return (error: any): Observable<T> => {
+    // private handleError<T>(operation = 'operation', result?: T) {
+    //   return (error: any): Observable<T> => {
     
-        // TODO: send the error to remote logging infrastructure
-        console.error(error); // log to console instead
+    //     // TODO: send the error to remote logging infrastructure
+    //     console.error(error); // log to console instead
     
-        // TODO: better job of transforming error for user consumption
-        this.log(`${operation} failed: ${error.message}`);
+    //     // TODO: better job of transforming error for user consumption
+    //     this.log(`${operation} failed: ${error.message}`);
     
-        // Let the app keep running by returning an empty result.
-        return of(result as T);
-      };
-    }
+    //     // Let the app keep running by returning an empty result.
+    //     return of(result as T);
+    //   };
+    // }
   
     getUser(id: string): Observable<User> {
       const url = `${this.apiUrl}/${id}`;
@@ -56,7 +56,7 @@ export class UserService {
     }
 
     // phương thức để cập nhật thông tin card
-    updateCard (code: number, cardData: Card): Observable<any> {
+    updateCard (code: string, cardData: Card): Observable<any> {
       const url = `${this.apiEdit}/card/update/${code}`;
       return this.http.put(url, cardData);
     }
