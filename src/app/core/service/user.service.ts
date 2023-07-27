@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map, tap, of } from "rxjs";
 import { User } from "src/app/page/user/user";
 import { Card } from "src/app/page/user/user-card/card";
+import { Image } from "src/app/page/image";
 import { MessageService } from "./message.service";
 
 
@@ -14,6 +15,7 @@ export class UserService {
   
     private apiUrl = 'http://localhost:3000/api/users'; // Replace with your backend server URL
     private apiEdit = 'http://localhost:3000/api';
+    private apiImage = 'http://localhost:3000/api/user/image';
     constructor(private http: HttpClient,
                 private message: MessageService,
     ) { }
@@ -47,6 +49,13 @@ export class UserService {
       return this.http.get<any>(url).pipe(
         map((data: any) => data.card) // Trả về thông tin thẻ đã được ánh xạ từ app.js
       );
+    }
+
+    getImage(id: string): Observable<Image> {
+      const url = `${this.apiImage}/${id}`;
+      return this.http.get<any>(url).pipe(
+        map((data: any) => data.image) // trả về thông tin ảnh đã được ánh xạ từ app.js
+      )
     }
 
     //Phương thưc để cập nhật thông tin người dùng

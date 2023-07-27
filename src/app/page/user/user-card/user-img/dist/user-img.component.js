@@ -12,6 +12,7 @@ var UserImgComponent = /** @class */ (function () {
     function UserImgComponent(activatedRoute, router) {
         this.activatedRoute = activatedRoute;
         this.router = router;
+        this.selectedFile = null;
     }
     UserImgComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -21,6 +22,28 @@ var UserImgComponent = /** @class */ (function () {
     };
     UserImgComponent.prototype.redirect = function () {
         this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id]);
+    };
+    UserImgComponent.prototype.onFileSelected = function (event) {
+        this.selectedFile = event.target.files[0];
+    };
+    UserImgComponent.prototype.uploadImage = function () {
+        // Implement code to handle file upload here
+        if (this.selectedFile) {
+            console.log('File selected:', this.selectedFile);
+            // You can send the selectedFile to the server for uploading or processing.
+        }
+    };
+    UserImgComponent.prototype.saveImage = function () {
+        // Implement code to save the uploaded image here
+        if (this.selectedFile) {
+            console.log('Image saved:', this.selectedFile);
+            // You can perform any required operations with the uploaded image here.
+        }
+    };
+    UserImgComponent.prototype.closePopup = function () {
+        // Implement code to close the popup here
+        console.log('Popup closed');
+        // You can hide the popup or perform any additional actions when closing the popup.
     };
     UserImgComponent = __decorate([
         core_1.Component({

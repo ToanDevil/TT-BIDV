@@ -9,14 +9,16 @@ exports.__esModule = true;
 exports.PageComponent = void 0;
 var core_1 = require("@angular/core");
 var PageComponent = /** @class */ (function () {
-    function PageComponent(route, router) {
+    function PageComponent(route, router, userService) {
         this.route = route;
         this.router = router;
+        this.userService = userService;
         // click icon
         this.id = '1';
         this.activeIcon = 'Icon1';
     }
     PageComponent.prototype.ngOnInit = function () {
+        var _this = this;
         // Kiểm tra nếu đã lưu giá trị activeIcon trong Local Storage
         var storedIcon = localStorage.getItem('activeIcon');
         if (storedIcon) {
@@ -26,6 +28,10 @@ var PageComponent = /** @class */ (function () {
         //   this.id = params['id'];
         //   //console.log(this.id); // Kiểm tra xem id đã nhận được từ URL hay không
         // });
+        this.userService.getImage(this.id).subscribe(function (imageData) {
+            _this.imageData = imageData;
+            console.log(_this.imageData);
+        });
     };
     PageComponent.prototype.setActiveIcon = function (Icon, url, check) {
         this.activeIcon = Icon;

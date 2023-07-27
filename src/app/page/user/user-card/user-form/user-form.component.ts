@@ -4,6 +4,8 @@ import { DataService } from 'src/app/core/service/data.service';
 import { UserService } from 'src/app/core/service/user.service';
 import { User } from '../../user';
 import { Card } from '../card';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-user-form',
@@ -20,6 +22,7 @@ export class UserFormComponent {
     private dataService: DataService,
     private userService: UserService,
     private router: Router,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -67,7 +70,8 @@ export class UserFormComponent {
       this.userService.updateCard(this.userData.code, this.cardData).subscribe(res => {
         console.log('Thông tin thẻ đã được cập nhật: ', res);
       })
-      this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
+      // this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
+      this.toastr.success('Hello world!', 'Toastr fun!');
     }
   }
 

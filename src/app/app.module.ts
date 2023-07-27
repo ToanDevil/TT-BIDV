@@ -15,6 +15,9 @@ import { UserInfoComponent } from './page/user/user-info/user-info.component';
 import { UserComponent } from './page/user/user.component';
 import { UserFormComponent } from './page/user/user-card/user-form/user-form.component';
 
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { ToastrModule, provideToastr } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -33,8 +36,14 @@ import { UserFormComponent } from './page/user/user-card/user-form/user-form.com
     HttpClientModule,
     UserCardModule,
     UserInfoModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
   ],
-  providers: [DataService],
+  providers: [
+    DataService,
+    provideAnimations(), // required animations providers
+    provideToastr(), // Toastr providers
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

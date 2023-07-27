@@ -6,10 +6,10 @@
             </div>
             <input type="text" class="header-search__input" placeholder="Tìm kiếm">
         </div>
-        <div class="header-icons">
+        <div class="header-icons" *ngIf="imageData">
             <i class="fa-regular fa-comment-dots"></i>
             <i class="fa-regular fa-bell"></i>
-            <img src="./assets/images/house1.jpg" alt="Avatar" class="header-avatar">
+            <img [src]="imageData.url" alt="Avatar" class="header-avatar">
         </div>
     </div>
     <div class="nav">

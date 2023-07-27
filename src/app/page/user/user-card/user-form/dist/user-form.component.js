@@ -9,11 +9,12 @@ exports.__esModule = true;
 exports.UserFormComponent = void 0;
 var core_1 = require("@angular/core");
 var UserFormComponent = /** @class */ (function () {
-    function UserFormComponent(activatedRoute, dataService, userService, router) {
+    function UserFormComponent(activatedRoute, dataService, userService, router, toastr) {
         this.activatedRoute = activatedRoute;
         this.dataService = dataService;
         this.userService = userService;
         this.router = router;
+        this.toastr = toastr;
     }
     UserFormComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -60,7 +61,8 @@ var UserFormComponent = /** @class */ (function () {
             this.userService.updateCard(this.userData.code, this.cardData).subscribe(function (res) {
                 console.log('Thông tin thẻ đã được cập nhật: ', res);
             });
-            this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id]);
+            // this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
+            this.toastr.success('Hello world!', 'Toastr fun!');
         }
     };
     UserFormComponent.prototype.redirect = function () {

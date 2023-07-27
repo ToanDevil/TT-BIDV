@@ -4,6 +4,31 @@
     flex-direction: column;
 }
 
+.user-add {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-add i {
+    color: #141ed2;
+}
+
+.box-add {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    background-color: #e8eaf6;
+    border-radius: 8px;
+    border: 1px solid #141ed2 ;
+    margin-bottom: 4px;
+    align-items: center;
+}
+
+.box-add a {
+    margin: auto;
+}
+
 h3 {
     margin: 0;
     text-align: left;

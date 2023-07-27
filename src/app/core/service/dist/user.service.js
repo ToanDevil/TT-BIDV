@@ -15,6 +15,7 @@ var UserService = /** @class */ (function () {
         this.message = message;
         this.apiUrl = 'http://localhost:3000/api/users'; // Replace with your backend server URL
         this.apiEdit = 'http://localhost:3000/api';
+        this.apiImage = 'http://localhost:3000/api/user/image';
     }
     // private log(message: string) {
     //   this.message.add(`HeroService: ${message}`);
@@ -37,6 +38,11 @@ var UserService = /** @class */ (function () {
     UserService.prototype.getCard = function (id) {
         var url = this.apiUrl + "/" + id;
         return this.http.get(url).pipe(rxjs_1.map(function (data) { return data.card; }) // Trả về thông tin thẻ đã được ánh xạ từ app.js
+        );
+    };
+    UserService.prototype.getImage = function (id) {
+        var url = this.apiImage + "/" + id;
+        return this.http.get(url).pipe(rxjs_1.map(function (data) { return data.image; }) // trả về thông tin ảnh đã được ánh xạ từ app.js
         );
     };
     //Phương thưc để cập nhật thông tin người dùng

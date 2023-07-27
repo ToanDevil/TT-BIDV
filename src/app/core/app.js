@@ -1,6 +1,7 @@
 const oracledb = require('oracledb');
 const express = require('express');
 const cors = require('cors');
+const { async } = require('rxjs');
 const app = express();
 const port = 3000;
 
@@ -48,6 +49,7 @@ async function getUser(id) {
   }
 }
 
+// phương thức getCard dựa trên code
 async function getCard(code) {
   try {
     const connection = await oracledb.getConnection();
@@ -71,6 +73,29 @@ async function getCard(code) {
     };
   } catch (err) {
     console.error('Error executing getCard query:', err);
+    throw err;
+  }
+}
+
+// getImage dựa trên code
+async function getImage(code){
+  try{
+    const connection = await oracledb.getConnection();
+    const imgQuery = 'SELECT * FROM IMG WHERE CODE = :code';
+    const imgResult = await connection.execute(imgQuery, [code]);
+    await connection.close();
+
+    if(imgResult.rows.length === 0){
+      return null;
+    }
+    const imgRow = imgResult.rows[0];
+    return {
+      id: imgRow[0],
+      code: imgRow[1],
+      url: imgRow[2],
+    };
+  } catch (err){
+    console.error('Error executing getImg query:', err);
     throw err;
   }
 }
@@ -100,6 +125,33 @@ app.get('/api/users/:id', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+//API endpoint để lấy thông tin ảnh người dùng
+app.get('/api/user/image/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const userData = await getUser(id);
+
+    if (!userData) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    const imageData = await getImage(userData.code);
+     
+    if(!imageData) {
+      res.status(404).json({message: 'image not found'});
+      return;
+    }
+
+    res.json({ image: imageData });
+  } catch (err) {
+    console.error('Error getting user and card data:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+})
+
 
 // API endpoint để cập nhật thông tin người dùng dựa trên ID
 app.put('/api/user/update/:id', async (req, res) => {

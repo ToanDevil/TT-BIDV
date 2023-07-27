@@ -22,6 +22,8 @@ var user_card_component_1 = require("./page/user/user-card/user-card.component")
 var user_info_component_1 = require("./page/user/user-info/user-info.component");
 var user_component_1 = require("./page/user/user.component");
 var user_form_component_1 = require("./page/user/user-card/user-form/user-form.component");
+var animations_1 = require("@angular/platform-browser/animations");
+var ngx_toastr_1 = require("ngx-toastr");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -43,8 +45,14 @@ var AppModule = /** @class */ (function () {
                 http_1.HttpClientModule,
                 user_card_module_1.UserCardModule,
                 user_info_module_1.UserInfoModule,
+                animations_1.BrowserAnimationsModule,
+                ngx_toastr_1.ToastrModule.forRoot(),
             ],
-            providers: [data_service_1.DataService],
+            providers: [
+                data_service_1.DataService,
+                animations_1.provideAnimations(),
+                ngx_toastr_1.provideToastr(),
+            ],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);
