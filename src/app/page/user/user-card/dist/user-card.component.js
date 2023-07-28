@@ -38,6 +38,9 @@ var UserCardComponent = /** @class */ (function () {
                     console.log(cardData);
                     console.log(_this.userData);
                 });
+                _this.userService.getImage(_this.id).subscribe(function (imageData) {
+                    _this.imageData = imageData;
+                });
             }
         });
     };

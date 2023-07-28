@@ -24,26 +24,24 @@ var UserImgComponent = /** @class */ (function () {
         this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id]);
     };
     UserImgComponent.prototype.onFileSelected = function (event) {
-        this.selectedFile = event.target.files[0];
-    };
-    UserImgComponent.prototype.uploadImage = function () {
-        // Implement code to handle file upload here
-        if (this.selectedFile) {
-            console.log('File selected:', this.selectedFile);
-            // You can send the selectedFile to the server for uploading or processing.
-        }
+        var _this = this;
+        var file = event.target.files[0]; // Lấy tệp đã chọn từ sự kiện
+        // Sử dụng FileReader để đọc nội dung tệp
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            // Nội dung của tệp được đọc sẽ nằm trong e.target.result
+            _this.url = e.target.result; // Lưu nội dung (data URL) vào biến url
+            console.log(_this.url);
+        };
+        reader.readAsDataURL(file);
     };
     UserImgComponent.prototype.saveImage = function () {
         // Implement code to save the uploaded image here
-        if (this.selectedFile) {
-            console.log('Image saved:', this.selectedFile);
-            // You can perform any required operations with the uploaded image here.
-        }
+        this.url = undefined;
     };
     UserImgComponent.prototype.closePopup = function () {
         // Implement code to close the popup here
-        console.log('Popup closed');
-        // You can hide the popup or perform any additional actions when closing the popup.
+        this.url = undefined;
     };
     UserImgComponent = __decorate([
         core_1.Component({

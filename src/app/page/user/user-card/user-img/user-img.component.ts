@@ -11,44 +11,43 @@ export class UserImgComponent {
   selectedFile: File | null = null;
 
   constructor(
-    private activatedRoute : ActivatedRoute,
-    private router : Router
-  ){}
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.activatedRoute.paramMap.subscribe(param => {
       this.id = (param as any).params['id']
     })
   }
-  redirect(){
+  redirect() {
     this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
   }
 
 
+  url: string | undefined;
 
   onFileSelected(event: any): void {
-    this.selectedFile = event.target.files[0];
+    const file: File = event.target.files[0]; // Lấy tệp đã chọn từ sự kiện
+
+    // Sử dụng FileReader để đọc nội dung tệp
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      // Nội dung của tệp được đọc sẽ nằm trong e.target.result
+      this.url = e.target.result; // Lưu nội dung (data URL) vào biến url
+      console.log(this.url);
+    };
+    reader.readAsDataURL(file);
   }
 
-  uploadImage(): void {
-    // Implement code to handle file upload here
-    if (this.selectedFile) {
-      console.log('File selected:', this.selectedFile);
-      // You can send the selectedFile to the server for uploading or processing.
-    }
-  }
 
   saveImage(): void {
     // Implement code to save the uploaded image here
-    if (this.selectedFile) {
-      console.log('Image saved:', this.selectedFile);
-      // You can perform any required operations with the uploaded image here.
-    }
+    this.url = undefined
   }
 
   closePopup(): void {
     // Implement code to close the popup here
-    console.log('Popup closed');
-    // You can hide the popup or perform any additional actions when closing the popup.
+    this.url = undefined
   }
 }

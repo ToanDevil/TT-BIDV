@@ -9,7 +9,7 @@
                 <h4>Upload Ảnh</h4>
                 <span></span>
             </div>
-            <div class="body">
+            <div class="body" *ngIf="!url">
                 <div class="icon-upload">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                 </div>
@@ -17,7 +17,9 @@
                 <span>Chọn file với các định dạng cho phép JPG, JPEG, BMP, PNG, SVG</span>
                 <br>
                 <input type="file" (change)="onFileSelected($event)">
-                <button (click)="uploadImage()">Chọn File</button>
+            </div>
+            <div class="body" *ngIf = "url">
+                <img [src]="url" alt="">
             </div>
             <div class="footer">
                 <button type="button" class="cancel-button" (click)="closePopup()">Hủy</button>

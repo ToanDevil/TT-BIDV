@@ -4,6 +4,7 @@ import { DataService } from 'src/app/core/service/data.service';
 import { UserService } from 'src/app/core/service/user.service';
 import { User } from '../user';
 import { Card } from './card';
+import { Image } from '../../image'
 
 @Component({
   selector: 'app-user-card',
@@ -13,6 +14,7 @@ import { Card } from './card';
 export class UserCardComponent {
   userData: User | undefined;
   cardData: Card | undefined;
+  imageData: Image | undefined;
   id: string | undefined;
   constructor(
     private userService: UserService,
@@ -43,6 +45,10 @@ export class UserCardComponent {
           this.dataService.setCardData(cardData);
           console.log(cardData);
           console.log(this.userData);
+        })
+
+        this.userService.getImage(this.id).subscribe(imageData => {
+          this.imageData = imageData
         })
       }
     });

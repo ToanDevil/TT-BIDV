@@ -56,6 +56,12 @@
     text-align: center;
 }
 
+.body img {
+    margin: auto;
+    height: 80%;
+    width: 80%;
+}
+
 .icon-upload {
     display: flex;
     align-items: center;
