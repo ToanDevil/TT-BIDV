@@ -6,6 +6,8 @@ var express = require('express');
 
 var cors = require('cors');
 
+var path = require('path');
+
 var _require = require('rxjs'),
     async = _require.async;
 
@@ -16,7 +18,11 @@ var multer = require('multer');
 var app = express();
 var port = 3000;
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // Đặt đường dẫn tới thư mục uploads
+
+var uploadsPath = path.join(__dirname, 'src', 'app', 'core', 'uploads'); // Phục vụ các tệp ảnh từ thư mục uploads
+
+app.use('/uploads', express["static"](uploadsPath));
 var dbConfig = {
   user: 'admin',
   password: 'Admin1',

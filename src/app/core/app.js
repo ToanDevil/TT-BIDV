@@ -1,6 +1,7 @@
 const oracledb = require('oracledb');
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const { async } = require('rxjs');
 const bodyParser = require("body-parser")
 const multer = require('multer')
@@ -10,6 +11,12 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
+
+// Đặt đường dẫn tới thư mục uploads
+const uploadsPath = path.join(__dirname, 'src', 'app', 'core', 'uploads');
+
+// Phục vụ các tệp ảnh từ thư mục uploads
+app.use('/uploads', express.static(uploadsPath));
 
 
 const dbConfig = {

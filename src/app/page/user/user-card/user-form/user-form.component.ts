@@ -26,9 +26,6 @@ export class UserFormComponent {
   ) { }
 
   ngOnInit() {
-    // this.dataService.userData$.subscribe(cardData => {
-    //   this.cardData = cardData; // Nhận dữ liệu từ DataService
-    // })
     this.activatedRoute.paramMap.subscribe(param => {
       this.id = (param as any).params['id']
     })
@@ -41,26 +38,10 @@ export class UserFormComponent {
       console.log(cardData)
     })
   }
-  //phương thức để cập nhật thông tin người dùng
-  updateUser(): void {
-    if (this.userData && this.id) {
-      this.userService.updateUser(this.id, this.userData).subscribe(res => {
-        //Xử lý kết quả cập nhật thành công
-      })
-    }
-  }
-  // phương thức để cập nhật dữ liệu thông tin card
-  updateCard(): void {
-    if (this.cardData && this.userData?.code) {
-      this.userService.updateCard(this.userData.code, this.cardData).subscribe(res => {
-        // Xử lý kêts quả cập nhật thành công
-      })
-    }
-  }
 
 
   saveData(): void {
-    if (this.userData && this.cardData && this.id) {
+    if (this.userData && this.cardData && this.id && this.userData.code) {
       // cập nhật thông tin người dùng và thẻ thông qua userService
       console.log(this.userData)
       this.userService.updateUser(this.id, this.userData).subscribe(res =>{
@@ -70,8 +51,8 @@ export class UserFormComponent {
       this.userService.updateCard(this.userData.code, this.cardData).subscribe(res => {
         console.log('Thông tin thẻ đã được cập nhật: ', res);
       })
-      // this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
       this.toastr.success('Hello world!', 'Toastr fun!');
+      this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
     }
   }
 

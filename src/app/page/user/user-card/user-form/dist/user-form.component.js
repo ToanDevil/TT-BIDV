@@ -18,9 +18,6 @@ var UserFormComponent = /** @class */ (function () {
     }
     UserFormComponent.prototype.ngOnInit = function () {
         var _this = this;
-        // this.dataService.userData$.subscribe(cardData => {
-        //   this.cardData = cardData; // Nhận dữ liệu từ DataService
-        // })
         this.activatedRoute.paramMap.subscribe(function (param) {
             _this.id = param.params['id'];
         });
@@ -33,25 +30,8 @@ var UserFormComponent = /** @class */ (function () {
             console.log(cardData);
         });
     };
-    //phương thức để cập nhật thông tin người dùng
-    UserFormComponent.prototype.updateUser = function () {
-        if (this.userData && this.id) {
-            this.userService.updateUser(this.id, this.userData).subscribe(function (res) {
-                //Xử lý kết quả cập nhật thành công
-            });
-        }
-    };
-    // phương thức để cập nhật dữ liệu thông tin card
-    UserFormComponent.prototype.updateCard = function () {
-        var _a;
-        if (this.cardData && ((_a = this.userData) === null || _a === void 0 ? void 0 : _a.code)) {
-            this.userService.updateCard(this.userData.code, this.cardData).subscribe(function (res) {
-                // Xử lý kêts quả cập nhật thành công
-            });
-        }
-    };
     UserFormComponent.prototype.saveData = function () {
-        if (this.userData && this.cardData && this.id) {
+        if (this.userData && this.cardData && this.id && this.userData.code) {
             // cập nhật thông tin người dùng và thẻ thông qua userService
             console.log(this.userData);
             this.userService.updateUser(this.id, this.userData).subscribe(function (res) {
@@ -61,8 +41,8 @@ var UserFormComponent = /** @class */ (function () {
             this.userService.updateCard(this.userData.code, this.cardData).subscribe(function (res) {
                 console.log('Thông tin thẻ đã được cập nhật: ', res);
             });
-            // this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
             this.toastr.success('Hello world!', 'Toastr fun!');
+            this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id]);
         }
     };
     UserFormComponent.prototype.redirect = function () {
