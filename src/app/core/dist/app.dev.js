@@ -477,48 +477,49 @@ app.put('/api/image/update/:code', upload.single('file'), function _callee6(req,
       switch (_context10.prev = _context10.next) {
         case 0:
           code = req.params.code;
-          imagePath = req.file.path; // Lấy đường dẫn tạm thời của ảnh từ multer
+          imagePath = '/uploads/' + req.file.filename; // Lấy đường dẫn tạm thời của ảnh từ multer
 
-          _context10.prev = 2;
-          _context10.next = 5;
+          console.log(imagePath);
+          _context10.prev = 3;
+          _context10.next = 6;
           return regeneratorRuntime.awrap(oracledb.getConnection());
 
-        case 5:
+        case 6:
           connection = _context10.sent;
           // Câu truy vấn để cập nhật thông tin ảnh dựa trên mã (code)
           updateQuery = "UPDATE IMG SET url = :imagePath WHERE code = :code";
-          _context10.next = 9;
+          _context10.next = 10;
           return regeneratorRuntime.awrap(connection.execute(updateQuery, [imagePath, code]));
 
-        case 9:
-          _context10.next = 11;
+        case 10:
+          _context10.next = 12;
           return regeneratorRuntime.awrap(connection.commit());
 
-        case 11:
-          _context10.next = 13;
+        case 12:
+          _context10.next = 14;
           return regeneratorRuntime.awrap(connection.close());
 
-        case 13:
+        case 14:
           res.json({
             message: 'Image information updated successfully'
           });
-          _context10.next = 20;
+          _context10.next = 21;
           break;
 
-        case 16:
-          _context10.prev = 16;
-          _context10.t0 = _context10["catch"](2);
+        case 17:
+          _context10.prev = 17;
+          _context10.t0 = _context10["catch"](3);
           console.error('Error updating image information', _context10.t0);
           res.status(500).json({
             message: 'Internal server error'
           });
 
-        case 20:
+        case 21:
         case "end":
           return _context10.stop();
       }
     }
-  }, null, null, [[2, 16]]);
+  }, null, null, [[3, 17]]);
 });
 connectToDB().then(function () {
   app.listen(port, function () {

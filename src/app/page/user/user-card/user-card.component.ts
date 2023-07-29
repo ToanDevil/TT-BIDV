@@ -53,4 +53,10 @@ export class UserCardComponent {
       }
     });
   }
+  onImageError() {
+    // Thay thế ảnh bằng URL của ảnh mặc định khi xảy ra lỗi
+    if(this.imageData){
+      this.imageData.url = '/assets/images/avatar.jpg';
+    }
+  }
 }

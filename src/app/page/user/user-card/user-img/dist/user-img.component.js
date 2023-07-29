@@ -48,6 +48,7 @@ var UserImgComponent = /** @class */ (function () {
         var _a;
         var formData = new FormData();
         formData.append('file', this.image);
+        console.log(formData);
         this.url = undefined;
         if (this.imageData) {
             this.userService.updateImage((_a = this.imageData) === null || _a === void 0 ? void 0 : _a.code, formData).subscribe(function (response) {

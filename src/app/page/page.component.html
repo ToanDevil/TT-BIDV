@@ -9,7 +9,7 @@
         <div class="header-icons" *ngIf="imageData">
             <i class="fa-regular fa-comment-dots"></i>
             <i class="fa-regular fa-bell"></i>
-            <img [src]="imageData.url" alt="Avatar" class="header-avatar">
+            <img [src]="imageData.url" alt="Avatar" class="header-avatar" (error)="onImageError()">
         </div>
         <div class="header-icons" *ngIf="!imageData">
             <i class="fa-regular fa-comment-dots"></i>
@@ -26,8 +26,9 @@
         </div>
         <div class="nav-icon">
 
-            <a routerLinkActive="active" class="nav-icon__option" [ngClass]="{'nav-icon__active': isIconActive('icon1')}"
-                (click)="setActiveIcon('icon1', '/', '')"><i class="fa-solid fa-house"></i></a>
+            <a routerLinkActive="active" class="nav-icon__option"
+                [ngClass]="{'nav-icon__active': isIconActive('icon1')}" (click)="setActiveIcon('icon1', '/', '')"><i
+                    class="fa-solid fa-house"></i></a>
 
             <a routerLinkActive="active" class="nav-icon__option"
                 [ngClass]="{'nav-icon__active': isIconActive('icon2')}" (click)="setActiveIcon('icon2', '/', '')"><i
@@ -39,8 +40,8 @@
 
 
             <a routerLinkActive="active" class="nav-icon__option"
-                [ngClass]="{'nav-icon__active': isIconActive('icon4')}" (click)="setActiveIcon('icon4', 'user-info', '1')"><i
-                    class="fa-solid fa-user-group"></i></a>
+                [ngClass]="{'nav-icon__active': isIconActive('icon4')}"
+                (click)="setActiveIcon('icon4', 'user-info', '1')"><i class="fa-solid fa-user-group"></i></a>
 
 
             <a class="nav-icon__option" [ngClass]="{'nav-icon__active': isIconActive('icon5')}"

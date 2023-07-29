@@ -31,6 +31,8 @@ h3 {
 .user-card__image img {
     position: relative;
     border-radius: 8px;
+    height: 50%; /* Đặt chiều cao của ảnh là 50% */
+    object-fit: cover; /* Đảm bảo ảnh sẽ hiển thị đúng tỷ lệ và không bị méo */
 }
 
 .img-change {

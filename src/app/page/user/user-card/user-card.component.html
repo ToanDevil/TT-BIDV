@@ -8,7 +8,16 @@
         </div>
         <div class="user-card__content">
             <div class="user-card__image" *ngIf = "imageData">
-                <img [src]="imageData.url" alt="">
+                <img [src]="imageData.url" alt="Avatar" class="header-avatar" (error)="onImageError()">
+                <div class="img-change">
+                    <a (click)="redirect('/edit-image')"><i class="fa-solid fa-pen"></i></a>
+                </div>
+                <div class="status">
+                    <p>Đang vắng mặt</p>
+                </div>
+            </div>
+            <div class="user-card__image" *ngIf = "!imageData">
+                <img src="/assets/images/avatar.jpg" alt="Avatar" class="header-avatar">
                 <div class="img-change">
                     <a (click)="redirect('/edit-image')"><i class="fa-solid fa-pen"></i></a>
                 </div>

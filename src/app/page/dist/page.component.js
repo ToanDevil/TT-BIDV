@@ -48,6 +48,12 @@ var PageComponent = /** @class */ (function () {
     PageComponent.prototype.isIconActive = function (Icon) {
         return this.activeIcon === Icon;
     };
+    PageComponent.prototype.onImageError = function () {
+        // Thay thế ảnh bằng URL của ảnh mặc định khi xảy ra lỗi
+        if (this.imageData) {
+            this.imageData.url = '/assets/images/avatar.jpg';
+        }
+    };
     PageComponent = __decorate([
         core_1.Component({
             selector: 'app-page',

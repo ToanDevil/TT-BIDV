@@ -215,7 +215,8 @@ app.post('/file', upload.single('file'), async (req, res) => {
 // Route để cập nhật ảnh
 app.put('/api/image/update/:code', upload.single('file'), async (req, res) => {
   const code = req.params.code;
-  const imagePath = req.file.path; // Lấy đường dẫn tạm thời của ảnh từ multer
+  const imagePath = '/uploads/' + req.file.filename; // Lấy đường dẫn tạm thời của ảnh từ multer
+  console.log(imagePath)
 
   try {
     const connection = await oracledb.getConnection();

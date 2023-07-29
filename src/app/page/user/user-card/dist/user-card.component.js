@@ -44,6 +44,12 @@ var UserCardComponent = /** @class */ (function () {
             }
         });
     };
+    UserCardComponent.prototype.onImageError = function () {
+        // Thay thế ảnh bằng URL của ảnh mặc định khi xảy ra lỗi
+        if (this.imageData) {
+            this.imageData.url = '/assets/images/avatar.jpg';
+        }
+    };
     UserCardComponent = __decorate([
         core_1.Component({
             selector: 'app-user-card',

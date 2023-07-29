@@ -57,6 +57,7 @@ export class UserImgComponent {
   saveImage(): void {
     const formData = new FormData();
     formData.append('file', this.image);
+    console.log(formData)
 
     this.url = undefined;
 
