@@ -69,4 +69,9 @@ export class UserService {
       const url = `${this.apiEdit}/card/update/${code}`;
       return this.http.put(url, cardData);
     }
+
+    updateImage(code: string, formData: any): Observable<any> {
+      const url = `http://localhost:3000/api/image/update/${code}`;
+      return this.http.put(url, formData);
+    }
   }

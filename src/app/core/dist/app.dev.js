@@ -9,6 +9,10 @@ var cors = require('cors');
 var _require = require('rxjs'),
     async = _require.async;
 
+var bodyParser = require("body-parser");
+
+var multer = require('multer');
+
 var app = express();
 var port = 3000;
 app.use(cors());
@@ -434,6 +438,84 @@ app.put('/api/card/update/:code', function _callee4(req, res) {
         case 20:
         case "end":
           return _context8.stop();
+      }
+    }
+  }, null, null, [[2, 16]]);
+});
+var storage = multer.diskStorage({
+  destination: function destination(req, file, cb) {
+    cb(null, 'uploads');
+  },
+  filename: function filename(req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+var upload = multer({
+  storage: storage
+});
+app.post('/file', upload.single('file'), function _callee5(req, res) {
+  var file;
+  return regeneratorRuntime.async(function _callee5$(_context9) {
+    while (1) {
+      switch (_context9.prev = _context9.next) {
+        case 0:
+          file = req.file;
+          console.log(file);
+
+        case 2:
+        case "end":
+          return _context9.stop();
+      }
+    }
+  });
+}); // Route để cập nhật ảnh
+
+app.put('/api/image/update/:code', upload.single('file'), function _callee6(req, res) {
+  var code, imagePath, connection, updateQuery;
+  return regeneratorRuntime.async(function _callee6$(_context10) {
+    while (1) {
+      switch (_context10.prev = _context10.next) {
+        case 0:
+          code = req.params.code;
+          imagePath = req.file.path; // Lấy đường dẫn tạm thời của ảnh từ multer
+
+          _context10.prev = 2;
+          _context10.next = 5;
+          return regeneratorRuntime.awrap(oracledb.getConnection());
+
+        case 5:
+          connection = _context10.sent;
+          // Câu truy vấn để cập nhật thông tin ảnh dựa trên mã (code)
+          updateQuery = "UPDATE IMG SET url = :imagePath WHERE code = :code";
+          _context10.next = 9;
+          return regeneratorRuntime.awrap(connection.execute(updateQuery, [imagePath, code]));
+
+        case 9:
+          _context10.next = 11;
+          return regeneratorRuntime.awrap(connection.commit());
+
+        case 11:
+          _context10.next = 13;
+          return regeneratorRuntime.awrap(connection.close());
+
+        case 13:
+          res.json({
+            message: 'Image information updated successfully'
+          });
+          _context10.next = 20;
+          break;
+
+        case 16:
+          _context10.prev = 16;
+          _context10.t0 = _context10["catch"](2);
+          console.error('Error updating image information', _context10.t0);
+          res.status(500).json({
+            message: 'Internal server error'
+          });
+
+        case 20:
+        case "end":
+          return _context10.stop();
       }
     }
   }, null, null, [[2, 16]]);

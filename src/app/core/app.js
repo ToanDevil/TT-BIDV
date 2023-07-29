@@ -2,11 +2,15 @@ const oracledb = require('oracledb');
 const express = require('express');
 const cors = require('cors');
 const { async } = require('rxjs');
+const bodyParser = require("body-parser")
+const multer = require('multer')
 const app = express();
 const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+
+
 
 const dbConfig = {
   user: 'admin',
@@ -188,6 +192,44 @@ app.put('/api/card/update/:code', async (req, res) => {
     res.json({ message: 'Card information updated successfully' });
   } catch (err) {
     console.error('Error updating card information', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
+
+app.post('/file', upload.single('file'), async (req, res) => {
+  const file = req.file;
+  console.log(file)
+})
+
+// Route để cập nhật ảnh
+app.put('/api/image/update/:code', upload.single('file'), async (req, res) => {
+  const code = req.params.code;
+  const imagePath = req.file.path; // Lấy đường dẫn tạm thời của ảnh từ multer
+
+  try {
+    const connection = await oracledb.getConnection();
+
+    // Câu truy vấn để cập nhật thông tin ảnh dựa trên mã (code)
+    const updateQuery = `UPDATE IMG SET url = :imagePath WHERE code = :code`;
+
+    await connection.execute(updateQuery, [imagePath, code]);
+    await connection.commit();
+    await connection.close();
+
+    res.json({ message: 'Image information updated successfully' });
+  } catch (err) {
+    console.error('Error updating image information', err);
     res.status(500).json({ message: 'Internal server error' });
   }
 });

@@ -55,6 +55,10 @@ var UserService = /** @class */ (function () {
         var url = this.apiEdit + "/card/update/" + code;
         return this.http.put(url, cardData);
     };
+    UserService.prototype.updateImage = function (code, formData) {
+        var url = "http://localhost:3000/api/image/update/" + code;
+        return this.http.put(url, formData);
+    };
     UserService = __decorate([
         core_1.Injectable({
             providedIn: 'root'
