@@ -34,25 +34,39 @@ async function connectToDB() {
   }
 }
 
+// Hàm chuyển đổi dữ liệu từ cursor thành JSON
+async function cursorToJSON(cursor) {
+  const rows = [];
+  let row;
+
+  while ((row = await cursor.getRow())) {
+    rows.push(row);
+  }
+
+  return rows;
+}
+
 async function getUser(id) {
   try {
     const connection = await oracledb.getConnection();
-    const userQuery = 'SELECT * FROM USERS WHERE ID = :id';
-    const userResult = await connection.execute(userQuery, [id]);
+    const userQuery = 'BEGIN :result := PTNB_Secret.GET_USER(:id); END;';
+    const userResult = await connection.execute(userQuery, { id: id, result: { type: oracledb.CURSOR, dir: oracledb.BIND_OUT } });
+    // Chuyển đổi dữ liệu từ cursor thành JSON
+    const userData = await cursorToJSON(userResult.outBinds.result);
     await connection.close();
 
-    if (userResult.rows.length === 0) {
+    if (!userData || userData.length === 0) {
       return null;
     }
 
     return {
-      code: userResult.rows[0][0],
-      name: userResult.rows[0][1],
-      email: userResult.rows[0][2],
-      address: userResult.rows[0][3],
-      phone: userResult.rows[0][4],
-      tel: userResult.rows[0][5],
-      id: userResult.rows[0][6],
+      code: userData[0][0],
+      name: userData[0][1],
+      email: userData[0][2],
+      address: userData[0][3],
+      phone: userData[0][4],
+      tel: userData[0][5],
+      id: userData[0][6],
     };
   } catch (err) {
     console.error('Error executing getUser query:', err);
@@ -64,23 +78,25 @@ async function getUser(id) {
 async function getCard(code) {
   try {
     const connection = await oracledb.getConnection();
-    const cardQuery = 'SELECT * FROM CARD WHERE CODE = :code';
-    const cardResult = await connection.execute(cardQuery, [code]);
+    const cardQuery = 'BEGIN :result := PTNB_Secret.GET_CARD(:code); END;';
+    const cardResult = await connection.execute(cardQuery, { code: code, result: { type: oracledb.CURSOR, dir: oracledb.BIND_OUT } });
+    // Chuyển đổi dữ liệu từ cursor thành JSON
+    const cardData = await cursorToJSON(cardResult.outBinds.result);
     await connection.close();
 
-    if (cardResult.rows.length === 0) {
+    if (!cardData || cardData.length === 0) {
       return null;
     }
 
     return {
-      id: cardResult.rows[0][0],
-      code: cardResult.rows[0][1],
-      position: cardResult.rows[0][2],
-      forte: cardResult.rows[0][3],
-      department: cardResult.rows[0][4],
-      nickname: cardResult.rows[0][5],
-      unit: cardResult.rows[0][6],
-      title: cardResult.rows[0][7],
+      id: cardData[0][0],
+      code: cardData[0][1],
+      position: cardData[0][2],
+      forte: cardData[0][3],
+      department: cardData[0][4],
+      nickname: cardData[0][5],
+      unit: cardData[0][6],
+      title: cardData[0][7],
     };
   } catch (err) {
     console.error('Error executing getCard query:', err);

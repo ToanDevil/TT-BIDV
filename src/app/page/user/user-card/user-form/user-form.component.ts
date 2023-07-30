@@ -51,7 +51,7 @@ export class UserFormComponent {
       this.userService.updateCard(this.userData.code, this.cardData).subscribe(res => {
         console.log('Thông tin thẻ đã được cập nhật: ', res);
       })
-      this.toastr.success('Hello world!', 'Toastr fun!');
+      this.toastr.success('Cập nhật thành công!');
       this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
     }
   }
