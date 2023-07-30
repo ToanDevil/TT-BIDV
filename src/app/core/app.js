@@ -74,6 +74,32 @@ async function getUser(id) {
   }
 }
 
+//Function updateUser
+async function updateUser(id, name, email, address, phone, tel) {
+  try {
+    const connection = await oracledb.getConnection();
+    const updateQuery = `BEGIN PTNB_Secret.UPDATE_USER(:id, :name, :email, :address, :phone, :tel); END;`;
+
+    await connection.execute(updateQuery, {
+      id: id,
+      name: name,
+      email: email,
+      address: address,
+      phone: phone,
+      tel: tel,
+    });
+
+    await connection.commit();
+    await connection.close();
+
+    console.log('User information updated successfully');
+  } catch (err) {
+    console.error('Error updating user information:', err);
+    throw err;
+  }
+}
+
+
 // phương thức getCard dựa trên code
 async function getCard(code) {
   try {
@@ -104,22 +130,49 @@ async function getCard(code) {
   }
 }
 
+// function updateCard
+async function updateCard(code, position, forte, department, nickname, unit, title) {
+  try {
+    const connection = await oracledb.getConnection();
+    const updateQuery = `BEGIN PTNB_Secret.UPDATE_CARD(:code, :position, :forte, :department, :nickname, :unit, :title); END;`;
+
+    await connection.execute(updateQuery, {
+      code: code,
+      position: position,
+      forte: forte,
+      department: department,
+      nickname: nickname,
+      unit: unit,
+      title: title,
+    });
+
+    await connection.commit();
+    await connection.close();
+
+    console.log('Card information updated successfully');
+  } catch (err) {
+    console.error('Error updating card information:', err);
+    throw err;
+  }
+}
+
 // getImage dựa trên code
 async function getImage(code){
   try{
     const connection = await oracledb.getConnection();
-    const imgQuery = 'SELECT * FROM IMG WHERE CODE = :code';
-    const imgResult = await connection.execute(imgQuery, [code]);
+    const imgQuery = 'BEGIN :result := PTNB_Secret.GET_IMG(:code); END;';
+    const imgResult = await connection.execute(imgQuery, { code: code, result: { type: oracledb.CURSOR, dir: oracledb.BIND_OUT } });
+    // Chuyển đổi dữ liệu từ cursor thành JSON
+    const imgData = await cursorToJSON(imgResult.outBinds.result);
     await connection.close();
 
-    if(imgResult.rows.length === 0){
+    if(!imgData || imgData.length === 0){
       return null;
     }
-    const imgRow = imgResult.rows[0];
     return {
-      id: imgRow[0],
-      code: imgRow[1],
-      url: imgRow[2],
+      id: imgData[0][0],
+      code: imgData[0][1],
+      url: imgData[0][2],
     };
   } catch (err){
     console.error('Error executing getImg query:', err);
@@ -184,14 +237,9 @@ app.get('/api/user/image/:id', async (req, res) => {
 app.put('/api/user/update/:id', async (req, res) => {
   const id = req.params.id;
   const { name, email, address, phone, tel } = req.body;
+
   try {
-    const connection = await oracledb.getConnection();
-    const updateQuery = `UPDATE USERS SET name = :name, email = :email, address = :address, phone = :phone, tel = :tel WHERE id = :id`;
-
-    await connection.execute(updateQuery, [name, email, address, phone, tel, id]);
-    await connection.commit();
-    await connection.close();
-
+    await updateUser(id, name, email, address, phone, tel);
     res.json({ message: 'User information updated successfully' });
   } catch (err) {
     console.error('Error updating user information', err);
@@ -199,19 +247,14 @@ app.put('/api/user/update/:id', async (req, res) => {
   }
 });
 
+
 // API endpoint để cập nhật thông tin thẻ dựa trên code
 app.put('/api/card/update/:code', async (req, res) => {
   const code = req.params.code;
   const { position, forte, department, nickname, unit, title } = req.body;
 
   try {
-    const connection = await oracledb.getConnection();
-    const updateQuery = `UPDATE CARD SET position = :position, forte = :forte, department = :department, nickname = :nickname, unit = :unit, title = :title WHERE code = :code`;
-
-    await connection.execute(updateQuery, [position, forte, department, nickname, unit, title, code]);
-    await connection.commit();
-    await connection.close();
-
+    await updateCard(code, position, forte, department, nickname, unit, title);
     res.json({ message: 'Card information updated successfully' });
   } catch (err) {
     console.error('Error updating card information', err);
