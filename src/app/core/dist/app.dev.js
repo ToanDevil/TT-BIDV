@@ -615,7 +615,7 @@ app.post('/file', upload.single('file'), function _callee5(req, res) {
       }
     }
   });
-}); // Route để cập nhật ảnh
+}); // API endpoint để cập nhật ảnh dựa trên code
 
 app.put('/api/image/update/:code', upload.single('file'), function _callee6(req, res) {
   var code, imagePath, connection, updateQuery;
@@ -634,9 +634,12 @@ app.put('/api/image/update/:code', upload.single('file'), function _callee6(req,
         case 6:
           connection = _context13.sent;
           // Câu truy vấn để cập nhật thông tin ảnh dựa trên mã (code)
-          updateQuery = "UPDATE IMG SET url = :imagePath WHERE code = :code";
+          updateQuery = "BEGIN PTNB_Secret.UPDATE_IMG(:code, :url); END;";
           _context13.next = 10;
-          return regeneratorRuntime.awrap(connection.execute(updateQuery, [imagePath, code]));
+          return regeneratorRuntime.awrap(connection.execute(updateQuery, {
+            code: code,
+            url: imagePath
+          }));
 
         case 10:
           _context13.next = 12;

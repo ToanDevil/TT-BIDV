@@ -278,7 +278,7 @@ app.post('/file', upload.single('file'), async (req, res) => {
   console.log(file)
 })
 
-// Route để cập nhật ảnh
+// API endpoint để cập nhật ảnh dựa trên code
 app.put('/api/image/update/:code', upload.single('file'), async (req, res) => {
   const code = req.params.code;
   const imagePath = '/uploads/' + req.file.filename; // Lấy đường dẫn tạm thời của ảnh từ multer
@@ -288,9 +288,12 @@ app.put('/api/image/update/:code', upload.single('file'), async (req, res) => {
     const connection = await oracledb.getConnection();
 
     // Câu truy vấn để cập nhật thông tin ảnh dựa trên mã (code)
-    const updateQuery = `UPDATE IMG SET url = :imagePath WHERE code = :code`;
+    const updateQuery = `BEGIN PTNB_Secret.UPDATE_IMG(:code, :url); END;`;
 
-    await connection.execute(updateQuery, [imagePath, code]);
+    await connection.execute(updateQuery, {
+      code: code,
+      url: imagePath,
+    });
     await connection.commit();
     await connection.close();
 
@@ -300,6 +303,7 @@ app.put('/api/image/update/:code', upload.single('file'), async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 connectToDB().then(() => {
   app.listen(port, () => {

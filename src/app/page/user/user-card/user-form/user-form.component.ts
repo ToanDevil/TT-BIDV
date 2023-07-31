@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DataService } from 'src/app/core/service/data.service';
 import { UserService } from 'src/app/core/service/user.service';
 import { User } from '../../user';
@@ -39,7 +39,7 @@ export class UserFormComponent {
     })
   }
 
-
+  checkupdate: boolean = false;
   saveData(): void {
     if (this.userData && this.cardData && this.id && this.userData.code) {
       // cập nhật thông tin người dùng và thẻ thông qua userService
@@ -52,8 +52,13 @@ export class UserFormComponent {
         console.log('Thông tin thẻ đã được cập nhật: ', res);
       })
       this.toastr.success('Cập nhật thành công!');
+      this.checkupdate = true;
       this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
     }
+  }
+
+  cancel(): void {
+    this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id])
   }
 
   redirect() {

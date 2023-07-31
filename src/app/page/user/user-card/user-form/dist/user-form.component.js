@@ -15,6 +15,7 @@ var UserFormComponent = /** @class */ (function () {
         this.userService = userService;
         this.router = router;
         this.toastr = toastr;
+        this.checkupdate = false;
     }
     UserFormComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -42,8 +43,12 @@ var UserFormComponent = /** @class */ (function () {
                 console.log('Thông tin thẻ đã được cập nhật: ', res);
             });
             this.toastr.success('Cập nhật thành công!');
+            this.checkupdate = true;
             this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id]);
         }
+    };
+    UserFormComponent.prototype.cancel = function () {
+        this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id]);
     };
     UserFormComponent.prototype.redirect = function () {
         this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id]);
