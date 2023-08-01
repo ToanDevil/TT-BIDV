@@ -59,7 +59,7 @@ export class UserService {
     }
 
     //Phương thưc để cập nhật thông tin người dùng
-    updateUser(id: string, userData: User) : Observable<any> {
+    updateUser(id: string, userData: any) : Observable<any> {
       const url = `${this.apiEdit}/user/update/${id}`;
       return this.http.put(url, userData);
     }

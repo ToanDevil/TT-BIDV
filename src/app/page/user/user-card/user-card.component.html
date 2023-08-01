@@ -3,14 +3,14 @@
     <div class="user-card">
         <div class="user-card__change">
             <div class="box-change">
-                <a (click)="redirect('/edit-profile')"><i class="fa-solid fa-pen"></i></a>
+                <a (click)="openForm()"><i class="fa-solid fa-pen"></i></a>
             </div>
         </div>
         <div class="user-card__content">
             <div class="user-card__image" *ngIf = "imageData">
                 <img [src]="imageData.url" alt="Avatar" class="header-avatar" (error)="onImageError()">
                 <div class="img-change">
-                    <a (click)="redirect('/edit-image')"><i class="fa-solid fa-pen"></i></a>
+                    <a (click)="openForm()"><i class="fa-solid fa-pen"></i></a>
                 </div>
                 <div class="status">
                     <p>Đang vắng mặt</p>
@@ -19,7 +19,7 @@
             <div class="user-card__image" *ngIf = "!imageData">
                 <img src="/assets/images/avatar.jpg" alt="Avatar" class="header-avatar">
                 <div class="img-change">
-                    <a (click)="redirect('/edit-image')"><i class="fa-solid fa-pen"></i></a>
+                    <a (click)="openForm()"><i class="fa-solid fa-pen"></i></a>
                 </div>
                 <div class="status">
                     <p>Đang vắng mặt</p>
@@ -99,5 +99,78 @@
         </div>
     </div>
 </div>
+
+<div class="overlay" *ngIf = "!showForm">
+    <div class="form-wrapper">
+        <div class="title">
+            <span class="form-title">Thẻ thông tin cá nhân</span>
+            <a (click)="closeForm()"> <span class="close-button">X</span> </a><!-- Close (x) button -->
+        </div>
+        <form [formGroup]= "userForm" (ngSubmit)="saveData()">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Họ và tên:</label>
+                    <input type="text" formControlName="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="position">Chức vụ:</label>
+                    <input type="text" formControlName="position" name="position" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="title">Vị trí chức danh:</label>
+                    <input type="text" formControlName="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="forte">Công việc sở trường:</label>
+                    <input type="text" formControlName="forte" name="forte" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="department">Phòng ban:</label>
+                    <input type="text" formControlName="department" name="department" required>
+                </div>
+                <div class="form-group">
+                    <label for="unit">Đơn vị:</label>
+                    <input type="text" formControlName="unit" name="unit" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tel">Số điện thoại cơ quan:</label>
+                    <input type="text" formControlName="tel" name="tel" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Số điện thoại di động:</label>
+                    <input type="text" formControlName="phone" name="phone" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" formControlName="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Địa chỉ:</label>
+                    <input type="text" formControlName="address" name="address" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nickname">Nick name:</label>
+                    <input type="text" formControlName="nickname" name="nickname" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="cancel-button" (click) = "cancel()">Hủy</button>
+                <button type="submit" class="save-button">Lưu thông tin</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <router-outlet></router-outlet>
 

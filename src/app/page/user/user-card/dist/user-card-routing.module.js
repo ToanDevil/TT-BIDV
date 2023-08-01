@@ -15,10 +15,10 @@ var routes = [
         path: '',
         component: user_card_component_1.UserCardComponent,
         children: [
-            {
-                path: 'edit-profile/:id',
-                loadChildren: function () { return Promise.resolve().then(function () { return require('./user-form/user-form.module'); }).then(function (m) { return m.UserFormModule; }); }
-            },
+            // {
+            //   path: 'edit-profile/:id',
+            //   loadChildren: () => import('./user-form/user-form.module').then((m) => m.UserFormModule),
+            // },
             {
                 path: 'edit-image/:id',
                 loadChildren: function () { return Promise.resolve().then(function () { return require('./user-img/user-img.module'); }).then(function (m) { return m.UserImgModule; }); }

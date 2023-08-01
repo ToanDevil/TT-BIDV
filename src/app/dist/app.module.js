@@ -21,7 +21,6 @@ var data_service_1 = require("./core/service/data.service");
 var user_card_component_1 = require("./page/user/user-card/user-card.component");
 var user_info_component_1 = require("./page/user/user-info/user-info.component");
 var user_component_1 = require("./page/user/user.component");
-var user_form_component_1 = require("./page/user/user-card/user-form/user-form.component");
 var animations_1 = require("@angular/platform-browser/animations");
 var ngx_toastr_1 = require("ngx-toastr");
 var AppModule = /** @class */ (function () {
@@ -35,7 +34,6 @@ var AppModule = /** @class */ (function () {
                 user_card_component_1.UserCardComponent,
                 user_info_component_1.UserInfoComponent,
                 user_component_1.UserComponent,
-                user_form_component_1.UserFormComponent,
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -47,6 +45,7 @@ var AppModule = /** @class */ (function () {
                 user_info_module_1.UserInfoModule,
                 animations_1.BrowserAnimationsModule,
                 ngx_toastr_1.ToastrModule.forRoot(),
+                forms_1.ReactiveFormsModule,
             ],
             providers: [
                 data_service_1.DataService,
