@@ -22,6 +22,9 @@ export class UserCardComponent {
   code: string | undefined;
   id!: string;
   showForm: boolean = true;
+  editImg: boolean = true;
+  selectedFile: File | null = null;
+
 
 
   constructor(
@@ -137,11 +140,63 @@ export class UserCardComponent {
     this.showForm = false;
   }
 
+  openEdit() {
+    this.editImg = false
+  }
+
   closeForm() {
     this.showForm = true;
   }
 
+  closeEdit() {
+    this.editImg = true;
+  }
+
   cancel(): void {
     this.showForm = false;
+  }
+
+  //// xử lý cập nhật ảnh
+  url: string | undefined;
+  image: any;
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0]; // Lấy tệp đã chọn từ sự kiện
+    this.image = file;
+    // Sử dụng FileReader để đọc nội dung tệp
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      // Nội dung của tệp được đọc sẽ nằm trong e.target.result
+      this.url = e.target.result; // Lưu nội dung (data URL) vào biến url
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+
+  saveImage(): void {
+    const formData = new FormData();
+    formData.append('file', this.image);
+    console.log(formData)
+
+    this.url = undefined;
+
+    if (this.imageData) {
+      this.userService.updateImage(this.imageData?.code, formData).subscribe(
+        (response) => {
+          console.log('Image updated successfully', response);
+          // Xử lý khi ảnh đã được cập nhật thành công
+        },
+        (error) => {
+          console.error('Error updating image', error);
+          // Xử lý khi gặp lỗi khi cập nhật ảnh
+        }
+      );
+    }
+  }
+
+  closePopup(): void {
+    // Implement code to close the popup here
+    this.url = undefined
   }
 }

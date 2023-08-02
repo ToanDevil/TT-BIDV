@@ -30,6 +30,8 @@ var UserCardComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this.location = location;
         this.showForm = true;
+        this.editImg = true;
+        this.selectedFile = null;
     }
     // redirect(check: string){
     //   if(check === 'edit-profile'){
@@ -114,11 +116,51 @@ var UserCardComponent = /** @class */ (function () {
     UserCardComponent.prototype.openForm = function () {
         this.showForm = false;
     };
+    UserCardComponent.prototype.openEdit = function () {
+        this.editImg = false;
+    };
     UserCardComponent.prototype.closeForm = function () {
         this.showForm = true;
     };
+    UserCardComponent.prototype.closeEdit = function () {
+        this.editImg = true;
+    };
     UserCardComponent.prototype.cancel = function () {
         this.showForm = false;
+    };
+    UserCardComponent.prototype.onFileSelected = function (event) {
+        var _this = this;
+        var file = event.target.files[0]; // Lấy tệp đã chọn từ sự kiện
+        this.image = file;
+        // Sử dụng FileReader để đọc nội dung tệp
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            // Nội dung của tệp được đọc sẽ nằm trong e.target.result
+            _this.url = e.target.result; // Lưu nội dung (data URL) vào biến url
+        };
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    };
+    UserCardComponent.prototype.saveImage = function () {
+        var _a;
+        var formData = new FormData();
+        formData.append('file', this.image);
+        console.log(formData);
+        this.url = undefined;
+        if (this.imageData) {
+            this.userService.updateImage((_a = this.imageData) === null || _a === void 0 ? void 0 : _a.code, formData).subscribe(function (response) {
+                console.log('Image updated successfully', response);
+                // Xử lý khi ảnh đã được cập nhật thành công
+            }, function (error) {
+                console.error('Error updating image', error);
+                // Xử lý khi gặp lỗi khi cập nhật ảnh
+            });
+        }
+    };
+    UserCardComponent.prototype.closePopup = function () {
+        // Implement code to close the popup here
+        this.url = undefined;
     };
     UserCardComponent = __decorate([
         core_1.Component({

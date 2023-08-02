@@ -10,7 +10,7 @@
             <div class="user-card__image" *ngIf = "imageData">
                 <img [src]="imageData.url" alt="Avatar" class="header-avatar" (error)="onImageError()">
                 <div class="img-change">
-                    <a (click)="openForm()"><i class="fa-solid fa-pen"></i></a>
+                    <a (click)="openEdit()"><i class="fa-solid fa-pen"></i></a>
                 </div>
                 <div class="status">
                     <p>Đang vắng mặt</p>
@@ -19,7 +19,7 @@
             <div class="user-card__image" *ngIf = "!imageData">
                 <img src="/assets/images/avatar.jpg" alt="Avatar" class="header-avatar">
                 <div class="img-change">
-                    <a (click)="openForm()"><i class="fa-solid fa-pen"></i></a>
+                    <a (click)="openEdit()"><i class="fa-solid fa-pen"></i></a>
                 </div>
                 <div class="status">
                     <p>Đang vắng mặt</p>
@@ -169,6 +169,37 @@
                 <button type="submit" class="save-button">Lưu thông tin</button>
             </div>
         </form>
+    </div>
+</div>
+
+<div class="overlay" *ngIf = "!editImg">
+    <div class="form-wrapper">
+        <div class="title">
+            <span class="form-title">Thay đổi ảnh đại diện</span>
+            <a (click)="closeEdit()"><span class="close-button">X</span></a>
+        </div>
+        <div class="container">
+            <div class="header">
+                <h4>Upload Ảnh</h4>
+                <span></span>
+            </div>
+            <div class="body" *ngIf="!url">
+                <div class="icon-upload">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <h4>Chọn một file hoặc kéo thả tệp tại đây</h4>
+                <span>Chọn file với các định dạng cho phép JPG, JPEG, BMP, PNG, SVG</span>
+                <br>
+                <input type="file" (change)="onFileSelected($event)">
+            </div>
+            <div class="body" *ngIf = "url">
+                <img [src]="url" alt="">
+            </div>
+            <div class="footer">
+                <button type="button" class="cancel-button" (click)="closePopup()">Hủy</button>
+                <button type="button" class="save-button" (click)="saveImage()">Lưu Ảnh</button>
+            </div>
+        </div>
     </div>
 </div>
 
