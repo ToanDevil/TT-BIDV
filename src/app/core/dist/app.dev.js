@@ -6,8 +6,6 @@ var express = require('express');
 
 var cors = require('cors');
 
-var path = require('path');
-
 var _require = require('rxjs'),
     async = _require.async;
 
@@ -17,6 +15,9 @@ var multer = require('multer');
 
 var app = express();
 var port = 3000;
+
+var path = require('path');
+
 app.use(cors());
 app.use(express.json()); // Đặt đường dẫn tới thư mục uploads
 
@@ -389,8 +390,8 @@ function getImage(code) {
 } // API endpoint để lấy thông tin người dùng và thẻ dựa trên ID
 
 
-app.get('/api/users/:id', function _callee(req, res) {
-  var id, userData, cardData;
+app.get('/api/user/:id', function _callee(req, res) {
+  var id, userData;
   return regeneratorRuntime.async(function _callee$(_context8) {
     while (1) {
       switch (_context8.prev = _context8.next) {
@@ -414,48 +415,29 @@ app.get('/api/users/:id', function _callee(req, res) {
           return _context8.abrupt("return");
 
         case 8:
-          _context8.next = 10;
-          return regeneratorRuntime.awrap(getCard(userData.code));
-
-        case 10:
-          cardData = _context8.sent;
-
-          if (cardData) {
-            _context8.next = 14;
-            break;
-          }
-
-          res.status(404).json({
-            message: 'Card not found'
-          });
-          return _context8.abrupt("return");
-
-        case 14:
           res.json({
-            user: userData,
-            card: cardData
+            user: userData
           });
-          _context8.next = 21;
+          _context8.next = 15;
           break;
 
-        case 17:
-          _context8.prev = 17;
+        case 11:
+          _context8.prev = 11;
           _context8.t0 = _context8["catch"](1);
           console.error('Error getting user and card data:', _context8.t0);
           res.status(500).json({
             message: 'Internal server error'
           });
 
-        case 21:
+        case 15:
         case "end":
           return _context8.stop();
       }
     }
-  }, null, null, [[1, 17]]);
-}); //API endpoint để lấy thông tin ảnh người dùng
-
-app.get('/api/user/image/:id', function _callee2(req, res) {
-  var id, userData, imageData;
+  }, null, null, [[1, 11]]);
+});
+app.get('/api/card/:id', function _callee2(req, res) {
+  var id, userData, cardData;
   return regeneratorRuntime.async(function _callee2$(_context9) {
     while (1) {
       switch (_context9.prev = _context9.next) {
@@ -467,109 +449,125 @@ app.get('/api/user/image/:id', function _callee2(req, res) {
 
         case 4:
           userData = _context9.sent;
+          _context9.next = 7;
+          return regeneratorRuntime.awrap(getCard(userData.code));
 
-          if (userData) {
-            _context9.next = 8;
+        case 7:
+          cardData = _context9.sent;
+
+          if (cardData) {
+            _context9.next = 11;
             break;
           }
 
           res.status(404).json({
-            message: 'User not found'
+            message: 'Card not found'
           });
           return _context9.abrupt("return");
 
-        case 8:
-          _context9.next = 10;
-          return regeneratorRuntime.awrap(getImage(userData.code));
-
-        case 10:
-          imageData = _context9.sent;
-
-          if (imageData) {
-            _context9.next = 14;
-            break;
-          }
-
-          res.status(404).json({
-            message: 'image not found'
-          });
-          return _context9.abrupt("return");
-
-        case 14:
+        case 11:
           res.json({
-            image: imageData
+            card: cardData
           });
-          _context9.next = 21;
+          _context9.next = 18;
           break;
 
-        case 17:
-          _context9.prev = 17;
+        case 14:
+          _context9.prev = 14;
           _context9.t0 = _context9["catch"](1);
           console.error('Error getting user and card data:', _context9.t0);
           res.status(500).json({
             message: 'Internal server error'
           });
 
-        case 21:
+        case 18:
         case "end":
           return _context9.stop();
       }
     }
-  }, null, null, [[1, 17]]);
-}); // API endpoint để cập nhật thông tin người dùng dựa trên ID
+  }, null, null, [[1, 14]]);
+}); //API endpoint để lấy thông tin ảnh người dùng
 
-app.put('/api/user/update/:id', function _callee3(req, res) {
-  var id, _req$body, name, email, address, phone, tel;
-
+app.get('/api/user/image/:id', function _callee3(req, res) {
+  var id, userData, imageData;
   return regeneratorRuntime.async(function _callee3$(_context10) {
     while (1) {
       switch (_context10.prev = _context10.next) {
         case 0:
           id = req.params.id;
-          _req$body = req.body, name = _req$body.name, email = _req$body.email, address = _req$body.address, phone = _req$body.phone, tel = _req$body.tel;
-          _context10.prev = 2;
-          _context10.next = 5;
-          return regeneratorRuntime.awrap(updateUser(id, name, email, address, phone, tel));
+          _context10.prev = 1;
+          _context10.next = 4;
+          return regeneratorRuntime.awrap(getUser(id));
 
-        case 5:
-          res.json({
-            message: 'User information updated successfully'
+        case 4:
+          userData = _context10.sent;
+
+          if (userData) {
+            _context10.next = 8;
+            break;
+          }
+
+          res.status(404).json({
+            message: 'User not found'
           });
-          _context10.next = 12;
-          break;
+          return _context10.abrupt("return");
 
         case 8:
-          _context10.prev = 8;
-          _context10.t0 = _context10["catch"](2);
-          console.error('Error updating user information', _context10.t0);
+          _context10.next = 10;
+          return regeneratorRuntime.awrap(getImage(userData.code));
+
+        case 10:
+          imageData = _context10.sent;
+
+          if (imageData) {
+            _context10.next = 14;
+            break;
+          }
+
+          res.status(404).json({
+            message: 'image not found'
+          });
+          return _context10.abrupt("return");
+
+        case 14:
+          res.json({
+            image: imageData
+          });
+          _context10.next = 21;
+          break;
+
+        case 17:
+          _context10.prev = 17;
+          _context10.t0 = _context10["catch"](1);
+          console.error('Error getting user and card data:', _context10.t0);
           res.status(500).json({
             message: 'Internal server error'
           });
 
-        case 12:
+        case 21:
         case "end":
           return _context10.stop();
       }
     }
-  }, null, null, [[2, 8]]);
-}); // API endpoint để cập nhật thông tin thẻ dựa trên code
+  }, null, null, [[1, 17]]);
+}); // API endpoint để cập nhật thông tin người dùng dựa trên ID
 
-app.put('/api/card/update/:code', function _callee4(req, res) {
-  var code, _req$body2, position, forte, department, nickname, unit, title;
+app.put('/api/user/update/:id', function _callee4(req, res) {
+  var id, _req$body, name, email, address, phone, tel;
 
   return regeneratorRuntime.async(function _callee4$(_context11) {
     while (1) {
       switch (_context11.prev = _context11.next) {
         case 0:
-          code = req.params.code;
-          _req$body2 = req.body, position = _req$body2.position, forte = _req$body2.forte, department = _req$body2.department, nickname = _req$body2.nickname, unit = _req$body2.unit, title = _req$body2.title;
+          id = req.params.id;
+          _req$body = req.body, name = _req$body.name, email = _req$body.email, address = _req$body.address, phone = _req$body.phone, tel = _req$body.tel;
           _context11.prev = 2;
           _context11.next = 5;
-          return regeneratorRuntime.awrap(updateCard(code, position, forte, department, nickname, unit, title));
+          return regeneratorRuntime.awrap(updateUser(id, name, email, address, phone, tel));
 
         case 5:
           res.json({
-            message: 'Card information updated successfully'
+            message: 'User information updated successfully'
           });
           _context11.next = 12;
           break;
@@ -577,7 +575,7 @@ app.put('/api/card/update/:code', function _callee4(req, res) {
         case 8:
           _context11.prev = 8;
           _context11.t0 = _context11["catch"](2);
-          console.error('Error updating card information', _context11.t0);
+          console.error('Error updating user information', _context11.t0);
           res.status(500).json({
             message: 'Internal server error'
           });
@@ -585,6 +583,42 @@ app.put('/api/card/update/:code', function _callee4(req, res) {
         case 12:
         case "end":
           return _context11.stop();
+      }
+    }
+  }, null, null, [[2, 8]]);
+}); // API endpoint để cập nhật thông tin thẻ dựa trên code
+
+app.put('/api/card/update/:code', function _callee5(req, res) {
+  var code, _req$body2, position, forte, department, nickname, unit, title;
+
+  return regeneratorRuntime.async(function _callee5$(_context12) {
+    while (1) {
+      switch (_context12.prev = _context12.next) {
+        case 0:
+          code = req.params.code;
+          _req$body2 = req.body, position = _req$body2.position, forte = _req$body2.forte, department = _req$body2.department, nickname = _req$body2.nickname, unit = _req$body2.unit, title = _req$body2.title;
+          _context12.prev = 2;
+          _context12.next = 5;
+          return regeneratorRuntime.awrap(updateCard(code, position, forte, department, nickname, unit, title));
+
+        case 5:
+          res.json({
+            message: 'Card information updated successfully'
+          });
+          _context12.next = 12;
+          break;
+
+        case 8:
+          _context12.prev = 8;
+          _context12.t0 = _context12["catch"](2);
+          console.error('Error updating card information', _context12.t0);
+          res.status(500).json({
+            message: 'Internal server error'
+          });
+
+        case 12:
+        case "end":
+          return _context12.stop();
       }
     }
   }, null, null, [[2, 8]]);
@@ -600,76 +634,145 @@ var storage = multer.diskStorage({
 var upload = multer({
   storage: storage
 });
-app.post('/file', upload.single('file'), function _callee5(req, res) {
-  var file;
-  return regeneratorRuntime.async(function _callee5$(_context12) {
+app.post('/uploadfile', upload.single('file'), function _callee6(req, res) {
+  var file, error;
+  return regeneratorRuntime.async(function _callee6$(_context13) {
     while (1) {
-      switch (_context12.prev = _context12.next) {
+      switch (_context13.prev = _context13.next) {
         case 0:
           file = req.file;
+
+          if (file) {
+            _context13.next = 5;
+            break;
+          }
+
+          error = new Error('Please upload a file');
+          error.httpStatusCode = 400;
+          return _context13.abrupt("return", next(error));
+
+        case 5:
+          res.send(file);
           console.log(file);
 
-        case 2:
+        case 7:
         case "end":
-          return _context12.stop();
+          return _context13.stop();
       }
     }
   });
 }); // API endpoint để cập nhật ảnh dựa trên code
 
-app.put('/api/image/update/:code', upload.single('file'), function _callee6(req, res) {
-  var code, imagePath, connection, updateQuery;
-  return regeneratorRuntime.async(function _callee6$(_context13) {
+app.put('/api/image/update/:code', upload.single('file'), function _callee7(req, res) {
+  var code, file, imagePath, connection, updateQuery;
+  return regeneratorRuntime.async(function _callee7$(_context14) {
     while (1) {
-      switch (_context13.prev = _context13.next) {
+      switch (_context14.prev = _context14.next) {
         case 0:
           code = req.params.code;
-          imagePath = '/uploads/' + req.file.filename; // Lấy đường dẫn tạm thời của ảnh từ multer
-
+          file = req.file;
+          imagePath = req.protocol + '://' + req.get('host') + '/' + req.file.filename;
           console.log(imagePath);
-          _context13.prev = 3;
-          _context13.next = 6;
+          _context14.prev = 4;
+          _context14.next = 7;
           return regeneratorRuntime.awrap(oracledb.getConnection());
 
-        case 6:
-          connection = _context13.sent;
+        case 7:
+          connection = _context14.sent;
           // Câu truy vấn để cập nhật thông tin ảnh dựa trên mã (code)
           updateQuery = "BEGIN PTNB_Secret.UPDATE_IMG(:code, :url); END;";
-          _context13.next = 10;
+          _context14.next = 11;
           return regeneratorRuntime.awrap(connection.execute(updateQuery, {
             code: code,
             url: imagePath
           }));
 
-        case 10:
-          _context13.next = 12;
+        case 11:
+          _context14.next = 13;
           return regeneratorRuntime.awrap(connection.commit());
 
-        case 12:
-          _context13.next = 14;
+        case 13:
+          _context14.next = 15;
           return regeneratorRuntime.awrap(connection.close());
 
-        case 14:
+        case 15:
           res.json({
             message: 'Image information updated successfully'
           });
-          _context13.next = 21;
+          _context14.next = 22;
           break;
 
-        case 17:
-          _context13.prev = 17;
-          _context13.t0 = _context13["catch"](3);
-          console.error('Error updating image information', _context13.t0);
+        case 18:
+          _context14.prev = 18;
+          _context14.t0 = _context14["catch"](4);
+          console.error('Error updating image information', _context14.t0);
           res.status(500).json({
             message: 'Internal server error'
           });
 
-        case 21:
+        case 22:
         case "end":
-          return _context13.stop();
+          return _context14.stop();
       }
     }
-  }, null, null, [[3, 17]]);
+  }, null, null, [[4, 18]]);
+}); // API endpoint để thêm người dùng
+
+app.post('/api/users', function _callee8(req, res) {
+  var _req$body3, code, name, email, address, phone, tel, connection, insertQuery;
+
+  return regeneratorRuntime.async(function _callee8$(_context15) {
+    while (1) {
+      switch (_context15.prev = _context15.next) {
+        case 0:
+          _req$body3 = req.body, code = _req$body3.code, name = _req$body3.name, email = _req$body3.email, address = _req$body3.address, phone = _req$body3.phone, tel = _req$body3.tel;
+          _context15.prev = 1;
+          _context15.next = 4;
+          return regeneratorRuntime.awrap(oracledb.getConnection());
+
+        case 4:
+          connection = _context15.sent;
+          // Câu truy vấn để thêm người dùng vào bảng người dùng
+          insertQuery = "BEGIN PTNB_SECRET.INSERT_USER(:code, :name, :email, :address, :phone, :tel); END;";
+          _context15.next = 8;
+          return regeneratorRuntime.awrap(connection.execute(insertQuery, {
+            code: code,
+            name: name,
+            email: email,
+            address: address,
+            phone: phone,
+            tel: tel
+          }));
+
+        case 8:
+          _context15.next = 10;
+          return regeneratorRuntime.awrap(connection.commit());
+
+        case 10:
+          _context15.next = 12;
+          return regeneratorRuntime.awrap(connection.close());
+
+        case 12:
+          res.json({
+            message: 'User added successfully'
+          });
+          _context15.next = 19;
+          break;
+
+        case 15:
+          _context15.prev = 15;
+          _context15.t0 = _context15["catch"](1);
+          console.error('Error adding user:', _context15.t0);
+          res.status(500).json({
+            message: 'Internal server error'
+          });
+
+        case 19:
+        case "end":
+          return _context15.stop();
+      }
+    }
+  }, null, null, [[1, 15]]);
 });
 connectToDB().then(function () {
   app.listen(port, function () {

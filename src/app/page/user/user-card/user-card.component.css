@@ -251,7 +251,7 @@ a {
 }
 
 
-/* css chỉnh sửa ảnh */
+/* css upload ảnh */
 
 .overlay {
     display: flex;
@@ -315,6 +315,13 @@ a {
     margin: auto;
     height: 80%;
     width: 80%;
+}
+
+#image {
+    border: none;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
 }
 
 .icon-upload {

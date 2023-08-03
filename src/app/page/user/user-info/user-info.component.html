@@ -2,7 +2,7 @@
     <div class="user-add">
         <h3>Thông tin cá nhân</h3>
         <div class="box-add">
-            <a href=""><i class="fa-solid fa-user-plus"></i></a>
+            <a (click)="openForm()"><i class="fa-solid fa-user-plus"></i></a>
         </div>
     </div>
     <div class="user-profile">
@@ -42,6 +42,51 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="overlay" *ngIf = "!showForm">
+    <div class="form-wrapper">
+        <div class="title">
+            <span class="form-title">Thêm mới người dùng</span>
+            <a (click)="closeForm()"> <span class="close-button">X</span> </a><!-- Close (x) button -->
+        </div>
+        <form [formGroup]= "profileForm" (ngSubmit)="saveData()" method="post">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Code:</label>
+                    <input type="text" formControlName="code" name="code" required>
+                </div>
+                <div class="form-group">
+                    <label for="position">Họ và tên:</label>
+                    <input type="text" formControlName="name" name="name" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="tel">Số điện thoại cơ quan:</label>
+                    <input type="text" formControlName="tel" name="tel" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Số điện thoại di động:</label>
+                    <input type="text" formControlName="phone" name="phone" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" formControlName="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Địa chỉ:</label>
+                    <input type="text" formControlName="address" name="address" required>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <!-- <button type="button" class="cancel-button" (click) = "cancel()">Hủy</button> -->
+                <button type="submit" class="save-button">Thêm</button>
+            </div>
+        </form>
     </div>
 </div>
 <!-- <app-user-card [userData] = "userData"></app-user-card> -->

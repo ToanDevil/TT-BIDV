@@ -14,8 +14,8 @@ import { MessageService } from "./message.service";
 export class UserService {
   
     private apiUrl = 'http://localhost:3000/api/users'; // Replace with your backend server URL
-    private apiEdit = 'http://localhost:3000/api';
     private apiImage = 'http://localhost:3000/api/user/image';
+    private api = 'http://localhost:3000/api';
     constructor(private http: HttpClient,
                 private message: MessageService,
     ) { }
@@ -38,14 +38,14 @@ export class UserService {
     // }
   
     getUser(id: string): Observable<User> {
-      const url = `${this.apiUrl}/${id}`;
+      const url = `${this.api}/user/${id}`;
       return this.http.get<any>(url).pipe(
         map((data: any) => data.user) // Trả về thông tin người dùng đã được ánh xạ từ app.js
       );
     }
   
     getCard(id: string): Observable<Card> {
-      const url = `${this.apiUrl}/${id}`;
+      const url = `${this.api}/card/${id}`;
       return this.http.get<any>(url).pipe(
         map((data: any) => data.card) // Trả về thông tin thẻ đã được ánh xạ từ app.js
       );
@@ -58,15 +58,20 @@ export class UserService {
       )
     }
 
+    addUser(user: any): Observable<any> {
+      const url = `${this.apiUrl}`;
+      return this.http.post(url, user)
+    }
+
     //Phương thưc để cập nhật thông tin người dùng
     updateUser(id: string, userData: any) : Observable<any> {
-      const url = `${this.apiEdit}/user/update/${id}`;
+      const url = `${this.api}/user/update/${id}`;
       return this.http.put(url, userData);
     }
 
     // phương thức để cập nhật thông tin card
     updateCard (code: string, cardData: Card): Observable<any> {
-      const url = `${this.apiEdit}/card/update/${code}`;
+      const url = `${this.api}/card/update/${code}`;
       return this.http.put(url, cardData);
     }
 

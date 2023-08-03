@@ -1,6 +1,7 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { User } from './user';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-user',
@@ -11,12 +12,12 @@ export class UserComponent {
   // @HostBinding("class") class: string = "user-container";
   // click option menu
 
-  id: number | undefined;
+  id: string | undefined;
 
   activeOption: string = 'option1';
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +37,7 @@ export class UserComponent {
     this.activeOption = option;
     // Lưu giá trị activeOption vào Local Storage
     localStorage.setItem('activeOption', option);
-    this.router.navigate([url + this.id]);
+    this.router.navigate(['/page/user/'+ this.id + url + this.id]);
     //  console.log(this.id)
   }
 

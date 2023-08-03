@@ -8,6 +8,7 @@ import { Location } from '@angular/common';
 import { User } from '../user';
 import { Card } from './card';
 import { Image } from '../../image'
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-card',
@@ -25,8 +26,6 @@ export class UserCardComponent {
   editImg: boolean = true;
   selectedFile: File | null = null;
 
-
-
   constructor(
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
@@ -34,17 +33,7 @@ export class UserCardComponent {
     private router: Router,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
-    private location: Location,
   ) { }
-
-  // redirect(check: string){
-  //   if(check === 'edit-profile'){
-  //     this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id + check + '/' + this.id])
-  //   }
-  //   else{
-  //     this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id + check + '/'+ this.id])
-  //   }
-  // }
 
   private initForm() {
     this.userForm = this.formBuilder.group({
@@ -70,14 +59,14 @@ export class UserCardComponent {
       console.log(this.id)
       if (this.id) {
         this.getCard(this.id)
-
         this.userService.getImage(this.id).subscribe(imageData => {
-          this.imageData = imageData
+          this.imageData = imageData;
           this.initForm();
         })
       }
     });
   }
+
   getCard(id: string) {
     this.userService.getCard(id).subscribe(cardData => {
       this.cardData = cardData;
@@ -100,8 +89,8 @@ export class UserCardComponent {
   }
 
   saveData() {
-    if (this.userData && this.cardData && this.id && this.userData.code) {
-
+    if (this.userData && this.userData.code || this.cardData || this.id ) {
+      const code = this.userData?.code
       // Update user information
       const updatedUser = {
         ...this.userData,
@@ -127,7 +116,7 @@ export class UserCardComponent {
         title: this.userForm.get('title')?.value,
       };
 
-      this.userService.updateCard(this.userData.code, updatedCard).subscribe(() => {
+      this.userService.updateCard(code as any, updatedCard).subscribe(() => {
         this.getCard(this.id)
       });
       this.showForm = true;
@@ -158,7 +147,14 @@ export class UserCardComponent {
 
   //// xử lý cập nhật ảnh
   url: string | undefined;
+  urlImg!: string;
   image: any;
+
+  getImage(id: string){
+    this.userService.getImage(id).subscribe(imageData => {
+      this.imageData = imageData;
+    })
+  }
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0]; // Lấy tệp đã chọn từ sự kiện
@@ -184,6 +180,7 @@ export class UserCardComponent {
     if (this.imageData) {
       this.userService.updateImage(this.imageData?.code, formData).subscribe(
         (response) => {
+          this.getImage(this.id);
           console.log('Image updated successfully', response);
           // Xử lý khi ảnh đã được cập nhật thành công
         },

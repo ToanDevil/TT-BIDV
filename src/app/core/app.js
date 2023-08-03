@@ -1,12 +1,12 @@
 const oracledb = require('oracledb');
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 const { async } = require('rxjs');
 const bodyParser = require("body-parser")
 const multer = require('multer')
 const app = express();
 const port = 3000;
+const path = require('path');
 
 app.use(cors());
 app.use(express.json());
@@ -181,7 +181,7 @@ async function getImage(code){
 }
 
 // API endpoint để lấy thông tin người dùng và thẻ dựa trên ID
-app.get('/api/users/:id', async (req, res) => {
+app.get('/api/user/:id', async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -192,6 +192,17 @@ app.get('/api/users/:id', async (req, res) => {
       return;
     }
 
+    res.json({ user: userData });
+  } catch (err) {
+    console.error('Error getting user and card data:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+app.get('/api/card/:id', async(req, res) => {
+  const id = req.params.id;
+  try {
+    const userData = await getUser(id);
     const cardData = await getCard(userData.code);
 
     if (!cardData) {
@@ -199,7 +210,7 @@ app.get('/api/users/:id', async (req, res) => {
       return;
     }
 
-    res.json({ user: userData, card: cardData });
+    res.json({ card: cardData });
   } catch (err) {
     console.error('Error getting user and card data:', err);
     res.status(500).json({ message: 'Internal server error' });
@@ -273,15 +284,22 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post('/file', upload.single('file'), async (req, res) => {
+app.post('/uploadfile', upload.single('file'), async (req, res) => {
   const file = req.file;
+  if (!file) {
+    const error = new Error('Please upload a file')
+    error.httpStatusCode = 400
+    return next(error)
+  }
+  res.send(file)
   console.log(file)
 })
 
 // API endpoint để cập nhật ảnh dựa trên code
 app.put('/api/image/update/:code', upload.single('file'), async (req, res) => {
   const code = req.params.code;
-  const imagePath = '/uploads/' + req.file.filename; // Lấy đường dẫn tạm thời của ảnh từ multer
+  const file = req.file;
+  let imagePath = req.protocol+'://'+req.get('host')+'/'+req.file.filename;
   console.log(imagePath)
 
   try {
@@ -304,6 +322,36 @@ app.put('/api/image/update/:code', upload.single('file'), async (req, res) => {
   }
 });
 
+
+
+// API endpoint để thêm người dùng
+app.post('/api/users', async (req, res) => {
+  const { code, name, email, address, phone, tel } = req.body;
+
+  try {
+    const connection = await oracledb.getConnection();
+
+    // Câu truy vấn để thêm người dùng vào bảng người dùng
+    const insertQuery = `BEGIN PTNB_SECRET.INSERT_USER(:code, :name, :email, :address, :phone, :tel); END;`;
+    
+    await connection.execute(insertQuery, {
+      code: code,
+      name: name,
+      email: email,
+      address: address,
+      phone: phone,
+      tel: tel
+    });
+
+    await connection.commit();
+    await connection.close();
+
+    res.json({ message: 'User added successfully' });
+  } catch (err) {
+    console.error('Error adding user:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 connectToDB().then(() => {
   app.listen(port, () => {

@@ -31,7 +31,7 @@ var UserComponent = /** @class */ (function () {
         this.activeOption = option;
         // Lưu giá trị activeOption vào Local Storage
         localStorage.setItem('activeOption', option);
-        this.router.navigate([url + this.id]);
+        this.router.navigate(['/page/user/' + this.id + url + this.id]);
         //  console.log(this.id)
     };
     UserComponent.prototype.isOptionActive = function (option) {

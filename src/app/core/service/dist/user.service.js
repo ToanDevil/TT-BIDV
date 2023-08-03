@@ -14,8 +14,8 @@ var UserService = /** @class */ (function () {
         this.http = http;
         this.message = message;
         this.apiUrl = 'http://localhost:3000/api/users'; // Replace with your backend server URL
-        this.apiEdit = 'http://localhost:3000/api';
         this.apiImage = 'http://localhost:3000/api/user/image';
+        this.api = 'http://localhost:3000/api';
     }
     // private log(message: string) {
     //   this.message.add(`HeroService: ${message}`);
@@ -31,12 +31,12 @@ var UserService = /** @class */ (function () {
     //   };
     // }
     UserService.prototype.getUser = function (id) {
-        var url = this.apiUrl + "/" + id;
+        var url = this.api + "/user/" + id;
         return this.http.get(url).pipe(rxjs_1.map(function (data) { return data.user; }) // Trả về thông tin người dùng đã được ánh xạ từ app.js
         );
     };
     UserService.prototype.getCard = function (id) {
-        var url = this.apiUrl + "/" + id;
+        var url = this.api + "/card/" + id;
         return this.http.get(url).pipe(rxjs_1.map(function (data) { return data.card; }) // Trả về thông tin thẻ đã được ánh xạ từ app.js
         );
     };
@@ -45,14 +45,18 @@ var UserService = /** @class */ (function () {
         return this.http.get(url).pipe(rxjs_1.map(function (data) { return data.image; }) // trả về thông tin ảnh đã được ánh xạ từ app.js
         );
     };
+    UserService.prototype.addUser = function (user) {
+        var url = "" + this.apiUrl;
+        return this.http.post(url, user);
+    };
     //Phương thưc để cập nhật thông tin người dùng
     UserService.prototype.updateUser = function (id, userData) {
-        var url = this.apiEdit + "/user/update/" + id;
+        var url = this.api + "/user/update/" + id;
         return this.http.put(url, userData);
     };
     // phương thức để cập nhật thông tin card
     UserService.prototype.updateCard = function (code, cardData) {
-        var url = this.apiEdit + "/card/update/" + code;
+        var url = this.api + "/card/update/" + code;
         return this.http.put(url, cardData);
     };
     UserService.prototype.updateImage = function (code, formData) {

@@ -21,26 +21,17 @@ exports.UserCardComponent = void 0;
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var UserCardComponent = /** @class */ (function () {
-    function UserCardComponent(userService, activatedRoute, dataService, router, toastr, formBuilder, location) {
+    function UserCardComponent(userService, activatedRoute, dataService, router, toastr, formBuilder) {
         this.userService = userService;
         this.activatedRoute = activatedRoute;
         this.dataService = dataService;
         this.router = router;
         this.toastr = toastr;
         this.formBuilder = formBuilder;
-        this.location = location;
         this.showForm = true;
         this.editImg = true;
         this.selectedFile = null;
     }
-    // redirect(check: string){
-    //   if(check === 'edit-profile'){
-    //     this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id + check + '/' + this.id])
-    //   }
-    //   else{
-    //     this.router.navigate(['/page/user/' + this.id + '/user-card/' + this.id + check + '/'+ this.id])
-    //   }
-    // }
     UserCardComponent.prototype.initForm = function () {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
         this.userForm = this.formBuilder.group({
@@ -96,16 +87,17 @@ var UserCardComponent = /** @class */ (function () {
     };
     UserCardComponent.prototype.saveData = function () {
         var _this = this;
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
-        if (this.userData && this.cardData && this.id && this.userData.code) {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+        if (this.userData && this.userData.code || this.cardData || this.id) {
+            var code = (_a = this.userData) === null || _a === void 0 ? void 0 : _a.code;
             // Update user information
-            var updatedUser = __assign(__assign({}, this.userData), { name: (_a = this.userForm.get('name')) === null || _a === void 0 ? void 0 : _a.value, email: (_b = this.userForm.get('email')) === null || _b === void 0 ? void 0 : _b.value, address: (_c = this.userForm.get('address')) === null || _c === void 0 ? void 0 : _c.value, phone: (_d = this.userForm.get('phone')) === null || _d === void 0 ? void 0 : _d.value, tel: (_e = this.userForm.get('tel')) === null || _e === void 0 ? void 0 : _e.value });
+            var updatedUser = __assign(__assign({}, this.userData), { name: (_b = this.userForm.get('name')) === null || _b === void 0 ? void 0 : _b.value, email: (_c = this.userForm.get('email')) === null || _c === void 0 ? void 0 : _c.value, address: (_d = this.userForm.get('address')) === null || _d === void 0 ? void 0 : _d.value, phone: (_e = this.userForm.get('phone')) === null || _e === void 0 ? void 0 : _e.value, tel: (_f = this.userForm.get('tel')) === null || _f === void 0 ? void 0 : _f.value });
             this.userService.updateUser(this.id, updatedUser).subscribe(function () {
                 _this.getUser(_this.id);
             });
             // Update card information
-            var updatedCard = __assign(__assign({}, this.cardData), { position: (_f = this.userForm.get('position')) === null || _f === void 0 ? void 0 : _f.value, forte: (_g = this.userForm.get('forte')) === null || _g === void 0 ? void 0 : _g.value, department: (_h = this.userForm.get('department')) === null || _h === void 0 ? void 0 : _h.value, nickname: (_j = this.userForm.get('nickname')) === null || _j === void 0 ? void 0 : _j.value, unit: (_k = this.userForm.get('unit')) === null || _k === void 0 ? void 0 : _k.value, title: (_l = this.userForm.get('title')) === null || _l === void 0 ? void 0 : _l.value });
-            this.userService.updateCard(this.userData.code, updatedCard).subscribe(function () {
+            var updatedCard = __assign(__assign({}, this.cardData), { position: (_g = this.userForm.get('position')) === null || _g === void 0 ? void 0 : _g.value, forte: (_h = this.userForm.get('forte')) === null || _h === void 0 ? void 0 : _h.value, department: (_j = this.userForm.get('department')) === null || _j === void 0 ? void 0 : _j.value, nickname: (_k = this.userForm.get('nickname')) === null || _k === void 0 ? void 0 : _k.value, unit: (_l = this.userForm.get('unit')) === null || _l === void 0 ? void 0 : _l.value, title: (_m = this.userForm.get('title')) === null || _m === void 0 ? void 0 : _m.value });
+            this.userService.updateCard(code, updatedCard).subscribe(function () {
                 _this.getCard(_this.id);
             });
             this.showForm = true;
@@ -128,6 +120,12 @@ var UserCardComponent = /** @class */ (function () {
     UserCardComponent.prototype.cancel = function () {
         this.showForm = false;
     };
+    UserCardComponent.prototype.getImage = function (id) {
+        var _this = this;
+        this.userService.getImage(id).subscribe(function (imageData) {
+            _this.imageData = imageData;
+        });
+    };
     UserCardComponent.prototype.onFileSelected = function (event) {
         var _this = this;
         var file = event.target.files[0]; // Lấy tệp đã chọn từ sự kiện
@@ -143,6 +141,7 @@ var UserCardComponent = /** @class */ (function () {
         }
     };
     UserCardComponent.prototype.saveImage = function () {
+        var _this = this;
         var _a;
         var formData = new FormData();
         formData.append('file', this.image);
@@ -150,6 +149,7 @@ var UserCardComponent = /** @class */ (function () {
         this.url = undefined;
         if (this.imageData) {
             this.userService.updateImage((_a = this.imageData) === null || _a === void 0 ? void 0 : _a.code, formData).subscribe(function (response) {
+                _this.getImage(_this.id);
                 console.log('Image updated successfully', response);
                 // Xử lý khi ảnh đã được cập nhật thành công
             }, function (error) {
