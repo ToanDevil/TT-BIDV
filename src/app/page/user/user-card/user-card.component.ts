@@ -185,6 +185,7 @@ export class UserCardComponent {
         (response) => {
           this.getImage(this.id);
           console.log('Image updated successfully', response);
+          this.closeEdit();
           // Xử lý khi ảnh đã được cập nhật thành công
         },
         (error) => {

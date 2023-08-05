@@ -151,6 +151,7 @@ var UserCardComponent = /** @class */ (function () {
             this.userService.updateImage((_a = this.imageData) === null || _a === void 0 ? void 0 : _a.code, formData).subscribe(function (response) {
                 _this.getImage(_this.id);
                 console.log('Image updated successfully', response);
+                _this.closeEdit();
                 // Xử lý khi ảnh đã được cập nhật thành công
             }, function (error) {
                 console.error('Error updating image', error);

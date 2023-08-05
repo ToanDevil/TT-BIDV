@@ -10,7 +10,10 @@
           <tr>
             <th>STT</th>
             <th>Mã code</th>
-            <th>Tên</th>
+            <th>
+                <span>Tên</span>                        
+                <!-- <i class="fa-sharp fa-solid fa-sort-down icon-sort"></i> -->
+            </th>
             <th>Email</th>
             <th></th> <!-- Thêm cột trống để đặt nút Đánh giá -->
             <th></th>
@@ -32,9 +35,9 @@
         </tbody>
       </table>
       <div class="pagination">
-        <button (click)="prevPage()" [disabled]="currentPage === 1">Trang trước</button>
+        <button (click)="prevPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-caret-left"></i></button>
         <span>Trang {{ currentPage }} / {{totalPage}}</span>
-        <button (click)="nextPage()" [disabled]="currentPage === getTotalPages()">Trang sau</button>
+        <button (click)="nextPage()" [disabled]="currentPage === getTotalPages()"><i class="fa-solid fa-caret-right"></i></button>
       </div>
     </div>
   </div>

@@ -13,6 +13,10 @@ export class UserEvalComponent {
   currentPage: number = 1; // Trang hiện tại, mặc định là trang đầu tiên
   itemsPerPage: number = 5; // Số hàng hiển thị trên mỗi trang
   totalPage!: number;
+  sortedUsers: any[] = [];
+  sortAscending: boolean = true;
+
+
   constructor (
     private userService: UserService
   ){}
@@ -22,6 +26,7 @@ export class UserEvalComponent {
       (user) =>{
         this.users = user
         this.totalPage = this.getTotalPages();
+        this.sortUsers();
       },
       (error) => {
         console.error('Error fetching users:', error)
@@ -41,6 +46,7 @@ export class UserEvalComponent {
         this.userService.getListUser().subscribe((updatedUsers) => {
           this.users = updatedUsers;
           this.totalPage = this.getTotalPages();
+          this.sortUsers();
           console.log('Xóa người dùng này', user);
         });
       });
@@ -76,5 +82,19 @@ export class UserEvalComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
     }
+  }
+  
+  // sắp xếp user theo thứ tự a-z z-a
+  sortUsers() {
+    if (this.sortAscending) {
+      this.sortedUsers = this.users.slice().sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      this.sortedUsers = this.users.slice().sort((a, b) => b.name.localeCompare(a.name));
+    }
+  }
+  
+  toggleSortOrder() {
+    this.sortAscending = !this.sortAscending;
+    this.sortUsers();
   }
 }

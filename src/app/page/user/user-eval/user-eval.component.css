@@ -78,3 +78,17 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.pagination span {
+    margin: 0 6px 0 6px;
+}
+
+.pagination button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-sort {
+    margin-left: 8px;
+}

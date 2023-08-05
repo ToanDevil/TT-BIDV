@@ -14,12 +14,15 @@ var UserEvalComponent = /** @class */ (function () {
         this.users = [];
         this.currentPage = 1; // Trang hiện tại, mặc định là trang đầu tiên
         this.itemsPerPage = 5; // Số hàng hiển thị trên mỗi trang
+        this.sortedUsers = [];
+        this.sortAscending = true;
     }
     UserEvalComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.userService.getListUser().subscribe(function (user) {
             _this.users = user;
             _this.totalPage = _this.getTotalPages();
+            _this.sortUsers();
         }, function (error) {
             console.error('Error fetching users:', error);
         });
@@ -37,6 +40,7 @@ var UserEvalComponent = /** @class */ (function () {
                 _this.userService.getListUser().subscribe(function (updatedUsers) {
                     _this.users = updatedUsers;
                     _this.totalPage = _this.getTotalPages();
+                    _this.sortUsers();
                     console.log('Xóa người dùng này', user);
                 });
             });
@@ -67,6 +71,19 @@ var UserEvalComponent = /** @class */ (function () {
         if (this.currentPage > 1) {
             this.currentPage--;
         }
+    };
+    // sắp xếp user theo thứ tự a-z z-a
+    UserEvalComponent.prototype.sortUsers = function () {
+        if (this.sortAscending) {
+            this.sortedUsers = this.users.slice().sort(function (a, b) { return a.name.localeCompare(b.name); });
+        }
+        else {
+            this.sortedUsers = this.users.slice().sort(function (a, b) { return b.name.localeCompare(a.name); });
+        }
+    };
+    UserEvalComponent.prototype.toggleSortOrder = function () {
+        this.sortAscending = !this.sortAscending;
+        this.sortUsers();
     };
     UserEvalComponent = __decorate([
         core_1.Component({
