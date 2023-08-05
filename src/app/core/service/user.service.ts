@@ -43,6 +43,16 @@ export class UserService {
         map((data: any) => data.user) // Trả về thông tin người dùng đã được ánh xạ từ app.js
       );
     }
+
+    deleteUser(code: string): Observable<User>{
+      const url = `${this.api}/user/${code}`;
+      return this.http.delete<User>(url);
+    }
+
+    getListUser(): Observable<any[]> {
+      const url = `${this.apiUrl}`;
+      return this.http.get<any[]>(url);
+    }
   
     getCard(id: string): Observable<Card> {
       const url = `${this.api}/card/${id}`;

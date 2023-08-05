@@ -35,6 +35,14 @@ var UserService = /** @class */ (function () {
         return this.http.get(url).pipe(rxjs_1.map(function (data) { return data.user; }) // Trả về thông tin người dùng đã được ánh xạ từ app.js
         );
     };
+    UserService.prototype.deleteUser = function (code) {
+        var url = this.api + "/user/" + code;
+        return this.http["delete"](url);
+    };
+    UserService.prototype.getListUser = function () {
+        var url = "" + this.apiUrl;
+        return this.http.get(url);
+    };
     UserService.prototype.getCard = function (id) {
         var url = this.api + "/card/" + id;
         return this.http.get(url).pipe(rxjs_1.map(function (data) { return data.card; }) // Trả về thông tin thẻ đã được ánh xạ từ app.js

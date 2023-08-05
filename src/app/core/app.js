@@ -199,6 +199,72 @@ app.get('/api/user/:id', async (req, res) => {
   }
 });
 
+
+// API endpoint lấy list user 
+class User {
+  constructor(code, name, email, address, phone, tel) {
+    this.code = code;
+    this.name = name;
+    this.email = email;
+    this.address = address;
+    this.phone = phone;
+    this.tel = tel;
+  }
+}
+
+app.get('/api/users', async (req, res) => {
+  try {
+    const connection = await oracledb.getConnection();
+    const bindVars = {
+      cur: { type: oracledb.CURSOR, dir: oracledb.BIND_OUT }
+    };
+
+    const result = await connection.execute('BEGIN :cur := PTNB_Secret.GET_LIST_USER; END;', bindVars);
+    const resultSet = result.outBinds.cur;
+    let users = [];
+
+    // Fetch the result set rows and convert them to an array of user objects
+    let row;
+    while ((row = await resultSet.getRow())) {
+      const [code, name, email, address, phone, tel] = row;
+      const user = new User(code, name, email, address, phone, tel);
+      users.push(user);
+    }
+
+    await resultSet.close();
+    await connection.close();
+
+    res.json(users);
+  } catch (err) {
+    console.error('Error fetching users:', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+// API endpoint để xóa người dùng
+
+// In your backend API (app.js or routes file)
+app.delete('/api/user/:code', async (req, res) => {
+  try {
+    const code = req.params.code;
+    const connection = await oracledb.getConnection();
+    
+    await connection.execute('BEGIN PTNB_Secret.DELETE_USER(:p_code); END;', { p_code: code });
+
+    await connection.commit();
+    await connection.close();
+    
+    res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
+
+
 app.get('/api/card/:id', async(req, res) => {
   const id = req.params.id;
   try {

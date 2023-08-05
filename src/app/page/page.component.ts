@@ -10,7 +10,7 @@ import { Image } from '../page/image'
 })
 export class PageComponent implements OnInit {
   // click icon
-  id: string = '1';
+  id: string = '41';
   activeIcon: string = 'Icon1';
   imageData: Image | undefined;
   constructor(
