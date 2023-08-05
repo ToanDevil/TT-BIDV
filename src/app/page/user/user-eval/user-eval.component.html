@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="user-eval">
+      <h3>Đánh giá đồng nghiệp</h3>
+    </div>
+    <div class="user-box">
+      <h4>Đồng nghiệp xuất sắc trong tháng này:</h4>
+      <br>
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>Mã code</th>
+            <th>Tên</th>
+            <th>Email</th>
+            <th></th> <!-- Thêm cột trống để đặt nút Đánh giá -->
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.code }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <button (click)="evaluate(user)" class="btn-eval">Đánh giá</button>
+            </td>
+            <td>
+                <button (click)="delete(user)" class="btn-delete">Xóa</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

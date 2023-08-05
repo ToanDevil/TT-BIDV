@@ -19,7 +19,7 @@
             <a href="#" class="menu-user-option"> <i class="fa-solid fa-chart-line"></i> Kết quả đánh giá cán bộ</a>
         </li>
         <li>
-            <a href="#" class="menu-user-option"> <i class="fa-solid fa-thumbs-up"></i> Đánh giá đồng nghiệp</a>
+            <a outerLinkActive="active" class="menu-user-option" [ngClass]="{'menu-user-option__active': isOptionActive('option7')}" (click)="setActiveOption('option7', '/user-evaluate/')"> <i class="fa-solid fa-thumbs-up" [ngClass]="{'menu-user-option__active': isOptionActive('option7')}"></i> Đánh giá đồng nghiệp</a>
         </li>
         <li>
             <a outerLinkActive="active" class="menu-user-option" [ngClass]="{'menu-user-option__active': isOptionActive('option8')}" (click)="setActiveOption('option8', '/user-card/')"> <i class="fa-solid fa-id-card" [ngClass]="{'menu-user-option__active': isOptionActive('option8')}"></i> Thẻ thông tin cá nhân</a>

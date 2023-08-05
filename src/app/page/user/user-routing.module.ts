@@ -14,6 +14,10 @@ const routes: Routes = [
       {
         path: 'user-card/:id',
         loadChildren: () => import('./user-card/user-card.module').then((m) => m.UserCardModule)
+      },
+      {
+        path:'user-evaluate/:id',
+        loadChildren: () => import('./user-eval/user-eval.module').then((m) => m.UserEvalModule)
       }
     ]
   }

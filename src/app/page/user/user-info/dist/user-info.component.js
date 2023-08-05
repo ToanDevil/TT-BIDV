@@ -10,12 +10,13 @@ exports.UserInfoComponent = void 0;
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var UserInfoComponent = /** @class */ (function () {
-    function UserInfoComponent(route, userService, activatedRoute, dataService, formBuilder) {
+    function UserInfoComponent(route, userService, activatedRoute, dataService, formBuilder, toastr) {
         this.route = route;
         this.userService = userService;
         this.activatedRoute = activatedRoute;
         this.dataService = dataService;
         this.formBuilder = formBuilder;
+        this.toastr = toastr;
         this.id = null;
         this.showForm = true;
         this.profileForm = this.formBuilder.group({
@@ -50,6 +51,7 @@ var UserInfoComponent = /** @class */ (function () {
         this.showForm = true;
     };
     UserInfoComponent.prototype.saveData = function () {
+        var _this = this;
         if (this.profileForm.invalid) {
             // Handle form validation errors
             return;
@@ -57,6 +59,8 @@ var UserInfoComponent = /** @class */ (function () {
         var userData = this.profileForm.value;
         this.userService.addUser(userData).subscribe(function (response) {
             console.log('User added successfully', response);
+            _this.showForm = true;
+            _this.toastr.success('Thêm thành công!');
             // Xử lý khi người dùng được thêm thành công
         }, function (error) {
             console.error('Error adding user', error);

@@ -49,13 +49,13 @@ export class UserCardComponent {
       position: [this.cardData?.position || '', Validators.required],
       title: [this.cardData?.title || '', Validators.required],
     })
+    console.log(this.userForm)
   }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(paramMap => {
       this.id = (paramMap as any).params['id'];
       this.getUser(this.id);
-      this.initForm();
       console.log(this.id)
       if (this.id) {
         this.getCard(this.id)
@@ -71,8 +71,8 @@ export class UserCardComponent {
     this.userService.getCard(id).subscribe(cardData => {
       this.cardData = cardData;
       this.dataService.setCardData(cardData);
-      console.log(cardData);
-      console.log(this.userData);
+      // console.log(cardData);
+      // console.log(this.userData);
     })
   }
 
@@ -145,7 +145,10 @@ export class UserCardComponent {
     this.showForm = false;
   }
 
-  //// xử lý cập nhật ảnh
+
+  //// xử lý cập nhật ảnh////////////////////////////////////////
+
+
   url: string | undefined;
   urlImg!: string;
   image: any;

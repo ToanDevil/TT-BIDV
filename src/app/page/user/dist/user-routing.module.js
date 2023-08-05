@@ -22,6 +22,10 @@ var routes = [
             {
                 path: 'user-card/:id',
                 loadChildren: function () { return Promise.resolve().then(function () { return require('./user-card/user-card.module'); }).then(function (m) { return m.UserCardModule; }); }
+            },
+            {
+                path: 'user-evaluate/:id',
+                loadChildren: function () { return Promise.resolve().then(function () { return require('./user-eval/user-eval.module'); }).then(function (m) { return m.UserEvalModule; }); }
             }
         ]
     }

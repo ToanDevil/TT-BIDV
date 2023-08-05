@@ -4,6 +4,7 @@ import { UserService } from 'src/app/core/service/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/core/service/data.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-info',
@@ -20,6 +21,7 @@ export class UserInfoComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private dataService: DataService,
     private formBuilder: FormBuilder,
+    private toastr : ToastrService,
   ) {
     this.profileForm = this.formBuilder.group({
       code: ['', Validators.required],
@@ -67,6 +69,8 @@ export class UserInfoComponent implements OnInit {
     this.userService.addUser(userData).subscribe(
       (response) => {
         console.log('User added successfully', response);
+        this.showForm = true;
+        this.toastr.success('Thêm thành công!');
         // Xử lý khi người dùng được thêm thành công
       },
       (error) => {

@@ -47,13 +47,13 @@ var UserCardComponent = /** @class */ (function () {
             position: [((_k = this.cardData) === null || _k === void 0 ? void 0 : _k.position) || '', forms_1.Validators.required],
             title: [((_l = this.cardData) === null || _l === void 0 ? void 0 : _l.title) || '', forms_1.Validators.required]
         });
+        console.log(this.userForm);
     };
     UserCardComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.activatedRoute.paramMap.subscribe(function (paramMap) {
             _this.id = paramMap.params['id'];
             _this.getUser(_this.id);
-            _this.initForm();
             console.log(_this.id);
             if (_this.id) {
                 _this.getCard(_this.id);
@@ -69,8 +69,8 @@ var UserCardComponent = /** @class */ (function () {
         this.userService.getCard(id).subscribe(function (cardData) {
             _this.cardData = cardData;
             _this.dataService.setCardData(cardData);
-            console.log(cardData);
-            console.log(_this.userData);
+            // console.log(cardData);
+            // console.log(this.userData);
         });
     };
     UserCardComponent.prototype.getUser = function (id) {
