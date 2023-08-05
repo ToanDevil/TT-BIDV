@@ -17,6 +17,8 @@
     border-radius: 5px;
     padding: 30px;
     margin-top: 20px;
+    position: relative;
+    /* Đặt .user-box làm khung chứa tương đối */
 }
 
 .user-table {
@@ -67,4 +69,12 @@
 
 .btn-delete:hover {
     background-color: red;
+}
+
+.pagination {
+    position: absolute;
+    bottom: 45px;
+    right: 30px;
+    display: flex;
+    justify-content: flex-end;
 }

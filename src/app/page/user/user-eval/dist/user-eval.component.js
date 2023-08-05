@@ -12,11 +12,14 @@ var UserEvalComponent = /** @class */ (function () {
     function UserEvalComponent(userService) {
         this.userService = userService;
         this.users = [];
+        this.currentPage = 1; // Trang hiện tại, mặc định là trang đầu tiên
+        this.itemsPerPage = 5; // Số hàng hiển thị trên mỗi trang
     }
     UserEvalComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.userService.getListUser().subscribe(function (user) {
             _this.users = user;
+            _this.totalPage = _this.getTotalPages();
         }, function (error) {
             console.error('Error fetching users:', error);
         });
@@ -30,9 +33,39 @@ var UserEvalComponent = /** @class */ (function () {
         this.userToDelete = user;
         if (this.userToDelete.code) {
             this.userService.deleteUser(this.userToDelete.code).subscribe(function () {
-                _this.userService.getListUser().subscribe();
-                console.log('Xóa người dùng này', user);
+                // Sau khi xóa thành công, cập nhật lại danh sách người dùng
+                _this.userService.getListUser().subscribe(function (updatedUsers) {
+                    _this.users = updatedUsers;
+                    _this.totalPage = _this.getTotalPages();
+                    console.log('Xóa người dùng này', user);
+                });
             });
+        }
+    };
+    UserEvalComponent.prototype.confirmDelete = function (user) {
+        var result = confirm('Bạn có chắc chắn muốn xóa người dùng này không?');
+        if (result) {
+            this["delete"](user);
+        }
+    };
+    UserEvalComponent.prototype.getTotalPages = function () {
+        return Math.ceil(this.users.length / this.itemsPerPage);
+    };
+    UserEvalComponent.prototype.getCurrentPageData = function () {
+        var startIndex = (this.currentPage - 1) * this.itemsPerPage;
+        var endIndex = startIndex + this.itemsPerPage;
+        return this.users.slice(startIndex, endIndex);
+    };
+    // Hàm để chuyển đến trang tiếp theo
+    UserEvalComponent.prototype.nextPage = function () {
+        if (this.users.length % this.itemsPerPage !== 0) {
+            this.currentPage++;
+        }
+    };
+    // Hàm để quay lại trang trước
+    UserEvalComponent.prototype.prevPage = function () {
+        if (this.currentPage > 1) {
+            this.currentPage--;
         }
     };
     UserEvalComponent = __decorate([

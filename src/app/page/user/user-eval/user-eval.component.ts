@@ -10,6 +10,9 @@ import { User } from '../user';
 export class UserEvalComponent {
   users: any[] = [];
   userToDelete !: User;
+  currentPage: number = 1; // Trang hiện tại, mặc định là trang đầu tiên
+  itemsPerPage: number = 5; // Số hàng hiển thị trên mỗi trang
+  totalPage!: number;
   constructor (
     private userService: UserService
   ){}
@@ -18,6 +21,7 @@ export class UserEvalComponent {
     this.userService.getListUser().subscribe(
       (user) =>{
         this.users = user
+        this.totalPage = this.getTotalPages();
       },
       (error) => {
         console.error('Error fetching users:', error)
@@ -29,15 +33,48 @@ export class UserEvalComponent {
     console.log('Đánh giá cho người dùng:', user);
   }
 
-  delete(user: any){
+  delete(user: any) {
     this.userToDelete = user;
-    if(this.userToDelete.code){
-      this.userService.deleteUser(this.userToDelete.code).subscribe(() => 
-        {
-          this.userService.getListUser().subscribe();
+    if (this.userToDelete.code) {
+      this.userService.deleteUser(this.userToDelete.code).subscribe(() => {
+        // Sau khi xóa thành công, cập nhật lại danh sách người dùng
+        this.userService.getListUser().subscribe((updatedUsers) => {
+          this.users = updatedUsers;
+          this.totalPage = this.getTotalPages();
           console.log('Xóa người dùng này', user);
-        }
-      )
+        });
+      });
+    }
+  }
+
+  confirmDelete(user: any) {
+    const result = confirm('Bạn có chắc chắn muốn xóa người dùng này không?');
+    if (result) {
+      this.delete(user);
+    }
+  }
+
+  getTotalPages(): number {
+    return Math.ceil(this.users.length / this.itemsPerPage);
+  }
+
+  getCurrentPageData() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    return this.users.slice(startIndex, endIndex);
+  }
+
+  // Hàm để chuyển đến trang tiếp theo
+  nextPage() {
+    if(this.users.length % this.itemsPerPage !== 0){
+      this.currentPage++;
+    }
+  }
+
+  // Hàm để quay lại trang trước
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
     }
   }
 }
