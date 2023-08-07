@@ -16,7 +16,13 @@ var UserEvalComponent = /** @class */ (function () {
         this.itemsPerPage = 5; // Số hàng hiển thị trên mỗi trang
         this.sortedUsers = [];
         this.sortAscending = true;
+        this.searchValue = '';
+        this.searchResult = '';
     }
+    UserEvalComponent.prototype.ngOnChanges = function () {
+        // Thực hiện tìm kiếm với dữ liệu trong this.searchValue
+        this.searchResult = 'Kết quả tìm kiếm với: ' + this.searchValue;
+    };
     UserEvalComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.userService.getListUser().subscribe(function (user) {
@@ -85,6 +91,9 @@ var UserEvalComponent = /** @class */ (function () {
         this.sortAscending = !this.sortAscending;
         this.sortUsers();
     };
+    __decorate([
+        core_1.Input()
+    ], UserEvalComponent.prototype, "searchValue");
     UserEvalComponent = __decorate([
         core_1.Component({
             selector: 'app-user-eval',

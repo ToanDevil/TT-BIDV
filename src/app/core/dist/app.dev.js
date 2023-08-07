@@ -31,9 +31,10 @@ var path = require('path');
 app.use(cors());
 app.use(express.json()); // Đặt đường dẫn tới thư mục uploads
 
-var uploadsPath = path.join(__dirname, 'src', 'app', 'core', 'uploads'); // Phục vụ các tệp ảnh từ thư mục uploads
+var uploadsPath = path.join(__dirname, 'uploads');
+console.log('uploadsPath', uploadsPath); // Phục vụ các tệp ảnh từ thư mục uploads
 
-app.use('/uploads', express["static"](uploadsPath));
+app.use('/upload', express["static"](uploadsPath));
 var dbConfig = {
   user: 'admin',
   password: 'Admin1',
@@ -529,7 +530,6 @@ app.get('/api/users', function _callee2(req, res) {
     }
   }, null, null, [[0, 25]]);
 }); // API endpoint để xóa người dùng
-// In your backend API (app.js or routes file)
 
 app["delete"]('/api/user/:code', function _callee3(req, res) {
   var code, connection;
@@ -777,33 +777,70 @@ var storage = multer.diskStorage({
 var upload = multer({
   storage: storage
 });
-app.post('/uploadfile', upload.single('file'), function _callee8(req, res) {
-  var file, error;
+app.post('/upload', upload.single('image'), function _callee8(req, res) {
+  var file, imagePath, connection, updateQuery;
   return regeneratorRuntime.async(function _callee8$(_context15) {
     while (1) {
       switch (_context15.prev = _context15.next) {
         case 0:
           file = req.file;
+          console.log('----------------', req, file);
 
           if (file) {
             _context15.next = 5;
             break;
           }
 
-          error = new Error('Please upload a file');
-          error.httpStatusCode = 400;
-          return _context15.abrupt("return", next(error));
+          res.status(400).json({
+            message: 'Please upload a file'
+          });
+          return _context15.abrupt("return");
 
         case 5:
-          res.send(file);
-          console.log(file);
+          imagePath = 'http://localhost:3000/upload/' + file.filename;
+          _context15.prev = 6;
+          _context15.next = 9;
+          return regeneratorRuntime.awrap(oracledb.getConnection(dbConfig));
 
-        case 7:
+        case 9:
+          connection = _context15.sent;
+          // Câu truy vấn để cập nhật thông tin ảnh dựa trên mã (code)
+          updateQuery = "BEGIN PTNB_Secret.UPDATE_IMG(:code, :url); END;";
+          _context15.next = 13;
+          return regeneratorRuntime.awrap(connection.execute(updateQuery, {
+            url: imagePath,
+            code: req.body.code
+          }));
+
+        case 13:
+          _context15.next = 15;
+          return regeneratorRuntime.awrap(connection.commit());
+
+        case 15:
+          _context15.next = 17;
+          return regeneratorRuntime.awrap(connection.close());
+
+        case 17:
+          res.json({
+            message: 'Image uploaded successfully'
+          });
+          _context15.next = 24;
+          break;
+
+        case 20:
+          _context15.prev = 20;
+          _context15.t0 = _context15["catch"](6);
+          console.error('Error updating image information', _context15.t0);
+          res.status(500).json({
+            message: 'Internal server error'
+          });
+
+        case 24:
         case "end":
           return _context15.stop();
       }
     }
-  });
+  }, null, null, [[6, 20]]);
 }); // API endpoint để cập nhật ảnh dựa trên code
 
 app.put('/api/image/update/:code', upload.single('file'), function _callee9(req, res) {
@@ -814,8 +851,8 @@ app.put('/api/image/update/:code', upload.single('file'), function _callee9(req,
         case 0:
           code = req.params.code;
           file = req.file;
-          imagePath = req.protocol + '://' + req.get('host') + '/' + req.file.filename;
-          console.log(imagePath);
+          console.log(file);
+          imagePath = req.protocol + '://' + req.get('host') + '/uploads/' + file.filename;
           _context16.prev = 4;
           _context16.next = 7;
           return regeneratorRuntime.awrap(oracledb.getConnection());

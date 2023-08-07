@@ -13,10 +13,10 @@ app.use(express.json());
 
 
 // Đặt đường dẫn tới thư mục uploads
-const uploadsPath = path.join(__dirname, 'src', 'app', 'core', 'uploads');
-
+const uploadsPath = path.join(__dirname, 'uploads');
+console.log('uploadsPath', uploadsPath);
 // Phục vụ các tệp ảnh từ thư mục uploads
-app.use('/uploads', express.static(uploadsPath));
+app.use('/upload', express.static(uploadsPath));
 
 
 const dbConfig = {
@@ -244,7 +244,6 @@ app.get('/api/users', async (req, res) => {
 
 // API endpoint để xóa người dùng
 
-// In your backend API (app.js or routes file)
 app.delete('/api/user/:code', async (req, res) => {
   try {
     const code = req.params.code;
@@ -350,23 +349,43 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post('/uploadfile', upload.single('file'), async (req, res) => {
+app.post('/upload', upload.single('image'), async (req, res) => {
   const file = req.file;
+  console.log('----------------', req, file);
   if (!file) {
-    const error = new Error('Please upload a file')
-    error.httpStatusCode = 400
-    return next(error)
+    res.status(400).json({ message: 'Please upload a file' });
+    return;
   }
-  res.send(file)
-  console.log(file)
-})
+
+  const imagePath = 'http://localhost:3000/upload/' + file.filename;
+
+  try {
+    const connection = await oracledb.getConnection(dbConfig);
+
+    // Câu truy vấn để cập nhật thông tin ảnh dựa trên mã (code)
+    const updateQuery = `BEGIN PTNB_Secret.UPDATE_IMG(:code, :url); END;`;
+
+    await connection.execute(updateQuery, {
+      url: imagePath,
+      code: req.body.code, 
+    });
+
+    await connection.commit();
+    await connection.close();
+
+    res.json({ message: 'Image uploaded successfully' });
+  } catch (err) {
+    console.error('Error updating image information', err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 // API endpoint để cập nhật ảnh dựa trên code
 app.put('/api/image/update/:code', upload.single('file'), async (req, res) => {
   const code = req.params.code;
   const file = req.file;
-  let imagePath = req.protocol+'://'+req.get('host')+'/'+req.file.filename;
-  console.log(imagePath)
+  console.log(file)
+  let imagePath = req.protocol+'://'+req.get('host')+'/uploads/'+ file.filename;
 
   try {
     const connection = await oracledb.getConnection();

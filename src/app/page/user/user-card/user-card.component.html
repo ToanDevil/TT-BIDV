@@ -32,63 +32,63 @@
                             <div class="field">
                                 <label>Họ và tên</label>
                                 <br>
-                                <p *ngIf="userData">{{userData.name}}</p>
+                                <p *ngIf="userData" title="{{userData.name}}">{{userData.name}}</p>
                             </div>
                             <div class="field">
                                 <label>Chức vụ</label>
                                 <br>
-                                <p>{{cardData.position}}</p>
+                                <p title="{{cardData.position}}">{{cardData.position}}</p>
                             </div>
                             <div class="field">
                                 <label>Vị trí chức danh</label>
                                 <br>
-                                <p>{{cardData.title}}</p>
+                                <p title="{{cardData.title}}">{{cardData.title}}</p>
                             </div>
                         </div>
                         <div class="field-row" style="background-color: #e5f3ff;">
                             <div class="field">
                                 <label>Công việc (sở trường)</label>
                                 <br>
-                                <p>{{cardData.forte}}</p>
+                                <p title="{{cardData.forte}}">{{cardData.forte}}</p>
                             </div>
                             <div class="field">
                                 <label>Phòng ban</label>
                                 <br>
-                                <p>{{cardData.department}}</p>
+                                <p title="{{cardData.department}}">{{cardData.department}}</p>
                             </div>
                             <div class="field">
                                 <label>Đơn vị</label>
                                 <br>
-                                <p>{{cardData.unit}}</p>
+                                <p title="{{cardData.unit}}">{{cardData.unit}}</p>
                             </div>
                         </div>
                         <div class="field-row">
                             <div class="field">
                                 <label>Số điện thoại cơ quan</label>
                                 <br>
-                                <p *ngIf="userData">{{userData.tel}}</p>
+                                <p *ngIf="userData" title="{{userData.tel}}">{{userData.tel}}</p>
                             </div>
                             <div class="field">
                                 <label>Số điện thoại di động</label>
                                 <br>
-                                <p *ngIf="userData">{{userData.phone}}</p>
+                                <p *ngIf="userData" title="{{userData.phone}}">{{userData.phone}}</p>
                             </div>
                             <div class="field">
                                 <label>Email</label>
                                 <br>
-                                <p *ngIf="userData">{{userData.email}}</p>
+                                <p *ngIf="userData" title="{{userData.email}}">{{userData.email}}</p>
                             </div>
                         </div>
                         <div class="field-row" style="background-color: #e5f3ff;">
                             <div class="field">
                                 <label>Địa chỉ</label>
                                 <br>
-                                <p *ngIf="userData">{{userData.address}}</p>
+                                <p *ngIf="userData" title="{{userData.address}}">{{userData.address}}</p>
                             </div>
                             <div class="field">
                                 <label>Nick name</label>
                                 <br>
-                                <p>{{cardData.nickname}}</p>
+                                <p title="{{cardData.nickname}}">{{cardData.nickname}}</p>
                             </div>
                             <div class="field">
                             </div>
@@ -190,6 +190,7 @@
             </div>
             <div class="body" *ngIf="!url">
                 <div class="icon-upload">
+                    <input type="file" (change) = "onFileSelected($event)">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                 </div>
                 <h4>Chọn một file hoặc kéo thả tệp tại đây</h4>

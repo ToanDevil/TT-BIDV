@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from 'src/app/page/user/user';
 import { Card } from 'src/app/page/user/user-card/card';
+import { Image } from 'src/app/page/image';
 import { UserService } from './user.service';
 
 
@@ -13,8 +14,10 @@ export class DataService {
   // userData$ = this.userDataSubject.asObservable();
   private userDataSubject: BehaviorSubject<User | undefined>;
   private cardDataSubject: BehaviorSubject<Card | undefined>;
+  private imageDataSubject: BehaviorSubject<Image | undefined>;
   userData$: Observable<User | undefined>;
   cardData$: Observable<Card | undefined>;
+  imageData$: Observable<Image | undefined>;
 
   constructor() {
     const userDataFromLocalStorage = JSON.parse(localStorage.getItem('userData') || 'null');
@@ -24,6 +27,10 @@ export class DataService {
     const cardDataFromLocalStorage = JSON.parse(localStorage.getItem('cardData') || 'null');
     this.cardDataSubject = new BehaviorSubject<Card | undefined>(cardDataFromLocalStorage);
     this.cardData$ = this.cardDataSubject.asObservable();
+
+    const imageDataFromLocalStorage = JSON.parse(localStorage.getItem('imageData') || 'null');
+    this.imageDataSubject = new BehaviorSubject<Image | undefined>(imageDataFromLocalStorage);
+    this.imageData$ = this.imageDataSubject.asObservable();
   }
 
   setUserData(userData: User): void {
@@ -36,5 +43,10 @@ export class DataService {
     this.cardDataSubject.next(cardData);
     // lưu trữ dữ liệu vào local storage
     localStorage.setItem('cardData', JSON.stringify(cardData));
+  }
+
+  setImgData(imageData: Image): void {
+    this.imageDataSubject.next(imageData);
+    localStorage.setItem('imageData', JSON.stringify(imageData));
   }
 }

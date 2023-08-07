@@ -10,13 +10,15 @@ import { Image } from '../page/image'
 })
 export class PageComponent implements OnInit {
   // click icon
-  id: string = '41';
+  id: string = '1';
   activeIcon: string = 'Icon1';
   imageData: Image | undefined;
+  search: any;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private activeRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -25,10 +27,10 @@ export class PageComponent implements OnInit {
     if (storedIcon) {
       this.activeIcon = storedIcon;
     }
-    // this.route.params.subscribe(params => {
-    //   this.id = params['id'];
-    //   //console.log(this.id); // Kiểm tra xem id đã nhận được từ URL hay không
-    // });
+    // this.activeRoute.paramMap.subscribe(param => {
+    //   this.id = (param as any).params['id'];
+    //   // console.log(this.id)
+    // })
     this.userService.getImage(this.id).subscribe(imageData => {
       this.imageData = imageData;
       console.log(this.imageData)

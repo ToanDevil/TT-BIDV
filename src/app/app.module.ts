@@ -16,6 +16,7 @@ import { UserComponent } from './page/user/user.component';
 
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { ToastrModule, provideToastr } from 'ngx-toastr';
+import { FilterPipe } from './core/pipe/filter.pipe';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { ToastrModule, provideToastr } from 'ngx-toastr';
     UserCardComponent,
     UserInfoComponent,
     UserComponent,
+    FilterPipe,
   ],
   imports: [
     BrowserModule,

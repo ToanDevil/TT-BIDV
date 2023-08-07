@@ -7,11 +7,11 @@ import { UserEvalComponent } from './user-eval.component';
 
 @NgModule({
   declarations: [
-    UserEvalComponent
+    UserEvalComponent, 
   ],
   imports: [
     CommonModule,
-    UserEvalRoutingModule
+    UserEvalRoutingModule,
   ]
 })
 export class UserEvalModule { }

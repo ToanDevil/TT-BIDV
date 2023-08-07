@@ -173,31 +173,36 @@ export class UserCardComponent {
     }
   }
 
+
   saveImage(): void {
+    if (!this.image) {
+      console.error('No image selected');
+      return;
+    }
     const formData = new FormData();
-    formData.append('file', this.image);
-    console.log(formData)
-
-    this.url = undefined;
-
-    if (this.imageData) {
-      this.userService.updateImage(this.imageData?.code, formData).subscribe(
-        (response) => {
+    formData.append('image', this.image);
+    if(this.imageData){
+      formData.append('code', this.imageData.code);
+      console.log(formData)
+    }
+    this.userService.uploadImage(formData).subscribe(
+      (response) => {
           this.getImage(this.id);
           console.log('Image updated successfully', response);
           this.closeEdit();
           // Xử lý khi ảnh đã được cập nhật thành công
-        },
-        (error) => {
-          console.error('Error updating image', error);
-          // Xử lý khi gặp lỗi khi cập nhật ảnh
-        }
-      );
-    }
+      },
+      (error) => {
+        console.error('Error uploading image:', error);
+        // Handle the error if needed
+      }
+    )
   }
+  
 
   closePopup(): void {
     // Implement code to close the popup here
-    this.url = undefined
+    this.url = undefined;
+    this.editImg = true;
   }
 }

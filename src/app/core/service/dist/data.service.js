@@ -17,6 +17,9 @@ var DataService = /** @class */ (function () {
         var cardDataFromLocalStorage = JSON.parse(localStorage.getItem('cardData') || 'null');
         this.cardDataSubject = new rxjs_1.BehaviorSubject(cardDataFromLocalStorage);
         this.cardData$ = this.cardDataSubject.asObservable();
+        var imageDataFromLocalStorage = JSON.parse(localStorage.getItem('imageData') || 'null');
+        this.imageDataSubject = new rxjs_1.BehaviorSubject(imageDataFromLocalStorage);
+        this.imageData$ = this.imageDataSubject.asObservable();
     }
     DataService.prototype.setUserData = function (userData) {
         this.userDataSubject.next(userData);
@@ -27,6 +30,10 @@ var DataService = /** @class */ (function () {
         this.cardDataSubject.next(cardData);
         // lưu trữ dữ liệu vào local storage
         localStorage.setItem('cardData', JSON.stringify(cardData));
+    };
+    DataService.prototype.setImgData = function (imageData) {
+        this.imageDataSubject.next(imageData);
+        localStorage.setItem('imageData', JSON.stringify(imageData));
     };
     DataService = __decorate([
         core_1.Injectable({

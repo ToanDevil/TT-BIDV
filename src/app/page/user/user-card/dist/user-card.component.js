@@ -142,26 +142,30 @@ var UserCardComponent = /** @class */ (function () {
     };
     UserCardComponent.prototype.saveImage = function () {
         var _this = this;
-        var _a;
-        var formData = new FormData();
-        formData.append('file', this.image);
-        console.log(formData);
-        this.url = undefined;
-        if (this.imageData) {
-            this.userService.updateImage((_a = this.imageData) === null || _a === void 0 ? void 0 : _a.code, formData).subscribe(function (response) {
-                _this.getImage(_this.id);
-                console.log('Image updated successfully', response);
-                _this.closeEdit();
-                // Xử lý khi ảnh đã được cập nhật thành công
-            }, function (error) {
-                console.error('Error updating image', error);
-                // Xử lý khi gặp lỗi khi cập nhật ảnh
-            });
+        if (!this.image) {
+            console.error('No image selected');
+            return;
         }
+        var formData = new FormData();
+        formData.append('image', this.image);
+        if (this.imageData) {
+            formData.append('code', this.imageData.code);
+            console.log(formData);
+        }
+        this.userService.uploadImage(formData).subscribe(function (response) {
+            _this.getImage(_this.id);
+            console.log('Image updated successfully', response);
+            _this.closeEdit();
+            // Xử lý khi ảnh đã được cập nhật thành công
+        }, function (error) {
+            console.error('Error uploading image:', error);
+            // Handle the error if needed
+        });
     };
     UserCardComponent.prototype.closePopup = function () {
         // Implement code to close the popup here
         this.url = undefined;
+        this.editImg = true;
     };
     UserCardComponent = __decorate([
         core_1.Component({

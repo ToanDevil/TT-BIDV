@@ -23,6 +23,7 @@ var user_info_component_1 = require("./page/user/user-info/user-info.component")
 var user_component_1 = require("./page/user/user.component");
 var animations_1 = require("@angular/platform-browser/animations");
 var ngx_toastr_1 = require("ngx-toastr");
+var filter_pipe_1 = require("./core/pipe/filter.pipe");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -34,6 +35,7 @@ var AppModule = /** @class */ (function () {
                 user_card_component_1.UserCardComponent,
                 user_info_component_1.UserInfoComponent,
                 user_component_1.UserComponent,
+                filter_pipe_1.FilterPipe,
             ],
             imports: [
                 platform_browser_1.BrowserModule,

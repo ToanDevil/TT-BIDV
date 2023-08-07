@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UserService } from 'src/app/core/service/user.service';
 import { User } from '../user';
 
@@ -20,6 +20,14 @@ export class UserEvalComponent {
   constructor (
     private userService: UserService
   ){}
+
+  @Input() searchValue: string = '';
+  searchResult: string = '';
+
+  ngOnChanges() {
+    // Thực hiện tìm kiếm với dữ liệu trong this.searchValue
+    this.searchResult = 'Kết quả tìm kiếm với: ' + this.searchValue;
+  }
 
   ngOnInit(){
     this.userService.getListUser().subscribe(

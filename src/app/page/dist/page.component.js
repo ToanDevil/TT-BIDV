@@ -9,10 +9,11 @@ exports.__esModule = true;
 exports.PageComponent = void 0;
 var core_1 = require("@angular/core");
 var PageComponent = /** @class */ (function () {
-    function PageComponent(route, router, userService) {
+    function PageComponent(route, router, userService, activeRoute) {
         this.route = route;
         this.router = router;
         this.userService = userService;
+        this.activeRoute = activeRoute;
         // click icon
         this.id = '1';
         this.activeIcon = 'Icon1';
@@ -24,10 +25,10 @@ var PageComponent = /** @class */ (function () {
         if (storedIcon) {
             this.activeIcon = storedIcon;
         }
-        // this.route.params.subscribe(params => {
-        //   this.id = params['id'];
-        //   //console.log(this.id); // Kiểm tra xem id đã nhận được từ URL hay không
-        // });
+        // this.activeRoute.paramMap.subscribe(param => {
+        //   this.id = (param as any).params['id'];
+        //   // console.log(this.id)
+        // })
         this.userService.getImage(this.id).subscribe(function (imageData) {
             _this.imageData = imageData;
             console.log(_this.imageData);
