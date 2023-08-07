@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../core/service/user.service';
 import { Image } from '../page/image'
@@ -24,7 +24,7 @@ export class PageComponent implements OnInit {
   ngOnInit(): void {
     // Kiểm tra nếu đã lưu giá trị activeIcon trong Local Storage
     const storedIcon = localStorage.getItem('activeIcon');
-    if (storedIcon) {
+    if(storedIcon){
       this.activeIcon = storedIcon;
     }
     // this.activeRoute.paramMap.subscribe(param => {
@@ -42,7 +42,7 @@ export class PageComponent implements OnInit {
     this.activeIcon = Icon;
     // Lưu giá trị activeIcon vào Local Storage
     localStorage.setItem('activeIcon', Icon);
-    if (check === '1') {
+    if (check === '4') {
       this.router.navigate(['/page/user/' + this.id + '/' + url + '/' + this.id]);
     }
     else {

@@ -152,6 +152,8 @@ export class UserCardComponent {
   url: string | undefined;
   urlImg!: string;
   image: any;
+  zoomLevel: number = 100;
+  zoomStyle: string = '';
 
   getImage(id: string){
     this.userService.getImage(id).subscribe(imageData => {
@@ -173,6 +175,24 @@ export class UserCardComponent {
     }
   }
 
+  zoomIn() {
+    this.zoomLevel += 10;
+    this.updateZoomStyle();
+  }
+
+  zoomOut() {
+    this.zoomLevel -= 10;
+    this.updateZoomStyle();
+  }
+
+  private updateZoomStyle() {
+    this.zoomStyle = `scale(${this.zoomLevel / 100})`;
+  }
+
+  updateZoom() {
+    this.zoomStyle = `scale(${this.zoomLevel / 100})`;
+  }
+
 
   saveImage(): void {
     if (!this.image) {
@@ -190,6 +210,7 @@ export class UserCardComponent {
           this.getImage(this.id);
           console.log('Image updated successfully', response);
           this.closeEdit();
+          this.toastr.success('Cập nhật thành công!');
           // Xử lý khi ảnh đã được cập nhật thành công
       },
       (error) => {

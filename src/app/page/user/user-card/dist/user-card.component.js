@@ -31,6 +31,8 @@ var UserCardComponent = /** @class */ (function () {
         this.showForm = true;
         this.editImg = true;
         this.selectedFile = null;
+        this.zoomLevel = 100;
+        this.zoomStyle = '';
     }
     UserCardComponent.prototype.initForm = function () {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
@@ -140,6 +142,20 @@ var UserCardComponent = /** @class */ (function () {
             reader.readAsDataURL(file);
         }
     };
+    UserCardComponent.prototype.zoomIn = function () {
+        this.zoomLevel += 10;
+        this.updateZoomStyle();
+    };
+    UserCardComponent.prototype.zoomOut = function () {
+        this.zoomLevel -= 10;
+        this.updateZoomStyle();
+    };
+    UserCardComponent.prototype.updateZoomStyle = function () {
+        this.zoomStyle = "scale(" + this.zoomLevel / 100 + ")";
+    };
+    UserCardComponent.prototype.updateZoom = function () {
+        this.zoomStyle = "scale(" + this.zoomLevel / 100 + ")";
+    };
     UserCardComponent.prototype.saveImage = function () {
         var _this = this;
         if (!this.image) {
@@ -156,6 +172,7 @@ var UserCardComponent = /** @class */ (function () {
             _this.getImage(_this.id);
             console.log('Image updated successfully', response);
             _this.closeEdit();
+            _this.toastr.success('Cập nhật thành công!');
             // Xử lý khi ảnh đã được cập nhật thành công
         }, function (error) {
             console.error('Error uploading image:', error);

@@ -180,7 +180,7 @@ async function getImage(code){
   }
 }
 
-// API endpoint để lấy thông tin người dùng và thẻ dựa trên ID
+// API endpoint để lấy thông tin người dùng, thẻ dựa trên ID
 app.get('/api/user/:id', async (req, res) => {
   const id = req.params.id;
 

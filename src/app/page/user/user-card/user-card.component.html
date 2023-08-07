@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="user-card__content">
-            <div class="user-card__image" *ngIf = "imageData">
+            <div class="user-card__image" *ngIf="imageData">
                 <img [src]="imageData.url" alt="Avatar" class="header-avatar" (error)="onImageError()">
                 <div class="img-change">
                     <a (click)="openEdit()"><i class="fa-solid fa-pen"></i></a>
@@ -16,7 +16,7 @@
                     <p>Đang vắng mặt</p>
                 </div>
             </div>
-            <div class="user-card__image" *ngIf = "!imageData">
+            <div class="user-card__image" *ngIf="!imageData">
                 <img src="/assets/images/avatar.jpg" alt="Avatar" class="header-avatar">
                 <div class="img-change">
                     <a (click)="openEdit()"><i class="fa-solid fa-pen"></i></a>
@@ -102,13 +102,13 @@
 
 
 <!-- Cập nhật thông tin -->
-<div class="overlay" *ngIf = "!showForm">
+<div class="overlay" *ngIf="!showForm">
     <div class="form-wrapper">
         <div class="title">
             <span class="form-title">Thẻ thông tin cá nhân</span>
             <a (click)="closeForm()"> <span class="close-button">X</span> </a><!-- Close (x) button -->
         </div>
-        <form [formGroup]= "userForm" (ngSubmit)="saveData()">
+        <form [formGroup]="userForm" (ngSubmit)="saveData()">
             <div class="form-row">
                 <div class="form-group">
                     <label for="name">Họ và tên:</label>
@@ -167,7 +167,7 @@
             </div>
 
             <div class="form-actions">
-                <button type="button" class="cancel-button" (click) = "cancel()">Hủy</button>
+                <button type="button" class="cancel-button" (click)="cancel()">Hủy</button>
                 <button type="submit" class="save-button">Lưu thông tin</button>
             </div>
         </form>
@@ -177,7 +177,7 @@
 
 
 <!-- Cập nhật ahr đại diện -->
-<div class="overlay" *ngIf = "!editImg">
+<div class="overlay" *ngIf="!editImg">
     <div class="form-wrapper">
         <div class="title">
             <span class="form-title">Thay đổi ảnh đại diện</span>
@@ -190,7 +190,7 @@
             </div>
             <div class="body" *ngIf="!url">
                 <div class="icon-upload">
-                    <input type="file" (change) = "onFileSelected($event)">
+                    <input type="file" (change)="onFileSelected($event)">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                 </div>
                 <h4>Chọn một file hoặc kéo thả tệp tại đây</h4>
@@ -198,8 +198,13 @@
                 <br>
                 <input type="file" (change)="onFileSelected($event)">
             </div>
-            <div class="body" *ngIf = "url">
-                <img [src]="url" alt="">
+            <div class="body" *ngIf="url">
+                <div class="zoom-wrapper">
+                    <img [src]="url" [style.transform]="zoomStyle" alt="">
+                  </div>
+                  <div class="zoom-controls">
+                    <input type="range" min="50" max="200" step="10" [(ngModel)]="zoomLevel" (input)="updateZoom()">
+                  </div>
             </div>
             <div class="footer">
                 <button type="button" class="cancel-button" (click)="closePopup()">Hủy</button>
@@ -210,4 +215,3 @@
 </div>
 
 <router-outlet></router-outlet>
-

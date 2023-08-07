@@ -398,7 +398,7 @@ function getImage(code) {
       }
     }
   }, null, null, [[0, 18]]);
-} // API endpoint để lấy thông tin người dùng và thẻ dựa trên ID
+} // API endpoint để lấy thông tin người dùng, thẻ dựa trên ID
 
 
 app.get('/api/user/:id', function _callee(req, res) {

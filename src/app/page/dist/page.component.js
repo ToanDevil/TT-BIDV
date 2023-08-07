@@ -38,7 +38,7 @@ var PageComponent = /** @class */ (function () {
         this.activeIcon = Icon;
         // Lưu giá trị activeIcon vào Local Storage
         localStorage.setItem('activeIcon', Icon);
-        if (check === '1') {
+        if (check === '4') {
             this.router.navigate(['/page/user/' + this.id + '/' + url + '/' + this.id]);
         }
         else {

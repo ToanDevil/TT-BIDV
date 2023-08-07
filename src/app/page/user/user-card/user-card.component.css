@@ -337,8 +337,33 @@ a {
     flex-direction: row;
 }
 
+/* zoom ảnh */
+
+.zoom-wrapper {
+    width: 200px;
+    /* Set the fixed width for the zoomed image */
+    height: 200px;
+    /* Set the fixed height for the zoomed image */
+    overflow: hidden;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+    transition: transform 0.2s;
+}
+
+.zoom-controls {
+    margin-top: 10px;
+}
+
+input[type="range"] {
+    width: 200px;
+    /* Set the width for the zoom range input */
+}
+
 .icon-upload {
-    position:relative;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
