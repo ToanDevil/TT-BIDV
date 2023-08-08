@@ -768,7 +768,7 @@ app.put('/api/card/update/:code', function _callee7(req, res) {
 });
 var storage = multer.diskStorage({
   destination: function destination(req, file, cb) {
-    cb(null, 'uploads');
+    cb(null, 'src/app/core/uploads');
   },
   filename: function filename(req, file, cb) {
     cb(null, Date.now() + '-' + file.originalname);
