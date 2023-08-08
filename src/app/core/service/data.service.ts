@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { User } from 'src/app/page/user/user';
 import { Card } from 'src/app/page/user/user-card/card';
 import { Image } from 'src/app/page/image';
@@ -48,5 +48,12 @@ export class DataService {
   setImgData(imageData: Image): void {
     this.imageDataSubject.next(imageData);
     localStorage.setItem('imageData', JSON.stringify(imageData));
+  }
+
+  private imageUpdatedSource = new Subject<void>();
+  imageUpdated$ = this.imageUpdatedSource.asObservable();
+
+  updateImage() {
+    this.imageUpdatedSource.next();
   }
 }

@@ -173,6 +173,7 @@ var UserCardComponent = /** @class */ (function () {
             console.log('Image updated successfully', response);
             _this.closeEdit();
             _this.toastr.success('Cập nhật thành công!');
+            _this.dataService.updateImage();
             // Xử lý khi ảnh đã được cập nhật thành công
         }, function (error) {
             console.error('Error uploading image:', error);

@@ -11,6 +11,8 @@ var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
 var DataService = /** @class */ (function () {
     function DataService() {
+        this.imageUpdatedSource = new rxjs_1.Subject();
+        this.imageUpdated$ = this.imageUpdatedSource.asObservable();
         var userDataFromLocalStorage = JSON.parse(localStorage.getItem('userData') || 'null');
         this.userDataSubject = new rxjs_1.BehaviorSubject(userDataFromLocalStorage);
         this.userData$ = this.userDataSubject.asObservable();
@@ -34,6 +36,9 @@ var DataService = /** @class */ (function () {
     DataService.prototype.setImgData = function (imageData) {
         this.imageDataSubject.next(imageData);
         localStorage.setItem('imageData', JSON.stringify(imageData));
+    };
+    DataService.prototype.updateImage = function () {
+        this.imageUpdatedSource.next();
     };
     DataService = __decorate([
         core_1.Injectable({

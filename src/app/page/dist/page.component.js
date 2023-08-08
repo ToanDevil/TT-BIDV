@@ -9,13 +9,14 @@ exports.__esModule = true;
 exports.PageComponent = void 0;
 var core_1 = require("@angular/core");
 var PageComponent = /** @class */ (function () {
-    function PageComponent(route, router, userService, activeRoute) {
+    function PageComponent(route, router, userService, activeRoute, dataService) {
         this.route = route;
         this.router = router;
         this.userService = userService;
         this.activeRoute = activeRoute;
+        this.dataService = dataService;
         // click icon
-        this.id = '1';
+        this.id = '41';
         this.activeIcon = 'Icon1';
     }
     PageComponent.prototype.ngOnInit = function () {
@@ -25,10 +26,18 @@ var PageComponent = /** @class */ (function () {
         if (storedIcon) {
             this.activeIcon = storedIcon;
         }
+        else {
+            this.activeIcon = 'Icon1';
+        }
         // this.activeRoute.paramMap.subscribe(param => {
         //   this.id = (param as any).params['id'];
         //   // console.log(this.id)
         // })
+        this.dataService.imageUpdated$.subscribe(function () {
+            _this.userService.getImage(_this.id).subscribe(function (imageData) {
+                _this.imageData = imageData;
+            });
+        });
         this.userService.getImage(this.id).subscribe(function (imageData) {
             _this.imageData = imageData;
             console.log(_this.imageData);

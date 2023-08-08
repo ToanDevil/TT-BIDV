@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataService } from '../core/service/data.service';
 import { UserService } from '../core/service/user.service';
 import { Image } from '../page/image'
 
@@ -10,7 +11,7 @@ import { Image } from '../page/image'
 })
 export class PageComponent implements OnInit {
   // click icon
-  id: string = '1';
+  id: string = '41';
   activeIcon: string = 'Icon1';
   imageData: Image | undefined;
   search: any;
@@ -18,7 +19,8 @@ export class PageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private dataService: DataService,
   ) { }
 
   ngOnInit(): void {
@@ -26,11 +28,18 @@ export class PageComponent implements OnInit {
     const storedIcon = localStorage.getItem('activeIcon');
     if(storedIcon){
       this.activeIcon = storedIcon;
+    } else {
+      this.activeIcon = 'Icon1';
     }
     // this.activeRoute.paramMap.subscribe(param => {
     //   this.id = (param as any).params['id'];
     //   // console.log(this.id)
     // })
+    this.dataService.imageUpdated$.subscribe(() => {
+      this.userService.getImage(this.id).subscribe(imageData => {
+        this.imageData = imageData;
+      })
+    })
     this.userService.getImage(this.id).subscribe(imageData => {
       this.imageData = imageData;
       console.log(this.imageData)

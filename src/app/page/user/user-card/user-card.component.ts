@@ -211,6 +211,7 @@ export class UserCardComponent {
           console.log('Image updated successfully', response);
           this.closeEdit();
           this.toastr.success('Cập nhật thành công!');
+          this.dataService.updateImage();
           // Xử lý khi ảnh đã được cập nhật thành công
       },
       (error) => {
