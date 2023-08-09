@@ -34,7 +34,7 @@ app.use(express.json()); // Đặt đường dẫn tới thư mục uploads
 var uploadsPath = path.join(__dirname, 'uploads');
 console.log('uploadsPath', uploadsPath); // Phục vụ các tệp ảnh từ thư mục uploads
 
-app.use('/upload', express["static"](uploadsPath));
+app.use('/avatar', express["static"](uploadsPath));
 var dbConfig = {
   user: 'admin',
   password: 'Admin1',
@@ -629,7 +629,7 @@ app.get('/api/card/:id', function _callee4(req, res) {
       }
     }
   }, null, null, [[1, 14]]);
-}); //API endpoint để lấy thông tin ảnh người dùng
+}); //API endpoint để lấy thông tin ảnh người 
 
 app.get('/api/user/image/:id', function _callee5(req, res) {
   var id, userData, imageData;
@@ -776,7 +776,8 @@ var storage = multer.diskStorage({
 });
 var upload = multer({
   storage: storage
-});
+}); // api endpoint upload và update ảnh.
+
 app.post('/upload', upload.single('image'), function _callee8(req, res) {
   var file, imagePath, connection, updateQuery;
   return regeneratorRuntime.async(function _callee8$(_context15) {
@@ -797,7 +798,7 @@ app.post('/upload', upload.single('image'), function _callee8(req, res) {
           return _context15.abrupt("return");
 
         case 5:
-          imagePath = 'http://localhost:3000/upload/' + file.filename;
+          imagePath = 'avatar/' + file.filename;
           _context15.prev = 6;
           _context15.next = 9;
           return regeneratorRuntime.awrap(oracledb.getConnection(dbConfig));
@@ -841,80 +842,25 @@ app.post('/upload', upload.single('image'), function _callee8(req, res) {
       }
     }
   }, null, null, [[6, 20]]);
-}); // API endpoint để cập nhật ảnh dựa trên code
+}); // API endpoint để thêm người dùng
 
-app.put('/api/image/update/:code', upload.single('file'), function _callee9(req, res) {
-  var code, file, imagePath, connection, updateQuery;
+app.post('/api/users', function _callee9(req, res) {
+  var _req$body3, code, name, email, address, phone, tel, connection, insertQuery;
+
   return regeneratorRuntime.async(function _callee9$(_context16) {
     while (1) {
       switch (_context16.prev = _context16.next) {
         case 0:
-          code = req.params.code;
-          file = req.file;
-          console.log(file);
-          imagePath = req.protocol + '://' + req.get('host') + '/uploads/' + file.filename;
-          _context16.prev = 4;
-          _context16.next = 7;
-          return regeneratorRuntime.awrap(oracledb.getConnection());
-
-        case 7:
-          connection = _context16.sent;
-          // Câu truy vấn để cập nhật thông tin ảnh dựa trên mã (code)
-          updateQuery = "BEGIN PTNB_Secret.UPDATE_IMG(:code, :url); END;";
-          _context16.next = 11;
-          return regeneratorRuntime.awrap(connection.execute(updateQuery, {
-            code: code,
-            url: imagePath
-          }));
-
-        case 11:
-          _context16.next = 13;
-          return regeneratorRuntime.awrap(connection.commit());
-
-        case 13:
-          _context16.next = 15;
-          return regeneratorRuntime.awrap(connection.close());
-
-        case 15:
-          res.json({
-            message: 'Image information updated successfully'
-          });
-          _context16.next = 22;
-          break;
-
-        case 18:
-          _context16.prev = 18;
-          _context16.t0 = _context16["catch"](4);
-          console.error('Error updating image information', _context16.t0);
-          res.status(500).json({
-            message: 'Internal server error'
-          });
-
-        case 22:
-        case "end":
-          return _context16.stop();
-      }
-    }
-  }, null, null, [[4, 18]]);
-}); // API endpoint để thêm người dùng
-
-app.post('/api/users', function _callee10(req, res) {
-  var _req$body3, code, name, email, address, phone, tel, connection, insertQuery;
-
-  return regeneratorRuntime.async(function _callee10$(_context17) {
-    while (1) {
-      switch (_context17.prev = _context17.next) {
-        case 0:
           _req$body3 = req.body, code = _req$body3.code, name = _req$body3.name, email = _req$body3.email, address = _req$body3.address, phone = _req$body3.phone, tel = _req$body3.tel;
-          _context17.prev = 1;
-          _context17.next = 4;
+          _context16.prev = 1;
+          _context16.next = 4;
           return regeneratorRuntime.awrap(oracledb.getConnection());
 
         case 4:
-          connection = _context17.sent;
+          connection = _context16.sent;
           // Câu truy vấn để thêm người dùng vào bảng người dùng
           insertQuery = "BEGIN PTNB_SECRET.INSERT_USER(:code, :name, :email, :address, :phone, :tel); END;";
-          _context17.next = 8;
+          _context16.next = 8;
           return regeneratorRuntime.awrap(connection.execute(insertQuery, {
             code: code,
             name: name,
@@ -925,31 +871,31 @@ app.post('/api/users', function _callee10(req, res) {
           }));
 
         case 8:
-          _context17.next = 10;
+          _context16.next = 10;
           return regeneratorRuntime.awrap(connection.commit());
 
         case 10:
-          _context17.next = 12;
+          _context16.next = 12;
           return regeneratorRuntime.awrap(connection.close());
 
         case 12:
           res.json({
             message: 'User added successfully'
           });
-          _context17.next = 19;
+          _context16.next = 19;
           break;
 
         case 15:
-          _context17.prev = 15;
-          _context17.t0 = _context17["catch"](1);
-          console.error('Error adding user:', _context17.t0);
+          _context16.prev = 15;
+          _context16.t0 = _context16["catch"](1);
+          console.error('Error adding user:', _context16.t0);
           res.status(500).json({
             message: 'Internal server error'
           });
 
         case 19:
         case "end":
-          return _context17.stop();
+          return _context16.stop();
       }
     }
   }, null, null, [[1, 15]]);

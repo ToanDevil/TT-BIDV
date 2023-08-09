@@ -89,9 +89,4 @@ export class UserService {
       const url = `http://localhost:3000/upload`;
       return this.http.post(url, formData);
     }
-
-    updateImage(code: string, imageUrl: string): Observable<any> {
-      const url = `http://localhost:3000/api/image/update/${code}`;
-      return this.http.put(url, { url: imageUrl });
-    }
   }

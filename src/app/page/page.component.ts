@@ -14,6 +14,7 @@ export class PageComponent implements OnInit {
   id: string = '41';
   activeIcon: string = 'Icon1';
   imageData: Image | undefined;
+  domainImage: string = 'http://localhost:3000/';
   search: any;
   constructor(
     private route: ActivatedRoute,
@@ -41,7 +42,7 @@ export class PageComponent implements OnInit {
       })
     })
     this.userService.getImage(this.id).subscribe(imageData => {
-      this.imageData = imageData;
+      this.imageData =  imageData;
       console.log(this.imageData)
     })
   }

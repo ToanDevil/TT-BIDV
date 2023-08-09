@@ -71,10 +71,6 @@ var UserService = /** @class */ (function () {
         var url = "http://localhost:3000/upload";
         return this.http.post(url, formData);
     };
-    UserService.prototype.updateImage = function (code, imageUrl) {
-        var url = "http://localhost:3000/api/image/update/" + code;
-        return this.http.put(url, { url: imageUrl });
-    };
     UserService = __decorate([
         core_1.Injectable({
             providedIn: 'root'

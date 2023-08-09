@@ -16,7 +16,7 @@ app.use(express.json());
 const uploadsPath = path.join(__dirname, 'uploads');
 console.log('uploadsPath', uploadsPath);
 // Phục vụ các tệp ảnh từ thư mục uploads
-app.use('/upload', express.static(uploadsPath));
+app.use('/avatar', express.static(uploadsPath));
 
 
 const dbConfig = {
@@ -282,7 +282,7 @@ app.get('/api/card/:id', async(req, res) => {
   }
 });
 
-//API endpoint để lấy thông tin ảnh người dùng
+//API endpoint để lấy thông tin ảnh người 
 app.get('/api/user/image/:id', async (req, res) => {
   const id = req.params.id;
 
@@ -344,11 +344,13 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + '-' + file.originalname);
-  }
+  },
 });
 
 const upload = multer({ storage: storage });
 
+
+// api endpoint upload và update ảnh.
 app.post('/upload', upload.single('image'), async (req, res) => {
   const file = req.file;
   console.log('----------------', req, file);
@@ -357,7 +359,7 @@ app.post('/upload', upload.single('image'), async (req, res) => {
     return;
   }
 
-  const imagePath = 'http://localhost:3000/upload/' + file.filename;
+  const imagePath = 'avatar/' + file.filename;
 
   try {
     const connection = await oracledb.getConnection(dbConfig);
@@ -374,33 +376,6 @@ app.post('/upload', upload.single('image'), async (req, res) => {
     await connection.close();
 
     res.json({ message: 'Image uploaded successfully' });
-  } catch (err) {
-    console.error('Error updating image information', err);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
-
-// API endpoint để cập nhật ảnh dựa trên code
-app.put('/api/image/update/:code', upload.single('file'), async (req, res) => {
-  const code = req.params.code;
-  const file = req.file;
-  console.log(file)
-  let imagePath = req.protocol+'://'+req.get('host')+'/uploads/'+ file.filename;
-
-  try {
-    const connection = await oracledb.getConnection();
-
-    // Câu truy vấn để cập nhật thông tin ảnh dựa trên mã (code)
-    const updateQuery = `BEGIN PTNB_Secret.UPDATE_IMG(:code, :url); END;`;
-
-    await connection.execute(updateQuery, {
-      code: code,
-      url: imagePath,
-    });
-    await connection.commit();
-    await connection.close();
-
-    res.json({ message: 'Image information updated successfully' });
   } catch (err) {
     console.error('Error updating image information', err);
     res.status(500).json({ message: 'Internal server error' });

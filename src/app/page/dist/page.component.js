@@ -18,6 +18,7 @@ var PageComponent = /** @class */ (function () {
         // click icon
         this.id = '41';
         this.activeIcon = 'Icon1';
+        this.domainImage = 'http://localhost:3000/';
     }
     PageComponent.prototype.ngOnInit = function () {
         var _this = this;

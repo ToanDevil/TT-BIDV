@@ -19,12 +19,14 @@ export class UserCardComponent {
   userData: User | undefined;
   cardData: Card | undefined;
   imageData: Image | undefined;
+  domainImage: string = 'http://localhost:3000/';
   userForm!: FormGroup;
   code: string | undefined;
   id!: string;
   showForm: boolean = true;
   editImg: boolean = true;
   selectedFile: File | null = null;
+
 
   constructor(
     private userService: UserService,
@@ -89,7 +91,7 @@ export class UserCardComponent {
   }
 
   saveData() {
-    if (this.userData && this.userData.code || this.cardData || this.id ) {
+    if (this.userData && this.userData.code || this.cardData || this.id) {
       const code = this.userData?.code
       // Update user information
       const updatedUser = {
@@ -155,7 +157,7 @@ export class UserCardComponent {
   zoomLevel: number = 100;
   zoomStyle: string = '';
 
-  getImage(id: string){
+  getImage(id: string) {
     this.userService.getImage(id).subscribe(imageData => {
       this.imageData = imageData;
     })
@@ -163,16 +165,25 @@ export class UserCardComponent {
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0]; // Lấy tệp đã chọn từ sự kiện
-    this.image = file;
-    // Sử dụng FileReader để đọc nội dung tệp
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      // Nội dung của tệp được đọc sẽ nằm trong e.target.result
-      this.url = e.target.result; // Lưu nội dung (data URL) vào biến url
-    };
-    if (file) {
+    if (this.isValidImageFile(file)) {
+      this.image = file;
+      // Sử dụng FileReader để đọc nội dung tệp
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        // Nội dung của tệp được đọc sẽ nằm trong e.target.result
+        this.url = e.target.result; // Lưu nội dung (data URL) vào biến url
+      };
       reader.readAsDataURL(file);
+    } else {
+      // Hiển thị thông báo yêu cầu người dùng chọn file đúng định dạng
+      alert('Vui lòng chọn file hình ảnh có định dạng JPG, JPEG, BMP, PNG, SVG.');
     }
+  }
+
+  isValidImageFile(file: File): boolean {
+    // Mảng chứa các định dạng hợp lệ
+    const validFormats = ['image/jpeg', 'image/png', 'image/bmp', 'image/svg+xml', 'image/jpg']
+    return validFormats.includes(file.type)
   }
 
   zoomIn() {
@@ -201,18 +212,18 @@ export class UserCardComponent {
     }
     const formData = new FormData();
     formData.append('image', this.image);
-    if(this.imageData){
+    if (this.imageData) {
       formData.append('code', this.imageData.code);
       console.log(formData)
     }
     this.userService.uploadImage(formData).subscribe(
       (response) => {
-          this.getImage(this.id);
-          console.log('Image updated successfully', response);
-          this.closeEdit();
-          this.toastr.success('Cập nhật thành công!');
-          this.dataService.updateImage();
-          // Xử lý khi ảnh đã được cập nhật thành công
+        this.getImage(this.id);
+        console.log('Image updated successfully', response);
+        this.closeEdit();
+        this.toastr.success('Cập nhật thành công!');
+        this.dataService.updateImage();
+        // Xử lý khi ảnh đã được cập nhật thành công
       },
       (error) => {
         console.error('Error uploading image:', error);
@@ -220,7 +231,7 @@ export class UserCardComponent {
       }
     )
   }
-  
+
 
   closePopup(): void {
     // Implement code to close the popup here

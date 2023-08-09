@@ -28,6 +28,7 @@ var UserCardComponent = /** @class */ (function () {
         this.router = router;
         this.toastr = toastr;
         this.formBuilder = formBuilder;
+        this.domainImage = 'http://localhost:3000/';
         this.showForm = true;
         this.editImg = true;
         this.selectedFile = null;
@@ -131,16 +132,25 @@ var UserCardComponent = /** @class */ (function () {
     UserCardComponent.prototype.onFileSelected = function (event) {
         var _this = this;
         var file = event.target.files[0]; // Lấy tệp đã chọn từ sự kiện
-        this.image = file;
-        // Sử dụng FileReader để đọc nội dung tệp
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            // Nội dung của tệp được đọc sẽ nằm trong e.target.result
-            _this.url = e.target.result; // Lưu nội dung (data URL) vào biến url
-        };
-        if (file) {
+        if (this.isValidImageFile(file)) {
+            this.image = file;
+            // Sử dụng FileReader để đọc nội dung tệp
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                // Nội dung của tệp được đọc sẽ nằm trong e.target.result
+                _this.url = e.target.result; // Lưu nội dung (data URL) vào biến url
+            };
             reader.readAsDataURL(file);
         }
+        else {
+            // Hiển thị thông báo yêu cầu người dùng chọn file đúng định dạng
+            alert('Vui lòng chọn file hình ảnh có định dạng JPG, JPEG, BMP, PNG, SVG.');
+        }
+    };
+    UserCardComponent.prototype.isValidImageFile = function (file) {
+        // Mảng chứa các định dạng hợp lệ
+        var validFormats = ['image/jpeg', 'image/png', 'image/bmp', 'image/svg+xml', 'image/jpg'];
+        return validFormats.includes(file.type);
     };
     UserCardComponent.prototype.zoomIn = function () {
         this.zoomLevel += 10;
