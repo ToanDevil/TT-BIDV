@@ -9,7 +9,7 @@
         <div class="header-icons" *ngIf="imageData">
             <i class="fa-regular fa-comment-dots"></i>
             <i class="fa-regular fa-bell"></i>
-            <img [src]="domainImage + imageData.url" alt="Avatar" class="header-avatar" (error)="onImageError()">
+            <img [src]="imageData.url" alt="Avatar" class="header-avatar" (error)="onImageError()">
         </div>
         <div class="header-icons" *ngIf="!imageData">
             <i class="fa-regular fa-comment-dots"></i>

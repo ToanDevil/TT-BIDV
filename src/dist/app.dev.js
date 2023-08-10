@@ -340,7 +340,7 @@ function updateCard(code, position, forte, department, nickname, unit, title) {
 
 
 function getImage(code) {
-  var connection, imgQuery, imgResult, imgData;
+  var connection, imgQuery, imgResult, imgData, imageUrl, fullImageUrl;
   return regeneratorRuntime.async(function getImage$(_context7) {
     while (1) {
       switch (_context7.prev = _context7.next) {
@@ -380,24 +380,27 @@ function getImage(code) {
           return _context7.abrupt("return", null);
 
         case 15:
+          // Thêm đường dẫn http://localhost:3000 vào trước URL
+          imageUrl = imgData[0][2];
+          fullImageUrl = "http://localhost:".concat(port, "/").concat(imageUrl);
           return _context7.abrupt("return", {
             id: imgData[0][0],
             code: imgData[0][1],
-            url: imgData[0][2]
+            url: fullImageUrl
           });
 
-        case 18:
-          _context7.prev = 18;
+        case 20:
+          _context7.prev = 20;
           _context7.t0 = _context7["catch"](0);
           console.error('Error executing getImg query:', _context7.t0);
           throw _context7.t0;
 
-        case 22:
+        case 24:
         case "end":
           return _context7.stop();
       }
     }
-  }, null, null, [[0, 18]]);
+  }, null, null, [[0, 20]]);
 } // API endpoint để lấy thông tin người dùng, thẻ dựa trên ID
 
 

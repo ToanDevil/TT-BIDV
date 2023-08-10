@@ -11,10 +11,9 @@ import { Image } from '../page/image'
 })
 export class PageComponent implements OnInit {
   // click icon
-  id: string = '41';
+  id: string = '181';
   activeIcon: string = 'Icon1';
   imageData: Image | undefined;
-  domainImage: string = 'http://localhost:3000/';
   search: any;
   constructor(
     private route: ActivatedRoute,

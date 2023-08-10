@@ -19,7 +19,6 @@ export class UserCardComponent {
   userData: User | undefined;
   cardData: Card | undefined;
   imageData: Image | undefined;
-  domainImage: string = 'http://localhost:3000/';
   userForm!: FormGroup;
   code: string | undefined;
   id!: string;

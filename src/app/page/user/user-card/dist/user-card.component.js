@@ -28,7 +28,6 @@ var UserCardComponent = /** @class */ (function () {
         this.router = router;
         this.toastr = toastr;
         this.formBuilder = formBuilder;
-        this.domainImage = 'http://localhost:3000/';
         this.showForm = true;
         this.editImg = true;
         this.selectedFile = null;

@@ -169,10 +169,15 @@ async function getImage(code){
     if(!imgData || imgData.length === 0){
       return null;
     }
+
+    // Thêm đường dẫn http://localhost:3000 vào trước URL
+    const imageUrl = imgData[0][2];
+    const fullImageUrl = `http://localhost:${port}/${imageUrl}`;
+
     return {
       id: imgData[0][0],
       code: imgData[0][1],
-      url: imgData[0][2],
+      url: fullImageUrl,
     };
   } catch (err){
     console.error('Error executing getImg query:', err);
