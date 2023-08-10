@@ -16,6 +16,9 @@ export class UserEvalComponent {
   sortedUsers: any[] = [];
   sortAscending: boolean = true;
 
+  userToEval !: User;
+  status : boolean = false;
+
 
   constructor (
     private userService: UserService
@@ -42,8 +45,10 @@ export class UserEvalComponent {
     )
   }
   evaluate(user: any) {
+    this.status = true;
     // Xử lý đánh giá đồng nghiệp ở đây
     console.log('Đánh giá cho người dùng:', user);
+    this.userToEval = user;
   }
 
   delete(user: any) {
@@ -104,5 +109,9 @@ export class UserEvalComponent {
   toggleSortOrder() {
     this.sortAscending = !this.sortAscending;
     this.sortUsers();
+  }
+
+  closeFormEval(){
+    this.status = false;
   }
 }

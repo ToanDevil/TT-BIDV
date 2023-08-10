@@ -16,6 +16,7 @@ var UserEvalComponent = /** @class */ (function () {
         this.itemsPerPage = 5; // Số hàng hiển thị trên mỗi trang
         this.sortedUsers = [];
         this.sortAscending = true;
+        this.status = false;
         this.searchValue = '';
         this.searchResult = '';
     }
@@ -34,8 +35,10 @@ var UserEvalComponent = /** @class */ (function () {
         });
     };
     UserEvalComponent.prototype.evaluate = function (user) {
+        this.status = true;
         // Xử lý đánh giá đồng nghiệp ở đây
         console.log('Đánh giá cho người dùng:', user);
+        this.userToEval = user;
     };
     UserEvalComponent.prototype["delete"] = function (user) {
         var _this = this;
@@ -90,6 +93,9 @@ var UserEvalComponent = /** @class */ (function () {
     UserEvalComponent.prototype.toggleSortOrder = function () {
         this.sortAscending = !this.sortAscending;
         this.sortUsers();
+    };
+    UserEvalComponent.prototype.closeFormEval = function () {
+        this.status = false;
     };
     __decorate([
         core_1.Input()

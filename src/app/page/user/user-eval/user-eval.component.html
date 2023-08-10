@@ -41,3 +41,13 @@
       </div>
     </div>
   </div>
+
+  <!-- Form đánh giá nhân viên -->
+<div class="overlay" *ngIf="status">
+  <div class="form-wrapper">
+    <form action="">
+      <p>Đánh giá nhân viên {{userToEval.name}}</p>
+      <button type="submit">Lưu</button>
+    </form>
+  </div>
+</div>

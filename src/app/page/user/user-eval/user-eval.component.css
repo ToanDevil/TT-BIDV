@@ -92,3 +92,31 @@
 .icon-sort {
     margin-left: 8px;
 }
+
+
+/* Form đánh giá nhân viên */
+.overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Background mờ */
+    z-index: 9999;
+    /* Đặt layer trên layout cũ */
+}
+
+.form-wrapper {
+    width: 80%;
+    max-width: 350px;
+    height: auto;
+    max-height: 90%;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
