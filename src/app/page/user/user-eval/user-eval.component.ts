@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { UserService } from 'src/app/core/service/user.service';
 import { User } from '../user';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-user-eval',
@@ -15,15 +16,17 @@ export class UserEvalComponent {
   totalPage!: number;
   sortedUsers: any[] = [];
   sortAscending: boolean = true;
+  idUser!: number;
 
   userToEval !: User;
-  status : boolean = false;
+  statusFormEval : boolean = false;
+  // statusUser!: number;
 
 
   constructor (
-    private userService: UserService
+    private userService: UserService,
+    private activatedRoute: ActivatedRoute,
   ){}
-
   @Input() searchValue: string = '';
   searchResult: string = '';
 
@@ -43,9 +46,13 @@ export class UserEvalComponent {
         console.error('Error fetching users:', error)
       }
     )
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      this.idUser = (paramMap as any).params['id']
+      console.log(this.idUser)
+    })
   }
   evaluate(user: any) {
-    this.status = true;
+    this.statusFormEval = true;
     // Xử lý đánh giá đồng nghiệp ở đây
     console.log('Đánh giá cho người dùng:', user);
     this.userToEval = user;
@@ -64,6 +71,18 @@ export class UserEvalComponent {
         });
       });
     }
+  }
+  // Cập nhật trạng thái người dùng
+  status(user:any){
+    if(user.status === 1){
+      user.status = 2
+    }
+    else{
+      user.status = 1
+    }
+    this.userService.updateUser(user.id, user).subscribe(() => {
+      this.userService.getListUser().subscribe()
+    })
   }
 
   confirmDelete(user: any) {
@@ -112,6 +131,6 @@ export class UserEvalComponent {
   }
 
   closeFormEval(){
-    this.status = false;
+    this.statusFormEval = false;
   }
 }

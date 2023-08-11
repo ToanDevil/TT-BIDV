@@ -5,5 +5,6 @@ export interface User {
     address? : String;
     phone?: string;
     code?: string;
-    tel? : string;    
+    tel? : string; 
+    status? : number;   
 }

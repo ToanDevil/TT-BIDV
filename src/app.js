@@ -67,6 +67,7 @@ async function getUser(id) {
       phone: userData[0][4],
       tel: userData[0][5],
       id: userData[0][6],
+      status: userData[0][7]
     };
   } catch (err) {
     console.error('Error executing getUser query:', err);
@@ -75,10 +76,10 @@ async function getUser(id) {
 }
 
 //Function updateUser
-async function updateUser(id, name, email, address, phone, tel) {
+async function updateUser(id, name, email, address, phone, tel, status) {
   try {
     const connection = await oracledb.getConnection();
-    const updateQuery = `BEGIN PTNB_Secret.UPDATE_USER(:id, :name, :email, :address, :phone, :tel); END;`;
+    const updateQuery = `BEGIN PTNB_Secret.UPDATE_USER(:id, :name, :email, :address, :phone, :tel, :status); END;`;
 
     await connection.execute(updateQuery, {
       id: id,
@@ -87,6 +88,7 @@ async function updateUser(id, name, email, address, phone, tel) {
       address: address,
       phone: phone,
       tel: tel,
+      status: status,
     });
 
     await connection.commit();
@@ -207,16 +209,19 @@ app.get('/api/user/:id', async (req, res) => {
 
 // API endpoint lấy list user 
 class User {
-  constructor(code, name, email, address, phone, tel) {
+  constructor(code, name, email, address, phone, tel, id, status) {
     this.code = code;
     this.name = name;
     this.email = email;
     this.address = address;
     this.phone = phone;
     this.tel = tel;
+    this.id = id;
+    this.status = status;
   }
 }
 
+// apiendpoit get list users
 app.get('/api/users', async (req, res) => {
   try {
     const connection = await oracledb.getConnection();
@@ -231,8 +236,8 @@ app.get('/api/users', async (req, res) => {
     // Fetch the result set rows and convert them to an array of user objects
     let row;
     while ((row = await resultSet.getRow())) {
-      const [code, name, email, address, phone, tel] = row;
-      const user = new User(code, name, email, address, phone, tel);
+      const [code, name, email, address, phone, tel, id, status] = row;
+      const user = new User(code, name, email, address, phone, tel, id, status);
       users.push(user);
     }
 
@@ -317,10 +322,10 @@ app.get('/api/user/image/:id', async (req, res) => {
 // API endpoint để cập nhật thông tin người dùng dựa trên ID
 app.put('/api/user/update/:id', async (req, res) => {
   const id = req.params.id;
-  const { name, email, address, phone, tel } = req.body;
+  const { name, email, address, phone, tel, status } = req.body;
 
   try {
-    await updateUser(id, name, email, address, phone, tel);
+    await updateUser(id, name, email, address, phone, tel, status);
     res.json({ message: 'User information updated successfully' });
   } catch (err) {
     console.error('Error updating user information', err);
@@ -391,16 +396,15 @@ app.post('/upload', upload.single('image'), async (req, res) => {
 
 // API endpoint để thêm người dùng
 app.post('/api/users', async (req, res) => {
-  const { code, name, email, address, phone, tel } = req.body;
+  const { name, email, address, phone, tel } = req.body;
 
   try {
     const connection = await oracledb.getConnection();
 
     // Câu truy vấn để thêm người dùng vào bảng người dùng
-    const insertQuery = `BEGIN PTNB_SECRET.INSERT_USER(:code, :name, :email, :address, :phone, :tel); END;`;
+    const insertQuery = `BEGIN PTNB_SECRET.INSERT_USER(:name, :email, :address, :phone, :tel); END;`;
     
     await connection.execute(insertQuery, {
-      code: code,
       name: name,
       email: email,
       address: address,

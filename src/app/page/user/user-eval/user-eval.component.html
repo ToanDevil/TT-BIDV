@@ -1,49 +1,61 @@
 <div class="container">
-    <div class="user-eval">
-      <h3>Đánh giá đồng nghiệp</h3>
-    </div>
-    <div class="user-box">
-      <h4>Đồng nghiệp xuất sắc trong tháng này:</h4>
-      <br>
-      <table class="user-table">
-        <thead>
-          <tr>
-            <th>STT</th>
-            <th>Mã code</th>
-            <th>
-                <span>Tên</span>                        
-                <!-- <i class="fa-sharp fa-solid fa-sort-down icon-sort"></i> -->
-            </th>
-            <th>Email</th>
-            <th></th> <!-- Thêm cột trống để đặt nút Đánh giá -->
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of getCurrentPageData(), let i = index">
-            <td scope="row">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
-            <td>{{ user.code }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>
-              <button (click)="evaluate(user)" class="btn-eval">Đánh giá</button>
-            </td>
-            <td>
-                <button (click)="confirmDelete(user)" class="btn-delete">Xóa</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="pagination">
-        <button (click)="prevPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-caret-left"></i></button>
-        <span>Trang {{ currentPage }} / {{totalPage}}</span>
-        <button (click)="nextPage()" [disabled]="currentPage === getTotalPages()"><i class="fa-solid fa-caret-right"></i></button>
-      </div>
+  <div class="user-eval">
+    <h3>Đánh giá đồng nghiệp</h3>
+  </div>
+  <div class="user-box">
+    <h4>Đồng nghiệp xuất sắc trong tháng này:</h4>
+    <br>
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Mã</th>
+          <th>
+            <span>Tên</span>
+            <!-- <i class="fa-sharp fa-solid fa-sort-down icon-sort"></i> -->
+          </th>
+          <th>Email</th>
+          <th></th> <!-- Thêm cột trống để đặt nút Đánh giá -->
+          <th></th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="separator" [ngClass]="{'red-row': user.status === 2}" *ngFor="let user of getCurrentPageData(), let i = index">
+          <td scope="row">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+          <td>{{ user.code }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button *ngIf = "user.status === 1" (click)="evaluate(user)" class="btn-eval">Đánh giá</button>
+          </td>
+          <td>
+            <button (click)="confirmDelete(user)" class="btn-delete">Xóa</button>
+          </td>
+          <td>
+            <select *ngIf = "user.status === 1" (change) = "status(user)" class="status-option">
+              <option value="1">Đang hoạt động</option>
+              <option value="2">Khóa tài khoản</option>
+            </select>
+            <select *ngIf = "user.status === 2" (change) = "status(user)" class="status-option">
+              <option value="2">Khóa tài khoản</option>
+              <option value="1">Đang hoạt động</option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pagination">
+      <button (click)="prevPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-caret-left"></i></button>
+      <span>Trang {{ currentPage }} / {{totalPage}}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === getTotalPages()"><i
+          class="fa-solid fa-caret-right"></i></button>
     </div>
   </div>
+</div>
 
-  <!-- Form đánh giá nhân viên -->
-<div class="overlay" *ngIf="status">
+<!-- Form đánh giá nhân viên -->
+<div class="overlay" *ngIf="statusFormEval">
   <div class="form-wrapper">
     <form action="">
       <p>Đánh giá nhân viên {{userToEval.name}}</p>

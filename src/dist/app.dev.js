@@ -151,7 +151,8 @@ function getUser(id) {
             address: userData[0][3],
             phone: userData[0][4],
             tel: userData[0][5],
-            id: userData[0][6]
+            id: userData[0][6],
+            status: userData[0][7]
           });
 
         case 18:
@@ -169,7 +170,7 @@ function getUser(id) {
 } //Function updateUser
 
 
-function updateUser(id, name, email, address, phone, tel) {
+function updateUser(id, name, email, address, phone, tel, status) {
   var connection, updateQuery;
   return regeneratorRuntime.async(function updateUser$(_context4) {
     while (1) {
@@ -181,7 +182,7 @@ function updateUser(id, name, email, address, phone, tel) {
 
         case 3:
           connection = _context4.sent;
-          updateQuery = "BEGIN PTNB_Secret.UPDATE_USER(:id, :name, :email, :address, :phone, :tel); END;";
+          updateQuery = "BEGIN PTNB_Secret.UPDATE_USER(:id, :name, :email, :address, :phone, :tel, :status); END;";
           _context4.next = 7;
           return regeneratorRuntime.awrap(connection.execute(updateQuery, {
             id: id,
@@ -189,7 +190,8 @@ function updateUser(id, name, email, address, phone, tel) {
             email: email,
             address: address,
             phone: phone,
-            tel: tel
+            tel: tel,
+            status: status
           }));
 
         case 7:
@@ -451,7 +453,7 @@ app.get('/api/user/:id', function _callee(req, res) {
   }, null, null, [[1, 11]]);
 }); // API endpoint lấy list user 
 
-var User = function User(code, name, email, address, phone, tel) {
+var User = function User(code, name, email, address, phone, tel, id, status) {
   _classCallCheck(this, User);
 
   this.code = code;
@@ -460,10 +462,13 @@ var User = function User(code, name, email, address, phone, tel) {
   this.address = address;
   this.phone = phone;
   this.tel = tel;
-};
+  this.id = id;
+  this.status = status;
+}; // apiendpoit get list users
+
 
 app.get('/api/users', function _callee2(req, res) {
-  var connection, bindVars, result, resultSet, users, row, _row, _row2, code, name, email, address, phone, tel, user;
+  var connection, bindVars, result, resultSet, users, row, _row, _row2, code, name, email, address, phone, tel, id, status, user;
 
   return regeneratorRuntime.async(function _callee2$(_context9) {
     while (1) {
@@ -499,8 +504,8 @@ app.get('/api/users', function _callee2(req, res) {
             break;
           }
 
-          _row = row, _row2 = _slicedToArray(_row, 6), code = _row2[0], name = _row2[1], email = _row2[2], address = _row2[3], phone = _row2[4], tel = _row2[5];
-          user = new User(code, name, email, address, phone, tel);
+          _row = row, _row2 = _slicedToArray(_row, 8), code = _row2[0], name = _row2[1], email = _row2[2], address = _row2[3], phone = _row2[4], tel = _row2[5], id = _row2[6], status = _row2[7];
+          user = new User(code, name, email, address, phone, tel, id, status);
           users.push(user);
           _context9.next = 10;
           break;
@@ -699,17 +704,17 @@ app.get('/api/user/image/:id', function _callee5(req, res) {
 }); // API endpoint để cập nhật thông tin người dùng dựa trên ID
 
 app.put('/api/user/update/:id', function _callee6(req, res) {
-  var id, _req$body, name, email, address, phone, tel;
+  var id, _req$body, name, email, address, phone, tel, status;
 
   return regeneratorRuntime.async(function _callee6$(_context13) {
     while (1) {
       switch (_context13.prev = _context13.next) {
         case 0:
           id = req.params.id;
-          _req$body = req.body, name = _req$body.name, email = _req$body.email, address = _req$body.address, phone = _req$body.phone, tel = _req$body.tel;
+          _req$body = req.body, name = _req$body.name, email = _req$body.email, address = _req$body.address, phone = _req$body.phone, tel = _req$body.tel, status = _req$body.status;
           _context13.prev = 2;
           _context13.next = 5;
-          return regeneratorRuntime.awrap(updateUser(id, name, email, address, phone, tel));
+          return regeneratorRuntime.awrap(updateUser(id, name, email, address, phone, tel, status));
 
         case 5:
           res.json({
@@ -848,13 +853,13 @@ app.post('/upload', upload.single('image'), function _callee8(req, res) {
 }); // API endpoint để thêm người dùng
 
 app.post('/api/users', function _callee9(req, res) {
-  var _req$body3, code, name, email, address, phone, tel, connection, insertQuery;
+  var _req$body3, name, email, address, phone, tel, connection, insertQuery;
 
   return regeneratorRuntime.async(function _callee9$(_context16) {
     while (1) {
       switch (_context16.prev = _context16.next) {
         case 0:
-          _req$body3 = req.body, code = _req$body3.code, name = _req$body3.name, email = _req$body3.email, address = _req$body3.address, phone = _req$body3.phone, tel = _req$body3.tel;
+          _req$body3 = req.body, name = _req$body3.name, email = _req$body3.email, address = _req$body3.address, phone = _req$body3.phone, tel = _req$body3.tel;
           _context16.prev = 1;
           _context16.next = 4;
           return regeneratorRuntime.awrap(oracledb.getConnection());
@@ -862,10 +867,9 @@ app.post('/api/users', function _callee9(req, res) {
         case 4:
           connection = _context16.sent;
           // Câu truy vấn để thêm người dùng vào bảng người dùng
-          insertQuery = "BEGIN PTNB_SECRET.INSERT_USER(:code, :name, :email, :address, :phone, :tel); END;";
+          insertQuery = "BEGIN PTNB_SECRET.INSERT_USER(:name, :email, :address, :phone, :tel); END;";
           _context16.next = 8;
           return regeneratorRuntime.awrap(connection.execute(insertQuery, {
-            code: code,
             name: name,
             email: email,
             address: address,

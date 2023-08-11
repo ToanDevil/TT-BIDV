@@ -20,7 +20,6 @@ var UserInfoComponent = /** @class */ (function () {
         this.id = null;
         this.showForm = true;
         this.profileForm = this.formBuilder.group({
-            code: ['', forms_1.Validators.required],
             name: ['', forms_1.Validators.required],
             email: ['', forms_1.Validators.email],
             address: [''],

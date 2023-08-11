@@ -37,13 +37,19 @@
     background-color: #f2f2f2;
 }
 
-.user-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+.separator {
+    border-bottom: 1px solid #ccc;
 }
 
-.user-table tr:hover {
-    background-color: #f9f9f9;
+/* .user-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+} */
+
+.status-option {
+    border: none;
 }
+
+
 
 .btn-eval {
     padding: 5px 10px;
@@ -119,4 +125,10 @@
     border-radius: 5px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* trạng thái người dùng */
+.red-row {
+    background-color: rgb(237, 145, 145);
+    color: #000;
 }

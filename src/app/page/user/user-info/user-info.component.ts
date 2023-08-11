@@ -24,7 +24,6 @@ export class UserInfoComponent implements OnInit {
     private toastr : ToastrService,
   ) {
     this.profileForm = this.formBuilder.group({
-      code: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', Validators.email],
       address: [''],

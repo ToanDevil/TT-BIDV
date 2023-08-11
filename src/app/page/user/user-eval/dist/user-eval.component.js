@@ -9,14 +9,16 @@ exports.__esModule = true;
 exports.UserEvalComponent = void 0;
 var core_1 = require("@angular/core");
 var UserEvalComponent = /** @class */ (function () {
-    function UserEvalComponent(userService) {
+    // statusUser!: number;
+    function UserEvalComponent(userService, activatedRoute) {
         this.userService = userService;
+        this.activatedRoute = activatedRoute;
         this.users = [];
         this.currentPage = 1; // Trang hiện tại, mặc định là trang đầu tiên
         this.itemsPerPage = 5; // Số hàng hiển thị trên mỗi trang
         this.sortedUsers = [];
         this.sortAscending = true;
-        this.status = false;
+        this.statusFormEval = false;
         this.searchValue = '';
         this.searchResult = '';
     }
@@ -33,9 +35,13 @@ var UserEvalComponent = /** @class */ (function () {
         }, function (error) {
             console.error('Error fetching users:', error);
         });
+        this.activatedRoute.paramMap.subscribe(function (paramMap) {
+            _this.idUser = paramMap.params['id'];
+            console.log(_this.idUser);
+        });
     };
     UserEvalComponent.prototype.evaluate = function (user) {
-        this.status = true;
+        this.statusFormEval = true;
         // Xử lý đánh giá đồng nghiệp ở đây
         console.log('Đánh giá cho người dùng:', user);
         this.userToEval = user;
@@ -54,6 +60,19 @@ var UserEvalComponent = /** @class */ (function () {
                 });
             });
         }
+    };
+    // Cập nhật trạng thái người dùng
+    UserEvalComponent.prototype.status = function (user) {
+        var _this = this;
+        if (user.status === 1) {
+            user.status = 2;
+        }
+        else {
+            user.status = 1;
+        }
+        this.userService.updateUser(user.id, user).subscribe(function () {
+            _this.userService.getListUser().subscribe();
+        });
     };
     UserEvalComponent.prototype.confirmDelete = function (user) {
         var result = confirm('Bạn có chắc chắn muốn xóa người dùng này không?');
@@ -95,7 +114,7 @@ var UserEvalComponent = /** @class */ (function () {
         this.sortUsers();
     };
     UserEvalComponent.prototype.closeFormEval = function () {
-        this.status = false;
+        this.statusFormEval = false;
     };
     __decorate([
         core_1.Input()
