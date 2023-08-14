@@ -21,6 +21,9 @@ var UserComponent = /** @class */ (function () {
         if (storedOption) {
             this.activeOption = storedOption;
         }
+        else {
+            this.activeOption = 'option1';
+        }
         this.activatedRoute.paramMap.subscribe(function (param) {
             console.log(param);
             _this.id = param.params['id'];

@@ -26,6 +26,9 @@ export class UserComponent {
     if (storedOption) {
       this.activeOption = storedOption;
     }
+    else {
+      this.activeOption = 'option1';
+    }
     this.activatedRoute.paramMap.subscribe(param => {
       console.log(param);
       this.id = (param as any).params['id'];

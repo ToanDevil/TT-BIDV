@@ -21,26 +21,26 @@ export class UserEvalComponent {
   userToEval !: User;
   statusFormEval : boolean = false;
   // statusUser!: number;
+  search: string = ''
 
 
   constructor (
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
   ){}
-  @Input() searchValue: string = '';
-  searchResult: string = '';
+  // @Input() searchValue: string = '';
+  // searchResult: string = '';
 
-  ngOnChanges() {
-    // Thực hiện tìm kiếm với dữ liệu trong this.searchValue
-    this.searchResult = 'Kết quả tìm kiếm với: ' + this.searchValue;
-  }
+  // ngOnChanges() {
+  //   // Thực hiện tìm kiếm với dữ liệu trong this.searchValue
+  //   this.searchResult = 'Kết quả tìm kiếm với: ' + this.searchValue;
+  // }
 
   ngOnInit(){
     this.userService.getListUser().subscribe(
       (user) =>{
         this.users = user
         this.totalPage = this.getTotalPages();
-        this.sortUsers();
       },
       (error) => {
         console.error('Error fetching users:', error)
@@ -66,7 +66,6 @@ export class UserEvalComponent {
         this.userService.getListUser().subscribe((updatedUsers) => {
           this.users = updatedUsers;
           this.totalPage = this.getTotalPages();
-          this.sortUsers();
           console.log('Xóa người dùng này', user);
         });
       });
@@ -115,22 +114,15 @@ export class UserEvalComponent {
       this.currentPage--;
     }
   }
-  
-  // sắp xếp user theo thứ tự a-z z-a
-  sortUsers() {
-    if (this.sortAscending) {
-      this.sortedUsers = this.users.slice().sort((a, b) => a.name.localeCompare(b.name));
-    } else {
-      this.sortedUsers = this.users.slice().sort((a, b) => b.name.localeCompare(a.name));
-    }
-  }
-  
-  toggleSortOrder() {
-    this.sortAscending = !this.sortAscending;
-    this.sortUsers();
-  }
 
   closeFormEval(){
     this.statusFormEval = false;
+  }
+
+  searchUsers(keyword: string){
+    this.userService.searchUser(keyword).subscribe((data: any[]) => {
+      this.users = data;
+      this.getCurrentPageData();
+    });
   }
 }

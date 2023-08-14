@@ -11,6 +11,7 @@ var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var user_eval_routing_module_1 = require("./user-eval-routing.module");
 var user_eval_component_1 = require("./user-eval.component");
+var forms_1 = require("@angular/forms");
 var UserEvalModule = /** @class */ (function () {
     function UserEvalModule() {
     }
@@ -22,6 +23,7 @@ var UserEvalModule = /** @class */ (function () {
             imports: [
                 common_1.CommonModule,
                 user_eval_routing_module_1.UserEvalRoutingModule,
+                forms_1.FormsModule,
             ]
         })
     ], UserEvalModule);

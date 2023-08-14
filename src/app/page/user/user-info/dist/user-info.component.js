@@ -11,6 +11,7 @@ var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var UserInfoComponent = /** @class */ (function () {
     function UserInfoComponent(route, userService, activatedRoute, dataService, formBuilder, toastr) {
+        var _a, _b, _c, _d, _e;
         this.route = route;
         this.userService = userService;
         this.activatedRoute = activatedRoute;
@@ -20,11 +21,11 @@ var UserInfoComponent = /** @class */ (function () {
         this.id = null;
         this.showForm = true;
         this.profileForm = this.formBuilder.group({
-            name: ['', forms_1.Validators.required],
-            email: ['', forms_1.Validators.email],
-            address: [''],
-            phone: [''],
-            tel: ['']
+            name: [(_a = this.userData) === null || _a === void 0 ? void 0 : _a.name, forms_1.Validators.required],
+            email: [(_b = this.userData) === null || _b === void 0 ? void 0 : _b.email, forms_1.Validators.email],
+            address: [(_c = this.userData) === null || _c === void 0 ? void 0 : _c.address],
+            phone: [(_d = this.userData) === null || _d === void 0 ? void 0 : _d.phone, forms_1.Validators.required, forms_1.Validators.minLength(10), forms_1.Validators.maxLength(10)],
+            tel: [(_e = this.userData) === null || _e === void 0 ? void 0 : _e.tel, forms_1.Validators.required, forms_1.Validators.minLength(10), forms_1.Validators.maxLength(10)]
         });
     }
     UserInfoComponent.prototype.getUser = function (id) {

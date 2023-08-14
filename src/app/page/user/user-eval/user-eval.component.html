@@ -5,6 +5,7 @@
   <div class="user-box">
     <h4>Đồng nghiệp xuất sắc trong tháng này:</h4>
     <br>
+    <input type="text" placeholder="Search theo tên" [(ngModel)]="search" (keyup)="searchUsers(search)">
     <table class="user-table">
       <thead>
         <tr>

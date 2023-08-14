@@ -17,7 +17,7 @@ var PageComponent = /** @class */ (function () {
         this.dataService = dataService;
         // click icon
         this.id = '181';
-        this.activeIcon = 'Icon1';
+        this.activeIcon = 'icon1';
     }
     PageComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -27,7 +27,7 @@ var PageComponent = /** @class */ (function () {
             this.activeIcon = storedIcon;
         }
         else {
-            this.activeIcon = 'Icon1';
+            this.activeIcon = 'icon1';
         }
         // this.activeRoute.paramMap.subscribe(param => {
         //   this.id = (param as any).params['id'];

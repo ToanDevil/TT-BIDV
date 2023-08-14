@@ -53,6 +53,12 @@ export class UserService {
       const url = `${this.apiUrl}`;
       return this.http.get<any[]>(url);
     }
+
+    searchUser(keyword: string): Observable<any[]>{
+      return this.http.get<any[]>(`${this.apiUrl}`).pipe(
+        map(users => users.filter(user => user.name.toLowerCase().includes(keyword.toLowerCase())))
+      )
+    }
   
     getCard(id: string): Observable<Card> {
       const url = `${this.api}/card/${id}`;

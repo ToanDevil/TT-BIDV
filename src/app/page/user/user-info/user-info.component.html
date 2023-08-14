@@ -44,15 +44,14 @@
         </div>
     </div>
 </div>
-
-<!-- Form thêm mới người dùng -->
-<div class="overlay" *ngIf = "!showForm">
+<!-- Form thêm mới người dùng -->  
+<div class="overlay" *ngIf="!showForm">
     <div class="form-wrapper">
         <div class="title">
             <span class="form-title">Thêm mới người dùng</span>
             <a (click)="closeForm()"> <span class="close-button">X</span> </a><!-- Close (x) button -->
         </div>
-        <form [formGroup]= "profileForm" (ngSubmit)="saveData()" method="post">
+        <form [formGroup]="profileForm" (ngSubmit)="saveData()" method="post">
             <div class="form-row">
                 <div class="form-group">
                     <label for="position">Họ và tên:</label>
@@ -70,7 +69,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="text" formControlName="email" name="email" required>
+                    <input type="email" formControlName="email" name="email" required>
                 </div>
             </div>
             <div class="form-row">

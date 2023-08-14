@@ -24,11 +24,11 @@ export class UserInfoComponent implements OnInit {
     private toastr : ToastrService,
   ) {
     this.profileForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', Validators.email],
-      address: [''],
-      phone: [''],
-      tel: ['']
+      name: [this.userData?.name, Validators.required],
+      email: [this.userData?.email, Validators.email],
+      address: [this.userData?.address],
+      phone: [this.userData?.phone, Validators.required, Validators.minLength(10), Validators.maxLength(10)],
+      tel: [this.userData?.tel, Validators.required, Validators.minLength(10), Validators.maxLength(10)]
     });
   }
 

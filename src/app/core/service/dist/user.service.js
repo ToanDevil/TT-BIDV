@@ -43,6 +43,9 @@ var UserService = /** @class */ (function () {
         var url = "" + this.apiUrl;
         return this.http.get(url);
     };
+    UserService.prototype.searchUser = function (keyword) {
+        return this.http.get("" + this.apiUrl).pipe(rxjs_1.map(function (users) { return users.filter(function (user) { return user.name.toLowerCase().includes(keyword.toLowerCase()); }); }));
+    };
     UserService.prototype.getCard = function (id) {
         var url = this.api + "/card/" + id;
         return this.http.get(url).pipe(rxjs_1.map(function (data) { return data.card; }) // Trả về thông tin thẻ đã được ánh xạ từ app.js

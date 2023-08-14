@@ -12,7 +12,7 @@ import { Image } from '../page/image'
 export class PageComponent implements OnInit {
   // click icon
   id: string = '181';
-  activeIcon: string = 'Icon1';
+  activeIcon: string = 'icon1';
   imageData: Image | undefined;
   search: any;
   constructor(
@@ -29,7 +29,7 @@ export class PageComponent implements OnInit {
     if(storedIcon){
       this.activeIcon = storedIcon;
     } else {
-      this.activeIcon = 'Icon1';
+      this.activeIcon = 'icon1';
     }
     // this.activeRoute.paramMap.subscribe(param => {
     //   this.id = (param as any).params['id'];

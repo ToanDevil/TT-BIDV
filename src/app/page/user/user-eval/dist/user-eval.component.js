@@ -9,7 +9,6 @@ exports.__esModule = true;
 exports.UserEvalComponent = void 0;
 var core_1 = require("@angular/core");
 var UserEvalComponent = /** @class */ (function () {
-    // statusUser!: number;
     function UserEvalComponent(userService, activatedRoute) {
         this.userService = userService;
         this.activatedRoute = activatedRoute;
@@ -19,19 +18,20 @@ var UserEvalComponent = /** @class */ (function () {
         this.sortedUsers = [];
         this.sortAscending = true;
         this.statusFormEval = false;
-        this.searchValue = '';
-        this.searchResult = '';
+        // statusUser!: number;
+        this.search = '';
     }
-    UserEvalComponent.prototype.ngOnChanges = function () {
-        // Thực hiện tìm kiếm với dữ liệu trong this.searchValue
-        this.searchResult = 'Kết quả tìm kiếm với: ' + this.searchValue;
-    };
+    // @Input() searchValue: string = '';
+    // searchResult: string = '';
+    // ngOnChanges() {
+    //   // Thực hiện tìm kiếm với dữ liệu trong this.searchValue
+    //   this.searchResult = 'Kết quả tìm kiếm với: ' + this.searchValue;
+    // }
     UserEvalComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.userService.getListUser().subscribe(function (user) {
             _this.users = user;
             _this.totalPage = _this.getTotalPages();
-            _this.sortUsers();
         }, function (error) {
             console.error('Error fetching users:', error);
         });
@@ -55,7 +55,6 @@ var UserEvalComponent = /** @class */ (function () {
                 _this.userService.getListUser().subscribe(function (updatedUsers) {
                     _this.users = updatedUsers;
                     _this.totalPage = _this.getTotalPages();
-                    _this.sortUsers();
                     console.log('Xóa người dùng này', user);
                 });
             });
@@ -100,25 +99,16 @@ var UserEvalComponent = /** @class */ (function () {
             this.currentPage--;
         }
     };
-    // sắp xếp user theo thứ tự a-z z-a
-    UserEvalComponent.prototype.sortUsers = function () {
-        if (this.sortAscending) {
-            this.sortedUsers = this.users.slice().sort(function (a, b) { return a.name.localeCompare(b.name); });
-        }
-        else {
-            this.sortedUsers = this.users.slice().sort(function (a, b) { return b.name.localeCompare(a.name); });
-        }
-    };
-    UserEvalComponent.prototype.toggleSortOrder = function () {
-        this.sortAscending = !this.sortAscending;
-        this.sortUsers();
-    };
     UserEvalComponent.prototype.closeFormEval = function () {
         this.statusFormEval = false;
     };
-    __decorate([
-        core_1.Input()
-    ], UserEvalComponent.prototype, "searchValue");
+    UserEvalComponent.prototype.searchUsers = function (keyword) {
+        var _this = this;
+        this.userService.searchUser(keyword).subscribe(function (data) {
+            _this.users = data;
+            _this.getCurrentPageData();
+        });
+    };
     UserEvalComponent = __decorate([
         core_1.Component({
             selector: 'app-user-eval',

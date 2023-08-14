@@ -6,24 +6,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.PageModule = void 0;
+exports.SearchPipe = void 0;
 var core_1 = require("@angular/core");
-var common_1 = require("@angular/common");
-var page_routing_module_1 = require("./page-routing.module");
-var forms_1 = require("@angular/forms");
-var PageModule = /** @class */ (function () {
-    function PageModule() {
+var SearchPipe = /** @class */ (function () {
+    function SearchPipe() {
     }
-    PageModule = __decorate([
-        core_1.NgModule({
-            declarations: [],
-            imports: [
-                common_1.CommonModule,
-                page_routing_module_1.PageRoutingModule,
-                forms_1.FormsModule,
-            ]
+    SearchPipe.prototype.transform = function (value, args) {
+        if (!value)
+            return null;
+        if (!args)
+            return value;
+        args = args.toLowerCase();
+        return value.filter(function (item) {
+            return JSON.stringify(item).toLowerCase().includes(args);
+        });
+    };
+    SearchPipe = __decorate([
+        core_1.Pipe({
+            name: 'search'
         })
-    ], PageModule);
-    return PageModule;
+    ], SearchPipe);
+    return SearchPipe;
 }());
-exports.PageModule = PageModule;
+exports.SearchPipe = SearchPipe;
